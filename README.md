@@ -20,6 +20,38 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Synchronisation des articles Hagnéré Investissement
+
+Un utilitaire CLI permet d'importer les articles publiés sur [hagnere-investissement.fr](https://hagnere-investissement.fr) dans la base Prisma locale via l'API `/api/import/article`.
+
+### Variables d'environnement
+
+Ajoutez les variables suivantes dans votre `.env.local` (ou exportez-les avant d'exécuter le script) :
+
+```
+# URL du site source (optionnelle)
+INVESTISSEMENT_API_BASE=https://hagnere-investissement.fr
+
+# Secret d'export côté Hagnéré Investissement (requis pour récupérer le contenu complet)
+INVESTISSEMENT_SYNC_SECRET=...
+
+# Cible Patrimoine (localhost par défaut)
+PATRIMOINE_BASE_URL=http://localhost:3000
+PATRIMOINE_SYNC_SECRET=...
+```
+
+> `INVESTISSEMENT_SYNC_SECRET` et `PATRIMOINE_SYNC_SECRET` doivent correspondre aux secrets configurés respectivement sur Hagnéré Investissement et sur cette application.
+
+### Exécution
+
+```bash
+npm run sync:articles                # synchronise tous les articles publiés
+npm run sync:articles -- --slug foo  # synchronise un article spécifique
+npm run sync:articles -- --dry-run   # affiche les actions sans import
+```
+
+Flags disponibles : `--slug <slug>`, `--limit <n>`, `--dry-run`, `--force` (ignore les erreurs et continue).
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

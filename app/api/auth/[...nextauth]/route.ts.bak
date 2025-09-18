@@ -1,0 +1,9 @@
+import NextAuth from "next-auth"
+import { authOptions } from "@/lib/auth"
+
+const authHandler = NextAuth(authOptions)
+
+console.log('[auth][route] NextAuth response keys', Object.keys(authHandler))
+
+export const GET = authHandler.handlers?.GET ?? authHandler
+export const POST = authHandler.handlers?.POST ?? authHandler
