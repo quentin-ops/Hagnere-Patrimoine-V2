@@ -98,14 +98,13 @@ export default async function BackofficeArticlesPage() {
   )
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
-        <div className="space-y-2">
-          <h1 className="text-3xl font-semibold tracking-tight">Articles importés</h1>
-          <p className="text-muted-foreground">
-            Consultation des contenus synchronisés depuis Hagnéré Investissement. Les mises à jour éditoriales restent centralisées sur la plateforme d&apos;origine.
-          </p>
-        </div>
+    <div className="p-6 space-y-6">
+      <div className="space-y-2">
+        <h1 className="text-2xl font-bold">Articles</h1>
+        <p className="text-muted-foreground">
+          Consultation des contenus synchronisés depuis Hagnéré Investissement. Les mises à jour éditoriales restent centralisées sur la plateforme d&apos;origine.
+        </p>
+      </div>
 
         <Alert>
           <AlertTitle>Gestion centralisée sur Hagnéré Investissement</AlertTitle>
@@ -249,7 +248,6 @@ export default async function BackofficeArticlesPage() {
             ) : null}
           </CardContent>
         </Card>
-      </div>
     </div>
   )
 }

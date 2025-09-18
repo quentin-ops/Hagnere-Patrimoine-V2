@@ -242,7 +242,7 @@ export function SecondHeader() {
           <nav
             ref={scrollRef}
             onScroll={checkScroll}
-            className="flex h-14 items-center justify-start gap-1 overflow-x-auto scrollbar-hide"
+            className="flex h-14 items-center justify-between gap-1 overflow-x-auto scrollbar-hide"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
           >
             <style jsx>{`
@@ -275,8 +275,9 @@ export function SecondHeader() {
                 animation: shimmer 2s linear infinite;
               }
             `}</style>
+            {/* Left aligned buttons */}
             <div className="flex items-center gap-1">
-              {menuItems.map((menu) => {
+              {menuItems.filter(menu => menu.title !== "Gestion de fortune").map((menu) => {
                 const Icon = menu.icon
                 const isGestionFortune = menu.title === "Gestion de fortune"
                 return (
@@ -665,6 +666,169 @@ export function SecondHeader() {
                 )
               })}
             </div>
+
+            {/* Right aligned Gestion de fortune */}
+            {menuItems.filter(menu => menu.title === "Gestion de fortune").map((menu) => {
+              const Icon = menu.icon
+              const isGestionFortune = true
+              return (
+                <DropdownMenu key={menu.title} modal={false}>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="h-9 px-3 text-[11px] font-medium bg-black dark:bg-white text-white dark:text-black hover:bg-black dark:hover:bg-white group relative data-[state=open]:bg-black dark:data-[state=open]:bg-white transition-all duration-200 rounded-md border border-black dark:border-white overflow-hidden"
+                    >
+                      {isGestionFortune && (
+                        <>
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 dark:via-black/30 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-out" />
+                          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-pulse" />
+                          </div>
+                        </>
+                      )}
+                      <Icon className="mr-1 h-3.5 w-3.5 flex-shrink-0 text-white dark:text-black relative z-10" />
+                      <span className="tracking-wide relative z-10 text-white dark:text-black">{menu.title}</span>
+                      <ChevronDown className="ml-0.5 h-2.5 w-2.5 flex-shrink-0 text-white dark:text-black relative z-10 transition-all duration-200 group-data-[state=open]:rotate-180" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    className="w-[900px] max-w-[calc(100vw-2rem)] p-0 border-0 shadow-2xl bg-black dark:bg-gray-950"
+                    align="end"
+                    sideOffset={8}
+                    collisionPadding={20}
+                    alignOffset={0}
+                  >
+                    <div className="flex">
+                      {/* Left side - Menu items */}
+                      <div className="flex-1 p-6 bg-black">
+                        {/* Header */}
+                        <div className="mb-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center gap-3">
+                              <div className="p-2 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-sm border border-gray-700">
+                                <Icon className="h-5 w-5 text-white" />
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-semibold text-white">{menu.title}</h3>
+                                <p className="text-sm text-gray-400">{menu.description}</p>
+                              </div>
+                            </div>
+                            {menu.badge && (
+                              <Badge className="bg-white dark:bg-white text-black dark:text-black border-0 animate-pulse">
+                                {menu.badge}
+                              </Badge>
+                            )}
+                          </div>
+                          <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-gray-700 to-transparent h-px" />
+                        </div>
+
+                        {/* Items Grid */}
+                        <div className="grid grid-cols-2 gap-1">
+                          {/* Services Exclusifs Title */}
+                          <div className="col-span-2 px-3 pt-2 pb-2">
+                            <Badge className="bg-white dark:bg-white text-black dark:text-black text-[10px] px-2 py-0.5">
+                              Services Exclusifs
+                            </Badge>
+                          </div>
+
+                          {menu.items.map((item, index) => {
+                            const ItemIcon = item.icon
+                            const showProduitsExclusifs = index === 6
+
+                            return (
+                              <React.Fragment key={item.href}>
+                                {showProduitsExclusifs && (
+                                  <div className="col-span-2 px-3 pt-4 pb-2">
+                                    <Badge className="bg-white dark:bg-white text-black dark:text-black text-[10px] px-2 py-0.5">
+                                      Produits Exclusifs
+                                    </Badge>
+                                  </div>
+                                )}
+                                <DropdownMenuItem className="p-0" asChild>
+                                  <Link
+                                    href={item.href}
+                                    className="group relative flex items-start gap-3 px-3 py-3 rounded-lg hover:!bg-white dark:hover:!bg-white transition-all duration-300 hover:shadow-sm w-full"
+                                  >
+                                    <div className="relative mt-0.5">
+                                      <div className="relative transform transition-all duration-300 group-hover:scale-110">
+                                        <ItemIcon className="h-4 w-4 text-gray-400 group-hover:!text-black dark:text-gray-400 dark:group-hover:!text-black transition-colors duration-300" />
+                                      </div>
+                                    </div>
+                                    <div className="flex-1 transform transition-transform duration-300 group-hover:translate-x-1">
+                                      <p className="text-sm font-medium mb-1 text-gray-100 group-hover:!text-black dark:text-gray-100 dark:group-hover:!text-black transition-colors duration-300">
+                                        {item.name}
+                                      </p>
+                                      <p className="text-xs text-gray-400 dark:text-gray-400 group-hover:!text-gray-700 dark:group-hover:!text-gray-700 transition-colors duration-300">
+                                        {item.description}
+                                      </p>
+                                    </div>
+                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                                      <ChevronDown className="h-3 w-3 text-gray-400 group-hover:!text-black -rotate-90" />
+                                    </div>
+                                  </Link>
+                                </DropdownMenuItem>
+                              </React.Fragment>
+                            )
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Right side - Promotional section */}
+                      <div className="w-[280px] bg-black dark:bg-black p-6 border-l border-neutral-100">
+                        <div className="h-full flex flex-col">
+                          <div className="rounded-lg overflow-hidden mb-4">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500&h=300&fit=crop"
+                              alt="Consultation gratuite"
+                              className="w-full h-32 object-cover"
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-3">
+                              <Badge className="bg-yellow-500 text-black text-[10px] px-2 py-0.5" variant="default">
+                                <Star className="h-3 w-3 mr-1" />
+                                Exclusif
+                              </Badge>
+                              <Badge className="border-gray-600 text-gray-300 text-[10px] px-2 py-0.5" variant="outline">
+                                100% Gratuit
+                              </Badge>
+                            </div>
+
+                            <h4 className="font-semibold text-sm mb-2 text-white dark:text-white">Rendez-vous Bilan Patrimonial 360° - Elite Patrimoine</h4>
+                            <p className="text-xs text-gray-400 dark:text-gray-400 mb-3">
+                              Bénéficiez d&apos;une analyse complète de votre situation et recevez des recommandations personnalisées
+                            </p>
+
+                            <div className="space-y-2 mb-4">
+                              <div className="flex items-center gap-2 text-[10px] text-gray-300 dark:text-gray-300">
+                                <Clock className="h-3 w-3 text-gray-500 dark:text-gray-500" />
+                                <span>Entretien de 1 heure</span>
+                              </div>
+                              <div className="flex items-center gap-2 text-[10px] text-gray-300 dark:text-gray-300">
+                                <CheckCircle className="h-3 w-3 text-gray-500 dark:text-gray-500" />
+                                <span>Sans engagement</span>
+                              </div>
+                              <div className="flex items-center gap-2 text-[10px] text-gray-300 dark:text-gray-300">
+                                <Users className="h-3 w-3 text-gray-500 dark:text-gray-500" />
+                                <span>Par visioconférence ou en présentiel</span>
+                              </div>
+                            </div>
+                          </div>
+                          <Link
+                            href="/bilan-gratuit"
+                            className="inline-flex items-center justify-center w-full px-4 py-2 bg-white hover:bg-gray-200 dark:bg-white dark:hover:bg-gray-200 text-black dark:text-black text-sm font-medium rounded-lg transition-colors"
+                          >
+                            Réserver mon créneau
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )
+            })}
           </nav>
         </div>
       </div>

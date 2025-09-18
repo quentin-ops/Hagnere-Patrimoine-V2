@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Users, FileText, Building2, BarChart3, TrendingUp, Activity, DollarSign, Calendar } from "lucide-react"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 export default async function BackOfficePage() {
   const session = await getServerSession(authOptions)
@@ -88,124 +89,146 @@ export default async function BackOfficePage() {
 
       {/* Main Content Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-        {/* Welcome Card */}
-        <Card className="mb-8">
+        {/* Recent Activity Card */}
+        <Card className="md:col-span-2 lg:col-span-4">
           <CardHeader>
-            <CardTitle>Bienvenue dans votre espace administrateur</CardTitle>
+            <CardTitle>Activité récente</CardTitle>
             <CardDescription>
-              Gérez votre site, vos contenus et vos utilisateurs depuis ce tableau de bord.
+              Dernières actions effectuées sur le site
             </CardDescription>
           </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {[
+                { action: "Nouvel article publié", time: "Il y a 2 heures", type: "article" },
+                { action: "Projet immobilier ajouté", time: "Il y a 5 heures", type: "projet" },
+                { action: "Mise à jour des paramètres", time: "Hier", type: "settings" },
+                { action: "3 nouveaux messages", time: "Il y a 2 jours", type: "message" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "h-2 w-2 rounded-full",
+                      item.type === "article" && "bg-green-500",
+                      item.type === "projet" && "bg-blue-500",
+                      item.type === "settings" && "bg-gray-500",
+                      item.type === "message" && "bg-yellow-500"
+                    )} />
+                    <span className="text-sm">{item.action}</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">{item.time}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
         </Card>
 
-        {/* Dashboard Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Projets */}
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <Building2 className="h-8 w-8 text-blue-500" />
-                <span className="text-2xl font-bold">12</span>
-              </div>
-              <CardTitle className="mt-4">Projets</CardTitle>
-              <CardDescription>Gérer les projets immobiliers</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button className="w-full" variant="secondary" asChild>
-                <Link href="/backoffice/projets">Accéder aux projets</Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Articles */}
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <FileText className="h-8 w-8 text-green-500" />
-                <span className="text-2xl font-bold">24</span>
-              </div>
-              <CardTitle className="mt-4">Articles</CardTitle>
-              <CardDescription>Gérer le blog et les contenus</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button className="w-full" variant="secondary" asChild>
-                <Link href="/backoffice/articles">Accéder aux articles</Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Utilisateurs */}
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <Users className="h-8 w-8 text-purple-500" />
-                <span className="text-2xl font-bold">3</span>
-              </div>
-              <CardTitle className="mt-4">Utilisateurs</CardTitle>
-              <CardDescription>Gérer les comptes utilisateurs</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button className="w-full" variant="secondary" asChild>
-                <Link href="/backoffice/utilisateurs">Gérer les utilisateurs</Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Statistiques */}
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <BarChart3 className="h-8 w-8 text-orange-500" />
-              </div>
-              <CardTitle className="mt-4">Statistiques</CardTitle>
-              <CardDescription>Analyser les performances</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button className="w-full" variant="secondary" asChild>
-                <Link href="/backoffice/stats">Voir les statistiques</Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Paramètres */}
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <Settings className="h-8 w-8 text-gray-500" />
-              </div>
-              <CardTitle className="mt-4">Paramètres</CardTitle>
-              <CardDescription>Configurer le site</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button className="w-full" variant="secondary" asChild>
-                <Link href="/backoffice/settings">Accéder aux paramètres</Link>
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Quick Actions */}
-        <Card className="mt-8">
+        {/* Quick Actions Card */}
+        <Card className="md:col-span-2 lg:col-span-3">
           <CardHeader>
             <CardTitle>Actions rapides</CardTitle>
-            <CardDescription>Effectuez les tâches courantes rapidement</CardDescription>
+            <CardDescription>
+              Accès rapide aux fonctionnalités
+            </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            <Button size="sm" variant="outline">
-              Ajouter un projet
+          <CardContent className="space-y-2">
+            <Button className="w-full justify-start" variant="outline" asChild>
+              <Link href="/backoffice/articles/new">
+                <FileText className="h-4 w-4 mr-2" />
+                Créer un article
+              </Link>
             </Button>
-            <Button size="sm" variant="outline">
-              Créer un article
+            <Button className="w-full justify-start" variant="outline" asChild>
+              <Link href="/backoffice/projets/new">
+                <Building2 className="h-4 w-4 mr-2" />
+                Ajouter un projet
+              </Link>
             </Button>
-            <Button size="sm" variant="outline">
-              Inviter un utilisateur
+            <Button className="w-full justify-start" variant="outline" asChild>
+              <Link href="/backoffice/messages">
+                <Users className="h-4 w-4 mr-2" />
+                Voir les messages
+              </Link>
             </Button>
-            <Button size="sm" variant="outline">
-              Exporter les données
+            <Button className="w-full justify-start" variant="outline" asChild>
+              <Link href="/backoffice/stats">
+                <BarChart3 className="h-4 w-4 mr-2" />
+                Statistiques détaillées
+              </Link>
             </Button>
           </CardContent>
         </Card>
-      </main>
+      </div>
+
+      {/* Performance Overview */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Aperçu des performances</CardTitle>
+            <CardDescription>
+              Évolution sur les 30 derniers jours
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium">Trafic web</span>
+                  <span className="text-sm text-green-600">+12%</span>
+                </div>
+                <div className="w-full bg-muted rounded-full h-2">
+                  <div className="bg-green-600 h-2 rounded-full" style={{ width: '75%' }} />
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium">Conversions</span>
+                  <span className="text-sm text-blue-600">+8%</span>
+                </div>
+                <div className="w-full bg-muted rounded-full h-2">
+                  <div className="bg-blue-600 h-2 rounded-full" style={{ width: '60%' }} />
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium">Engagement</span>
+                  <span className="text-sm text-purple-600">+15%</span>
+                </div>
+                <div className="w-full bg-muted rounded-full h-2">
+                  <div className="bg-purple-600 h-2 rounded-full" style={{ width: '82%' }} />
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Prochains événements</CardTitle>
+            <CardDescription>
+              Calendrier des prochaines échéances
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {[
+                { event: "Publication article SEO", date: "20 Sept", type: "article" },
+                { event: "Réunion équipe", date: "22 Sept", type: "meeting" },
+                { event: "Lancement projet Villa", date: "25 Sept", type: "projet" },
+                { event: "Maintenance site", date: "30 Sept", type: "maintenance" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center justify-between p-2 rounded-lg hover:bg-muted">
+                  <div className="flex items-center gap-3">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm">{item.event}</span>
+                  </div>
+                  <span className="text-xs font-medium text-muted-foreground">{item.date}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }
