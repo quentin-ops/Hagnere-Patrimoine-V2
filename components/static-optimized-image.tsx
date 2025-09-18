@@ -84,8 +84,9 @@ export function StaticOptimizedImage({
     observer.observe(imgRef.current)
 
     return () => {
-      if (imgRef.current) {
-        observer.unobserve(imgRef.current)
+      const img = imgRef.current
+      if (img) {
+        observer.unobserve(img)
       }
     }
   }, [enableLazyLoad, priority])

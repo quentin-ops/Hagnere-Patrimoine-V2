@@ -51,6 +51,7 @@ export const authOptions: NextAuthOptions = {
             email: user.email,
             name: user.name || "",
             role: user.role,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any
         } catch (error) {
           console.error('[auth] Erreur:', error)
@@ -62,6 +63,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         token.role = (user as any).role
         token.id = user.id
       }
@@ -69,8 +71,10 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user as any).role = token.role
-        (session.user as any).id = token.id
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (session.user as any).role = token.role as string
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (session.user as any).id = token.id as string
       }
       return session
     },

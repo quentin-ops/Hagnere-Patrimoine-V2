@@ -20,6 +20,7 @@ interface Point {
 }
 
 export default function StripeGlobe() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const globeRef = useRef<any>(null)
   const [arcs, setArcs] = useState<Arc[]>([])
   const [points, setPoints] = useState<Point[]>([])
@@ -77,6 +78,7 @@ export default function StripeGlobe() {
     }, 1000)
 
     return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -94,7 +96,8 @@ export default function StripeGlobe() {
       
       setGlobeReady(true)
     }
-  }, [globeRef.current])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="relative w-full h-[520px] bg-black rounded-2xl overflow-hidden">

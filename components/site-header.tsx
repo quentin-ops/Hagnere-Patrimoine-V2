@@ -23,16 +23,11 @@ import {
   Home,
   Shield,
   Menu,
-  X,
   Sparkles,
-  Users,
-  Target,
   BarChart3,
   Wallet,
   Handshake,
-  GraduationCap,
   Globe,
-  Orbit,
   Heart,
   Gift,
   Crown,
@@ -45,20 +40,15 @@ import {
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuLabel,
-  DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu"
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
@@ -825,7 +815,7 @@ export function SiteHeader() {
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <UserPlus className="h-4 w-4" />
-                        <span className="ml-2">S'inscrire</span>
+                        <span className="ml-2">S&apos;inscrire</span>
                       </Link>
                     </Button>
                   </div>
