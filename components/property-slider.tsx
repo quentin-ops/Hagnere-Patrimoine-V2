@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Badge } from '@/components/ui/badge'
-import Image from 'next/image'
-import { MapPin, TrendingUp, Euro, Home, Building2, Building, HomeIcon, Key, HousePlus, Castle } from 'lucide-react'
+import { TrendingUp, Euro, Home, Building2, HomeIcon, Key, HousePlus, Castle } from 'lucide-react'
 
 interface PropertyData {
   title: string

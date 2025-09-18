@@ -2,15 +2,13 @@
 
 import React, { useRef, useState, useEffect } from "react"
 import Link from "next/link"
-import { ChevronDown, ChevronLeft, ChevronRight, Building2, PiggyBank, TrendingUp, Gift, Wallet, Shield, Crown, FileText, Calculator, BookOpen, Users, ArrowRight, Clock, CheckCircle, Star, Home, Landmark, LineChart, Briefcase, Heart, TreePine, HandCoins, Globe, FileSignature, UserCheck, CreditCard, Banknote, Package, HeartHandshake, UserPlus, GraduationCap, AlertTriangle } from "lucide-react"
+import { ChevronDown, ChevronLeft, ChevronRight, Building2, PiggyBank, TrendingUp, Wallet, Shield, Crown, FileText, Calculator, BookOpen, Users, ArrowRight, Clock, CheckCircle, Star, Home, Landmark, LineChart, Briefcase, Heart, TreePine, HandCoins, Globe, FileSignature, CreditCard, Banknote, Package, HeartHandshake, GraduationCap, AlertTriangle } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-  DropdownMenuLabel,
-  DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -98,7 +96,7 @@ export function SecondHeader() {
       description: "Faites fructifier votre épargne",
       badge: "+8%",
       items: [
-        // Supports d'investissement
+        // Supports d&apos;investissement
         { name: "Assurance-vie", href: "/placements/assurance-vie", description: "Support privilégié d'épargne", icon: Heart },
         { name: "Assurance-vie Luxembourgeoise", href: "/placements/assurance-vie-luxembourgeoise", description: "Haut de gamme international", icon: Shield },
         { name: "Contrat de capitalisation (IR/IS)", href: "/placements/contrat-capitalisation", description: "Transmission optimisée", icon: FileText },
@@ -381,10 +379,10 @@ export function SecondHeader() {
                         )}
                         {menu.title === "Placements" && (
                           <>
-                            {/* Supports d'investissement Title */}
+                            {/* Supports d&apos;investissement Title */}
                             <div className="col-span-2 px-3 pt-2 pb-2">
                               <Badge className="bg-black text-white dark:bg-white dark:text-black text-[10px] px-2 py-0.5">
-                                Supports d'investissement
+                                Supports d&apos;investissement
                               </Badge>
                             </div>
                           </>
@@ -582,6 +580,7 @@ export function SecondHeader() {
                     }>
                       <div className="h-full flex flex-col">
                         <div className="rounded-lg overflow-hidden mb-4">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500&h=300&fit=crop"
                             alt="Consultation gratuite"
@@ -613,7 +612,7 @@ export function SecondHeader() {
                             ? "text-xs text-gray-400 dark:text-gray-400 mb-3"
                             : "text-xs text-muted-foreground mb-3"
                           }>
-                            Bénéficiez d'une analyse complète de votre situation et recevez des recommandations personnalisées
+                            Bénéficiez d&apos;une analyse complète de votre situation et recevez des recommandations personnalisées
                           </p>
 
                           <div className="space-y-2 mb-4">

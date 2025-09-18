@@ -13,7 +13,6 @@ import {
   MessageSquare,
   UserPlus,
   LogIn,
-  ChevronDown,
   Building2,
   TrendingUp,
   Calculator,
