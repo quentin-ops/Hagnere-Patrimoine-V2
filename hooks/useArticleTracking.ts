@@ -1,153 +1,88 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 
-const COOKIE_NAME = 'article_tracking'
-const COOKIE_CONSENT = 'cookies_accepted'
-const COOKIE_EXPIRY = 365
-
-interface ArticleProgress {
-  articleId: string
-  slug: string
-  title: string
-  progress: number
-  lastRead: string
-  readingTime?: number
-}
-
-interface ArticleTrackingData {
-  articlesRead: ArticleProgress[]
-  totalReadingTime: number
-}
-
-const getCookie = (name: string): string | null => {
-  if (typeof document === 'undefined') return null
-  const value = `; ${document.cookie}`
-  const parts = value.split(`; ${name}=`)
-  if (parts.length === 2) {
-    const cookieValue = parts.pop()?.split(';').shift()
-    return cookieValue || null
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void
   }
-  return null
 }
 
-const setCookie = (name: string, value: string, days: number) => {
-  if (typeof document === 'undefined') return
-  const date = new Date()
-  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
-  const expires = `expires=${date.toUTCString()}`
-  document.cookie = `${name}=${value};${expires};path=/;SameSite=Lax`
-}
+export function useArticleTracking(articleId: string, slug?: string, title?: string) {
+  const [hasConsent, setHasConsent] = useState(true)
+  const [currentProgress, setCurrentProgress] = useState(0)
 
-const removeCookie = (name: string) => {
-  if (typeof document === 'undefined') return
-  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`
-}
-
-export function useArticleTracking(articleId: string, slug: string, title: string) {
-  const [trackingData, setTrackingData] = useState<ArticleTrackingData>({
-    articlesRead: [],
-    totalReadingTime: 0,
-  })
-  const [startTime] = useState<number>(Date.now())
-  const [hasConsent, setHasConsent] = useState(false)
-
-  useEffect(() => {
-    const consent = getCookie(COOKIE_CONSENT)
-    setHasConsent(consent === 'true' || consent === 'all')
-
-    if (consent === 'true' || consent === 'all') {
-      const existingData = getCookie(COOKIE_NAME)
-      if (existingData) {
-        try {
-          const parsed = JSON.parse(decodeURIComponent(existingData)) as ArticleTrackingData
-          setTrackingData(parsed)
-        } catch (error) {
-          console.error('[useArticleTracking] parse error', error)
-        }
-      }
+  const saveProgress = useCallback((progress: number) => {
+    setCurrentProgress(progress)
+    // Sauvegarder dans localStorage
+    if (typeof window !== 'undefined' && slug) {
+      localStorage.setItem(`article_progress_${slug}`, String(progress))
     }
+  }, [slug])
+
+  const markAsRead = useCallback(() => {
+    if (typeof window !== 'undefined' && slug) {
+      localStorage.setItem(`article_read_${slug}`, 'true')
+    }
+  }, [slug])
+
+  const getCurrentProgress = useCallback(() => {
+    if (typeof window !== 'undefined' && slug) {
+      const saved = localStorage.getItem(`article_progress_${slug}`)
+      return saved ? parseInt(saved) : 0
+    }
+    return 0
+  }, [slug])
+
+  const getRecentlyRead = useCallback(() => {
+    // Retourner les articles récemment lus depuis localStorage
+    return []
   }, [])
 
-  const saveProgress = (progress: number) => {
-    if (!hasConsent) return
-
-    const currentTime = Date.now()
-    const readingTime = Math.floor((currentTime - startTime) / 1000)
-
-    const updatedData: ArticleTrackingData = {
-      ...trackingData,
-      totalReadingTime: trackingData.totalReadingTime + readingTime,
-    }
-
-    const existingIndex = updatedData.articlesRead.findIndex((item) => item.articleId === articleId)
-    const baseProgress: ArticleProgress = {
-      articleId,
-      slug,
-      title,
-      progress,
-      lastRead: new Date().toISOString(),
-      readingTime,
-    }
-
-    if (existingIndex >= 0) {
-      const existing = updatedData.articlesRead[existingIndex]
-      updatedData.articlesRead[existingIndex] = {
-        ...baseProgress,
-        progress: Math.max(existing.progress, progress),
-        readingTime: (existing.readingTime ?? 0) + readingTime,
+  useEffect(() => {
+    // Enregistrer la vue
+    const trackView = async () => {
+      try {
+        await fetch('/api/analytics/article-view', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ articleId })
+        })
+      } catch (error) {
+        console.error('Failed to track article view:', error)
       }
-    } else {
-      updatedData.articlesRead.push(baseProgress)
     }
 
-    if (updatedData.articlesRead.length > 100) {
-      updatedData.articlesRead = updatedData.articlesRead
-        .sort((a, b) => new Date(b.lastRead).getTime() - new Date(a.lastRead).getTime())
-        .slice(0, 100)
+    trackView()
+
+    // Google Analytics
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'page_view', {
+        page_title: document.title,
+        page_location: window.location.href,
+        page_path: window.location.pathname,
+        content_id: articleId
+      })
     }
 
-    try {
-      setCookie(COOKIE_NAME, encodeURIComponent(JSON.stringify(updatedData)), COOKIE_EXPIRY)
-      setTrackingData(updatedData)
-    } catch (error) {
-      console.error('[useArticleTracking] save error', error)
+    // Temps de lecture
+    const startTime = Date.now()
+    
+    return () => {
+      const timeSpent = Math.floor((Date.now() - startTime) / 1000)
+      
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'article_read', {
+          article_id: articleId,
+          time_spent: timeSpent
+        })
+      }
     }
-  }
-
-  const markAsRead = () => saveProgress(100)
-
-  const getCurrentProgress = () => {
-    const entry = trackingData.articlesRead.find((item) => item.articleId === articleId)
-    return entry?.progress ?? 0
-  }
-
-  const getTotalArticlesRead = () => trackingData.articlesRead.filter((item) => item.progress >= 90).length
-
-  const getRecentlyRead = (limit = 5) =>
-    trackingData.articlesRead
-      .filter((item) => item.articleId !== articleId)
-      .sort((a, b) => new Date(b.lastRead).getTime() - new Date(a.lastRead).getTime())
-      .slice(0, limit)
-
-  const hasReadArticle = (id: string) => {
-    const entry = trackingData.articlesRead.find((item) => item.articleId === id)
-    return entry ? entry.progress >= 90 : false
-  }
-
-  const clearHistory = () => {
-    if (!hasConsent) return
-    removeCookie(COOKIE_NAME)
-    setTrackingData({ articlesRead: [], totalReadingTime: 0 })
-  }
+  }, [articleId])
 
   return {
     saveProgress,
     markAsRead,
     getCurrentProgress,
-    getTotalArticlesRead,
-    getRecentlyRead,
-    hasReadArticle,
-    clearHistory,
     hasConsent,
-    totalReadingTime: trackingData.totalReadingTime,
+    getRecentlyRead
   }
 }

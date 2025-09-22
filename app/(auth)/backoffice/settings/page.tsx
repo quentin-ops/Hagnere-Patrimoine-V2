@@ -247,3 +247,4 @@ export default async function SettingsPage() {
 
 // Import Badge si non présent
 import { Badge } from "@/components/ui/badge"
+

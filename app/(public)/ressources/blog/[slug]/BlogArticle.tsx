@@ -10,7 +10,7 @@ import { generateVideoSchema } from '@/lib/json-ld-schemas'
 import { generateYouTubeVideoSchema } from '@/lib/youtube-utils'
 import { Clock, Calendar, Facebook, Twitter, Linkedin, Copy, Check, Mail, MessageCircle, TrendingUp, Home, Calculator, Sparkles, Youtube, User, ArrowRight, CheckCircle2, ExternalLink } from "lucide-react"
 import { ArticleCTAModern } from "@/components/article-cta-modern"
-import { PatrimoineCTA } from "@/components/patrimoine-cta"
+import PatrimoineCTA from "@/components/patrimoine-cta-v2"
 import { ArticleContentWithCTAs } from "@/components/article-content-with-ctas"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -20,14 +20,7 @@ import "@/styles/animations.css"
 
 const SITE_URL = 'https://hagnere-patrimoine.fr'
 
-interface Author {
-  id: string
-  name: string
-  email: string | null
-  image: string | null
-  bio?: string | null
-  role?: string | null
-}
+// L'auteur est toujours Hagnéré Patrimoine - pas de relation dans le schéma
 
 interface Category {
   id: string
@@ -70,10 +63,8 @@ interface Article {
   publishedAt: string | null
   createdAt: string
   updatedAt: string
-  author: Author | null
   category: Category | null
   categoryId: string | null
-  authorId: string | null
   metadata?: ArticleMetadata
 }
 
@@ -313,8 +304,8 @@ export default function BlogArticle({ article, relatedArticles }: BlogArticlePro
 
   // Composant CTA r\u00e9utilisable
   const CTAComponent = ({ variant = 'full', index = 0 }: { variant?: 'full' | 'compact' | 'appointment', index?: number }) => {
-    // Toujours utiliser le même design moderne pour toutes les CTAs
-    return <ArticleCTAModern />
+    // Utiliser le nouveau CTA Patrimoine
+    return <PatrimoineCTA />
     
   }
 
@@ -418,12 +409,10 @@ export default function BlogArticle({ article, relatedArticles }: BlogArticlePro
     url: `${SITE_URL}/ressources/blog/${article.slug}`,
     publishedAt: article.publishedAt ? new Date(article.publishedAt) : null,
     updatedAt: new Date(article.updatedAt),
-    author: article.author
-      ? {
-          name: article.author.name,
-          email: article.author.email,
-        }
-      : undefined,
+    author: {
+      name: 'Hagnéré Patrimoine',
+      email: 'contact@hagnere-patrimoine.fr'
+    },
     image: article.coverImageUrl || undefined,
     tags: article.keywords || [],
   })
@@ -531,9 +520,9 @@ export default function BlogArticle({ article, relatedArticles }: BlogArticlePro
                       {/* Auteur et date - Toujours Quentin Hagnéré */}
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-3 flex-1" itemProp="author" itemScope itemType="https://schema.org/Person">
-                          <div className="relative">
+                          <div className="relative w-9 h-9 rounded-full bg-black">
                             <Image
-                              src="/quentin_minia.jpeg"
+                              src="https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758129971150-5372beae560993e3.webp"
                               alt="Quentin Hagnéré"
                               width={36}
                               height={36}
@@ -545,7 +534,7 @@ export default function BlogArticle({ article, relatedArticles }: BlogArticlePro
                             <div>
                               <p className="text-sm font-medium text-gray-900 dark:text-gray-100" itemProp="name">Quentin Hagnéré</p>
                               <p className="text-xs text-gray-500 dark:text-gray-400">
-                                <time dateTime={publishDate.toISOString()} itemProp="datePublished">
+                                <time dateTime={publishDate} itemProp="datePublished">
                                   {new Date(publishDate).toLocaleDateString('fr-FR', {
                                     day: 'numeric',
                                     month: 'long',
@@ -1161,40 +1150,39 @@ export default function BlogArticle({ article, relatedArticles }: BlogArticlePro
                 </div>
               )}
               
-              {/* CTA Moderne Hagnéré Investissement - Version Sidebar */}
-              <div className="relative overflow-hidden rounded-2xl bg-black">
+              {/* CTA Moderne Hagnéré Patrimoine - Version Sidebar */}
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary/95 to-primary">
                 {/* Dégradé de fond subtil */}
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-purple-900/20" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/5 via-transparent to-black/10" />
                 
-                {/* Effet de halo lumineux centré en bas - bleu accentué */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-48 -mb-12">
-                  <div className="absolute -inset-12 bg-gradient-to-br from-blue-500/50 via-blue-400/30 to-blue-900/40 blur-3xl" />
-                </div>
+                {/* Effet de halo lumineux */}
+                <div className="absolute -top-24 -right-24 w-48 h-48 bg-white/10 rounded-full blur-3xl" />
+                <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-white/10 rounded-full blur-3xl" />
                 
                 {/* Contenu principal */}
                 <div className="relative z-10 p-6">
                   {/* Titre */}
                   <p className="text-xl font-bold text-white mb-2">
-                    Hagnéré Investissement
+                    Hagnéré Patrimoine
                   </p>
                   
-                  <p className="text-sm text-gray-300 mb-4 leading-relaxed">
-                    Investissez dans l&apos;immobilier ultra-rentable et net d&apos;impôts.
+                  <p className="text-sm text-white/90 mb-4 leading-relaxed">
+                    Optimisez votre patrimoine et réduisez vos impôts.
                   </p>
                   
                   {/* 3 Cards */}
                   <div className="space-y-2 mb-4">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2.5 text-center border border-white/20">
-                      <p className="text-lg font-bold text-white">8%</p>
-                      <p className="text-xs text-gray-300">Rendement brut minimum</p>
+                    <div className="bg-white/15 backdrop-blur-sm rounded-lg p-2.5 text-center border border-white/25">
+                      <p className="text-lg font-bold text-white">30%</p>
+                      <p className="text-xs text-white/90">Économie d&apos;impôts moyenne</p>
                     </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2.5 text-center border border-white/20">
+                    <div className="bg-white/15 backdrop-blur-sm rounded-lg p-2.5 text-center border border-white/25">
                       <p className="text-lg font-bold text-white">0€</p>
-                      <p className="text-xs text-gray-300">D&apos;impôts</p>
+                      <p className="text-xs text-white/90">Frais cachés</p>
                     </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2.5 text-center border border-white/20">
+                    <div className="bg-white/15 backdrop-blur-sm rounded-lg p-2.5 text-center border border-white/25">
                       <p className="text-lg font-bold text-white">100%</p>
-                      <p className="text-xs text-gray-300">Sur-mesure</p>
+                      <p className="text-xs text-white/90">Sur-mesure</p>
                     </div>
                   </div>
                   
@@ -1203,21 +1191,28 @@ export default function BlogArticle({ article, relatedArticles }: BlogArticlePro
                     <Button
                       asChild
                       size="sm"
-                      className="w-full bg-white text-black hover:bg-gray-100 font-semibold"
+                      className="w-full bg-white text-primary hover:bg-gray-100 font-semibold"
                     >
-                      <Link href="/calendly">
+                      <Link href="/prendre-rdv">
                         Prendre rendez-vous
                       </Link>
                     </Button>
                     <Button
                       asChild
                       size="sm"
-                      className="w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
+                      className="w-full bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30"
                     >
-                      <Link href="/services/hagnere-patrimoine">
+                      <Link href="/">
                         Découvrir le site
                       </Link>
                     </Button>
+                  </div>
+                  
+                  {/* Points de réassurance */}
+                  <div className="mt-3 pt-3 border-t border-white/20">
+                    <p className="text-xs text-white/80 text-center">
+                      ✓ Gratuit • ✓ Sans engagement • ✓ Experts certifiés
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1281,9 +1276,9 @@ export default function BlogArticle({ article, relatedArticles }: BlogArticlePro
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
                 {/* Photo */}
                 <div className="relative flex-shrink-0">
-                  <div className="w-24 h-24 rounded-full overflow-hidden ring-4 ring-primary/10">
+                  <div className="w-24 h-24 rounded-full overflow-hidden ring-4 ring-primary/10 bg-black">
                     <Image
-                      src="/quentin_minia.jpeg"
+                      src="https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758129971150-5372beae560993e3.webp"
                       alt="Quentin Hagnéré"
                       width={96}
                       height={96}

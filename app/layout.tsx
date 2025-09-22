@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
-import { SiteHeader } from "@/components/site-header";
-import { SecondHeader } from "@/components/second-header";
-import { DevS3Uploader } from "@/components/dev-s3-uploader";
-import { SiteBreadcrumb } from "@/components/site-breadcrumb";
+import { LayoutWrapper } from "@/components/layout-wrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,15 +36,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} antialiased`}
       >
         <Providers>
-          <div className="relative flex min-h-screen flex-col">
-            <SiteHeader />
-            <SecondHeader />
-            <main className="flex-1">
-              <SiteBreadcrumb />
-              {children}
-            </main>
-            <DevS3Uploader />
-          </div>
+          <LayoutWrapper>
+            {children}
+          </LayoutWrapper>
         </Providers>
       </body>
     </html>

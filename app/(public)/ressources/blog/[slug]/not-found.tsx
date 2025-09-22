@@ -1,32 +1,62 @@
 import Link from 'next/link'
+import { Home, Search } from 'lucide-react'
 
 export default function NotFound() {
-  // Les fichiers not-found.tsx ne reçoivent pas de params
-  // La logique de redirection doit être gérée dans page.tsx
-  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-zinc-950">
-      <div className="text-center px-4">
-        <h1 className="text-6xl font-bold text-gray-900 dark:text-gray-100 mb-4">404</h1>
-        <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
-          Article non trouvé
-        </h2>
-        <p className="text-gray-600 dark:text-gray-400 mb-8">
-          L&apos;article que vous recherchez n&apos;existe pas ou a été déplacé.
-        </p>
-        <div className="flex gap-4 justify-center">
-          <Link 
+    <div className="min-h-[70vh] flex items-center justify-center px-4">
+      <div className="text-center max-w-md">
+        <div className="mb-8">
+          <div className="text-6xl font-bold text-primary mb-2">404</div>
+          <h1 className="text-2xl font-bold mb-4">Article introuvable</h1>
+          <p className="text-muted-foreground mb-8">
+            Désolé, l'article que vous recherchez n'existe pas ou a été déplacé.
+          </p>
+        </div>
+        
+        <div className="space-y-4">
+          <Link
             href="/ressources/blog"
-            className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
           >
-            Retour au blog
+            <Search className="h-5 w-5" />
+            Parcourir tous les articles
           </Link>
-          <Link 
-            href="/"
-            className="px-6 py-3 bg-gray-200 dark:bg-zinc-800 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-zinc-700 transition-colors"
-          >
-            Accueil
-          </Link>
+          
+          <div>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-primary hover:underline"
+            >
+              <Home className="h-4 w-4" />
+              Retour à l'accueil
+            </Link>
+          </div>
+        </div>
+
+        <div className="mt-12 pt-8 border-t">
+          <p className="text-sm text-muted-foreground mb-4">
+            Articles populaires
+          </p>
+          <div className="space-y-2">
+            <Link
+              href="/ressources/blog/deficit-foncier"
+              className="block text-sm hover:text-primary transition-colors"
+            >
+              Guide du déficit foncier
+            </Link>
+            <Link
+              href="/ressources/blog/lmnp"
+              className="block text-sm hover:text-primary transition-colors"
+            >
+              Investir en LMNP
+            </Link>
+            <Link
+              href="/ressources/blog/sci"
+              className="block text-sm hover:text-primary transition-colors"
+            >
+              Créer une SCI
+            </Link>
+          </div>
         </div>
       </div>
     </div>

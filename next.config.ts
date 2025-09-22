@@ -1,11 +1,31 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/articles/:slug',
+        destination: '/ressources/blog/:slug',
+        permanent: true, // 301 redirect - bon pour le SEO
+      },
+      {
+        source: '/articles',
+        destination: '/ressources/blog',
+        permanent: true, // 301 redirect - bon pour le SEO
+      },
+    ]
+  },
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '*.s3.*.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'hagnerepatrimoine.s3.eu-north-1.amazonaws.com',
         port: '',
         pathname: '/**',
       },
@@ -21,7 +41,18 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
+    formats: ['image/webp', 'image/avif'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60 * 60 * 24 * 30, // 30 jours de cache
+    qualities: [75, 85, 95, 100], // Qualités supportées pour Next.js 16
   },
 };
 

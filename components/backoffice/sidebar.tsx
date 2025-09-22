@@ -25,6 +25,7 @@ import {
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import { useUnreadMessages } from "@/contexts/unread-messages"
 
 export type NavItem = { 
   href: string
@@ -33,13 +34,18 @@ export type NavItem = {
   badge?: number
 }
 
-const navGroups = [
+const getNavGroups = (unreadCount: number) => [
   {
     id: "general",
     title: "Général",
     items: [
       { href: "/backoffice", label: "Tableau de bord", icon: <Home className="size-4" /> },
-      { href: "/backoffice/messages", label: "Messages", icon: <Mail className="size-4" /> },
+      { 
+        href: "/backoffice/messages", 
+        label: "Messages", 
+        icon: <Mail className="size-4" />,
+        badge: unreadCount 
+      },
     ]
   },
   {
@@ -118,6 +124,7 @@ interface BackofficeSidebarProps {
 
 export function BackofficeSidebar({ mobile = false, onClose }: BackofficeSidebarProps) {
   const pathname = usePathname()
+  const { unreadCount } = useUnreadMessages()
   
   const handleLinkClick = () => {
     if (mobile && onClose) {
@@ -130,8 +137,8 @@ export function BackofficeSidebar({ mobile = false, onClose }: BackofficeSidebar
       className={cn(
         "flex flex-col bg-card text-card-foreground border-r",
         mobile 
-          ? "fixed inset-y-0 left-0 z-40 w-64 h-full" 
-          : "sticky top-0 h-screen w-64 hidden lg:flex"
+          ? "fixed inset-y-0 left-0 z-50 w-64 h-full" 
+          : "fixed top-0 left-0 h-screen w-64 hidden lg:flex z-50"
       )}
     >
       {/* Header */}
@@ -159,7 +166,7 @@ export function BackofficeSidebar({ mobile = false, onClose }: BackofficeSidebar
 
       {/* Navigation */}
       <nav className="flex-1 p-4 space-y-6 overflow-y-auto">
-        {navGroups.map((group) => (
+        {getNavGroups(unreadCount).map((group) => (
           <div key={group.id} className="space-y-1">
             <div className="px-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               {group.title}
@@ -184,7 +191,7 @@ export function BackofficeSidebar({ mobile = false, onClose }: BackofficeSidebar
                     {item.icon}
                     <span className="flex-1">{item.label}</span>
                     {item.badge && item.badge > 0 && (
-                      <span className="flex items-center justify-center min-w-[20px] h-5 px-1.5 text-xs font-semibold rounded-full bg-destructive text-destructive-foreground">
+                      <span className="flex items-center justify-center min-w-[20px] h-5 px-1.5 text-xs font-semibold rounded-full bg-destructive text-white">
                         {item.badge > 99 ? '99+' : item.badge}
                       </span>
                     )}
@@ -243,3 +250,4 @@ export function MobileMenuButton({ onClick }: { onClick: () => void }) {
     </Button>
   )
 }
+

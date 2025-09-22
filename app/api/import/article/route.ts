@@ -1,139 +1,288 @@
-import { NextResponse, type NextRequest } from "next/server"
-import { z } from "zod"
+import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 
-const MediaItemSchema = z.object({
-  type: z.string(),
-  url: z.string().optional().nullable(),
-  alt: z.string().optional().nullable(),
-  filename: z.string().optional().nullable(),
-  checksum: z.string().optional().nullable(),
-  mimeType: z.string().optional().nullable(),
-})
+// Rate limiting - Stockage en mémoire
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
+const RATE_LIMIT = 10 // Maximum 10 requêtes
+const RATE_LIMIT_WINDOW = 60 * 1000 // Par minute (60 secondes)
 
-const SyncPayloadSchema = z.object({
-  article: z.object({
-    id: z.string(),
-    slug: z.string(),
-    title: z.string(),
-    excerpt: z.string().optional().nullable(),
-    status: z.string(),
-    publishedAt: z.string().datetime().optional().nullable(),
-    updatedAt: z.string(),
-    createdAt: z.string(),
-    readingMinutes: z.number().int().optional().nullable(),
-    featured: z.boolean().optional().nullable(),
-    currentVersion: z.number().int().optional().nullable(),
-    content: z.object({
-      format: z.enum(["html", "json", "markdown"]).default("html"),
-      value: z.string(),
-      html: z.string().optional().nullable(),
-      raw: z.record(z.unknown()).optional().nullable(),
-    }),
-    faq: z.array(z.record(z.unknown())).default([]),
-    seo: z.object({
-      title: z.string().optional().nullable(),
-      description: z.string().optional().nullable(),
-      metadata: z.record(z.unknown()).optional().nullable(),
-    }),
-    coverImage: z
-      .object({
-        url: z.string().optional().nullable(),
-        alt: z.string().optional().nullable(),
-      })
-      .optional()
-      .nullable(),
-    category: z
-      .object({
-        id: z.string(),
-        name: z.string(),
-        slug: z.string(),
-      })
-      .optional()
-      .nullable(),
-    tags: z
-      .array(
-        z.object({
-          id: z.string().optional().nullable(),
-          name: z.string(),
-          slug: z.string(),
-        })
+// IP Whitelisting
+// IMPORTANT: En production, ajouter l'IP du serveur Hagnéré Investissement
+// Pour obtenir l'IP du serveur Investissement : 
+// 1. Se connecter au serveur Investissement
+// 2. Exécuter : curl ifconfig.me
+// 3. Ajouter l'IP obtenue ci-dessous
+const ALLOWED_IPS = [
+  '127.0.0.1', // Localhost
+  '::1', // Localhost IPv6
+  '192.168.1.14', // Votre IP locale (à adapter)
+  // TODO: Ajouter l'IP du serveur Hagnéré Investissement en production
+  // 'XX.XX.XX.XX', // IP serveur Investissement (remplacer XX.XX.XX.XX)
+]
+
+// Validation des limites
+const CONTENT_LIMITS = {
+  titleMaxLength: 200,
+  excerptMaxLength: 500, // NOTE: Cette limite n'est plus appliquée - les excerpts peuvent être de n'importe quelle taille
+  contentMaxLength: 100000, // ~100KB de texte
+  slugMaxLength: 100,
+  slugPattern: /^[a-z0-9-]+$/, // Seulement lettres minuscules, chiffres et tirets
+  faqMaxItems: 20,
+  faqQuestionMaxLength: 200,
+  faqAnswerMaxLength: 1000,
+  tagsMaxCount: 10,
+}
+
+// Fonction pour obtenir l'IP du client
+function getClientIP(req: Request): string {
+  const forwarded = req.headers.get('x-forwarded-for')
+  const realIP = req.headers.get('x-real-ip')
+  const ip = forwarded?.split(',')[0] || realIP || 'unknown'
+  return ip.trim()
+}
+
+// Fonction de rate limiting
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now()
+  const record = rateLimitMap.get(ip)
+
+  // Nettoyer les anciennes entrées
+  if (record && now > record.resetTime) {
+    rateLimitMap.delete(ip)
+  }
+
+  // Vérifier et mettre à jour le rate limit
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW })
+    return true
+  }
+
+  if (record.count >= RATE_LIMIT) {
+    return false
+  }
+
+  record.count++
+  return true
+}
+
+// Fonction de validation stricte du contenu
+function validateArticleContent(article: any): { valid: boolean; error?: string } {
+  // Vérifier la structure de base
+  if (!article || typeof article !== 'object') {
+    return { valid: false, error: "Structure d'article invalide" }
+  }
+
+  // Validation du slug
+  if (!article.slug || typeof article.slug !== 'string') {
+    return { valid: false, error: "Slug manquant ou invalide" }
+  }
+  if (article.slug.length > CONTENT_LIMITS.slugMaxLength) {
+    return { valid: false, error: `Slug trop long (max ${CONTENT_LIMITS.slugMaxLength} caractères)` }
+  }
+  if (!CONTENT_LIMITS.slugPattern.test(article.slug)) {
+    return { valid: false, error: "Slug invalide (seulement lettres minuscules, chiffres et tirets)" }
+  }
+
+  // Validation du titre
+  if (!article.title || typeof article.title !== 'string') {
+    return { valid: false, error: "Titre manquant ou invalide" }
+  }
+  if (article.title.length > CONTENT_LIMITS.titleMaxLength) {
+    return { valid: false, error: `Titre trop long (max ${CONTENT_LIMITS.titleMaxLength} caractères)` }
+  }
+  if (article.title.length < 3) {
+    return { valid: false, error: "Titre trop court (min 3 caractères)" }
+  }
+
+  // Validation du contenu
+  if (!article.content || typeof article.content !== 'string') {
+    return { valid: false, error: "Contenu manquant ou invalide" }
+  }
+  if (article.content.length > CONTENT_LIMITS.contentMaxLength) {
+    return { valid: false, error: `Contenu trop long (max ${CONTENT_LIMITS.contentMaxLength} caractères)` }
+  }
+  if (article.content.length < 10) {
+    return { valid: false, error: "Contenu trop court (min 10 caractères)" }
+  }
+
+  // Validation de l'excerpt (optionnel - sans limite de taille)
+  if (article.excerpt) {
+    if (typeof article.excerpt !== 'string') {
+      return { valid: false, error: "Excerpt invalide" }
+    }
+    // Pas de limite de taille pour l'excerpt
+  }
+
+  // Validation du status
+  const validStatuses = ['DRAFT', 'PUBLISHED', 'ARCHIVED']
+  if (article.status && !validStatuses.includes(article.status)) {
+    return { valid: false, error: `Status invalide (doit être: ${validStatuses.join(', ')})` }
+  }
+
+  // Validation de la FAQ (optionnelle)
+  if (article.faq) {
+    if (!Array.isArray(article.faq)) {
+      return { valid: false, error: "FAQ doit être un tableau" }
+    }
+    if (article.faq.length > CONTENT_LIMITS.faqMaxItems) {
+      return { valid: false, error: `FAQ trop longue (max ${CONTENT_LIMITS.faqMaxItems} questions)` }
+    }
+    for (const item of article.faq) {
+      if (!item.question || !item.answer) {
+        return { valid: false, error: "Question et réponse requises pour chaque item FAQ" }
+      }
+      if (item.question.length > CONTENT_LIMITS.faqQuestionMaxLength) {
+        return { valid: false, error: `Question FAQ trop longue (max ${CONTENT_LIMITS.faqQuestionMaxLength} caractères)` }
+      }
+      if (item.answer.length > CONTENT_LIMITS.faqAnswerMaxLength) {
+        return { valid: false, error: `Réponse FAQ trop longue (max ${CONTENT_LIMITS.faqAnswerMaxLength} caractères)` }
+      }
+    }
+  }
+
+  // Validation des tags (optionnels)
+  if (article.tags) {
+    if (!Array.isArray(article.tags)) {
+      return { valid: false, error: "Tags doit être un tableau" }
+    }
+    if (article.tags.length > CONTENT_LIMITS.tagsMaxCount) {
+      return { valid: false, error: `Trop de tags (max ${CONTENT_LIMITS.tagsMaxCount})` }
+    }
+  }
+
+  // Détection de contenu suspect (anti-spam basique)
+  const suspiciousPatterns = [
+    /viagra/gi,
+    /casino/gi,
+    /\bsex\b/gi,
+    /porn/gi,
+    /<script/gi,
+    /javascript:/gi,
+    /onclick=/gi,
+    /onerror=/gi,
+  ]
+  
+  const contentToCheck = `${article.title} ${article.content} ${article.excerpt || ''}`
+  for (const pattern of suspiciousPatterns) {
+    if (pattern.test(contentToCheck)) {
+      console.log(`⚠️ Contenu suspect détecté: ${pattern}`)
+      return { valid: false, error: "Contenu suspect détecté" }
+    }
+  }
+
+  return { valid: true }
+}
+
+export async function POST(req: Request) {
+  try {
+    // 1. IP Whitelisting
+    const clientIP = getClientIP(req)
+    const isIPAllowed = ALLOWED_IPS.includes(clientIP) || 
+                        clientIP === 'unknown' || // En dev local
+                        process.env.NODE_ENV === 'development'
+    
+    if (!isIPAllowed) {
+      console.log(`❌ IP non autorisée: ${clientIP}`)
+      return NextResponse.json(
+        { error: "Accès non autorisé - IP non reconnue" },
+        { status: 403 }
       )
-      .optional()
-      .default([]),
-    author: z
-      .object({
-        id: z.string().optional().nullable(),
-        name: z.string().optional().nullable(),
-        email: z.string().optional().nullable(),
-      })
-      .optional()
-      .nullable(),
-    imagePrompt: z.string().optional().nullable(),
-    metadata: z.record(z.unknown()).optional().nullable(),
-  }),
-  media: z.array(MediaItemSchema).optional().default([]),
-})
+    }
 
-const EnvelopeSchema = z.object({
-  source: z.string().default("unknown"),
-  generatedAt: z.string().datetime().optional().nullable(),
-  payload: SyncPayloadSchema,
-})
+    // 2. Rate Limiting
+    if (!checkRateLimit(clientIP)) {
+      console.log(`⚠️ Rate limit dépassé pour IP: ${clientIP}`)
+      return NextResponse.json(
+        { error: "Trop de requêtes. Veuillez réessayer dans une minute." },
+        { status: 429 }
+      )
+    }
 
-function extractSecret(req: NextRequest) {
-  const secretHeader = req.headers.get("x-sync-secret")
-  if (secretHeader && secretHeader.trim().length > 0) {
-    return secretHeader.trim()
-  }
-  const authHeader = req.headers.get("authorization")
-  if (!authHeader) return null
-  const [type, value] = authHeader.split(" ")
-  if (type?.toLowerCase() !== "bearer" || !value) {
-    return null
-  }
-  return value.trim()
-}
+    // 3. Vérifier l'origine de la requête (garde existante)
+    const origin = req.headers.get('origin') || req.headers.get('referer') || ''
+    const allowedOrigins = [
+      'https://hagnere-investissement.fr',
+      'https://www.hagnere-investissement.fr',
+      'http://localhost:3000',
+      'http://localhost:3001',
+    ]
+    
+    const isOriginAllowed = allowedOrigins.some(allowed => origin.startsWith(allowed))
+    
+    if (!isOriginAllowed && process.env.NODE_ENV !== 'development') {
+      console.log(`❌ Origine non autorisée: ${origin}`)
+      return NextResponse.json(
+        { error: "Accès non autorisé - Origine non reconnue" },
+        { status: 403 }
+      )
+    }
 
-function toJson(value: unknown) {
-  try {
-    return JSON.parse(JSON.stringify(value))
-  } catch {
-    return null
-  }
-}
+    // 4. Récupérer et valider les données
+    const body = await req.json()
+    const { source, payload, generatedAt } = body
 
-export async function POST(req: NextRequest) {
-  const expectedSecret = process.env.PATRIMOINE_SYNC_SECRET
-  if (!expectedSecret) {
-    return NextResponse.json({ error: "PATRIMOINE_SYNC_SECRET non configuré" }, { status: 500 })
-  }
+    if (!payload?.article) {
+      return NextResponse.json(
+        { error: "Données d'article manquantes" },
+        { status: 400 }
+      )
+    }
 
-  const providedSecret = extractSecret(req)
-  if (providedSecret !== expectedSecret) {
-    return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
-  }
+    // 5. Validation stricte du contenu
+    const validation = validateArticleContent(payload.article)
+    if (!validation.valid) {
+      console.log(`❌ Validation échouée: ${validation.error}`)
+      return NextResponse.json(
+        { error: `Validation échouée: ${validation.error}` },
+        { status: 400 }
+      )
+    }
 
-  const json = await req.json().catch(() => null)
-  if (!json) {
-    return NextResponse.json({ error: "Corps de requête invalide" }, { status: 400 })
-  }
+    // Log de sécurité
+    console.log(`✅ Requête autorisée - IP: ${clientIP}, Origine: ${origin}, Article: ${payload.article.slug}`)
 
-  const parsed = EnvelopeSchema.safeParse(json)
-  if (!parsed.success) {
-    return NextResponse.json({ error: "Payload invalide", details: parsed.error.flatten() }, { status: 400 })
-  }
+    const articleData = payload.article
 
-  const { payload, source } = parsed.data
-  const articleData = payload.article
-  const payloadJson = toJson(payload)
+    // Créer ou mettre à jour l'article
+    const article = await prisma.article.upsert({
+      where: { slug: articleData.slug },
+      update: {
+        title: articleData.title,
+        excerpt: articleData.excerpt || null,
+        content: articleData.content,
+        status: articleData.status,
+        publishedAt: articleData.publishedAt ? new Date(articleData.publishedAt) : null,
+        coverImageUrl: articleData.coverImage?.url || null,
+        coverImageAlt: articleData.coverImage?.alt || null,
+        faq: articleData.faq || null,
+        readingMinutes: articleData.readingTime || 5,
+        seoTitle: articleData.seo?.title || null,
+        seoDescription: articleData.seo?.description || null,
+        metadata: articleData.metadata || null,
+        imagePrompt: articleData.imagePrompt || null,
+        featured: articleData.featured || false,
+        updatedAt: new Date(),
+      },
+      create: {
+        slug: articleData.slug,
+        title: articleData.title,
+        excerpt: articleData.excerpt || null,
+        content: articleData.content,
+        status: articleData.status,
+        publishedAt: articleData.publishedAt ? new Date(articleData.publishedAt) : null,
+        coverImageUrl: articleData.coverImage?.url || null,
+        coverImageAlt: articleData.coverImage?.alt || null,
+        faq: articleData.faq || null,
+        readingMinutes: articleData.readingTime || 5,
+        seoTitle: articleData.seo?.title || null,
+        seoDescription: articleData.seo?.description || null,
+        metadata: articleData.metadata || null,
+        imagePrompt: articleData.imagePrompt || null,
+        featured: articleData.featured || false,
+      },
+    })
 
-  let articleId: string | null = null
-  let logStatus: "success" | "error" = "success"
-  let logError: string | null = null
-
-  try {
-    let categoryConnect: { id: string } | undefined
+    // Gérer la catégorie si elle existe
     if (articleData.category) {
       const category = await prisma.articleCategory.upsert({
         where: { slug: articleData.category.slug },
@@ -141,122 +290,92 @@ export async function POST(req: NextRequest) {
           name: articleData.category.name,
         },
         create: {
-          id: articleData.category.id,
-          name: articleData.category.name,
           slug: articleData.category.slug,
+          name: articleData.category.name,
+          description: articleData.category.description || null,
         },
       })
-      categoryConnect = { id: category.id }
+
+      await prisma.article.update({
+        where: { id: article.id },
+        data: { categoryId: category.id },
+      })
     }
 
-    const articleRecord = await prisma.article.upsert({
-      where: { slug: articleData.slug },
-      update: {
-        title: articleData.title,
-        excerpt: articleData.excerpt,
-        status: articleData.status,
-        coverImageUrl: articleData.coverImage?.url ?? null,
-        coverImageAlt: articleData.coverImage?.alt ?? null,
-        seoTitle: articleData.seo.title ?? null,
-        seoDescription: articleData.seo.description ?? null,
-        readingMinutes: articleData.readingMinutes ?? null,
-        metadata: toJson(articleData.metadata),
-        faq: toJson(articleData.faq),
-        imagePrompt: articleData.imagePrompt ?? null,
-        featured: Boolean(articleData.featured),
-        currentVersion: articleData.currentVersion ?? 1,
-        content: toJson({
-          format: articleData.content.format,
-          value: articleData.content.value,
-          html: articleData.content.html ?? null,
-          raw: articleData.content.raw ?? null,
-        }) ?? {
-          format: articleData.content.format,
-          value: articleData.content.value,
-          html: articleData.content.html ?? null,
-        },
-        publishedAt: articleData.publishedAt ? new Date(articleData.publishedAt) : null,
-        category: categoryConnect ? { connect: categoryConnect } : { disconnect: true },
-      },
-      create: {
-        id: articleData.id,
-        slug: articleData.slug,
-        title: articleData.title,
-        excerpt: articleData.excerpt,
-        status: articleData.status,
-        coverImageUrl: articleData.coverImage?.url ?? null,
-        coverImageAlt: articleData.coverImage?.alt ?? null,
-        seoTitle: articleData.seo.title ?? null,
-        seoDescription: articleData.seo.description ?? null,
-        readingMinutes: articleData.readingMinutes ?? null,
-        metadata: toJson(articleData.metadata),
-        faq: toJson(articleData.faq),
-        imagePrompt: articleData.imagePrompt ?? null,
-        featured: Boolean(articleData.featured),
-        currentVersion: articleData.currentVersion ?? 1,
-        content: toJson({
-          format: articleData.content.format,
-          value: articleData.content.value,
-          html: articleData.content.html ?? null,
-          raw: articleData.content.raw ?? null,
-        }) ?? {
-          format: articleData.content.format,
-          value: articleData.content.value,
-          html: articleData.content.html ?? null,
-        },
-        publishedAt: articleData.publishedAt ? new Date(articleData.publishedAt) : null,
-        createdAt: new Date(articleData.createdAt),
-        category: categoryConnect ? { connect: categoryConnect } : undefined,
-      },
-      include: { tags: true },
-    })
+    // Gérer les tags
+    if (articleData.tags && articleData.tags.length > 0) {
+      // Créer ou récupérer les tags
+      const tags = await Promise.all(
+        articleData.tags.map(async (tag: any) => {
+          return await prisma.tag.upsert({
+            where: { slug: tag.slug },
+            update: { name: tag.name },
+            create: {
+              slug: tag.slug,
+              name: tag.name,
+            },
+          })
+        })
+      )
 
-    articleId = articleRecord.id
-
-    const tagIds: string[] = []
-    const tags = articleData.tags ?? []
-    for (const tagInfo of tags) {
-      const tag = await prisma.tag.upsert({
-        where: { slug: tagInfo.slug },
-        update: { name: tagInfo.name },
-        create: {
-          id: tagInfo.id ?? undefined,
-          name: tagInfo.name,
-          slug: tagInfo.slug,
+      // Connecter les tags à l'article
+      await prisma.article.update({
+        where: { id: article.id },
+        data: {
+          tags: {
+            set: tags.map(tag => ({ id: tag.id })),
+          },
         },
       })
-      tagIds.push(tag.id)
     }
 
-    await prisma.article.update({
-      where: { id: articleRecord.id },
+    // Enregistrer le log de synchronisation
+    await prisma.articleSyncLog.create({
       data: {
-        tags: {
-          set: tagIds.map((id) => ({ id })),
-        },
+        articleId: article.id,
+        source: source || "investissement",
+        status: "success",
+        payload: payload as any,
+        generatedAt: generatedAt ? new Date(generatedAt) : new Date(),
       },
     })
 
-    return NextResponse.json({ ok: true, articleId: articleRecord.id, tags: tagIds })
+    console.log(`✅ Article synchronisé avec succès: ${article.title}`)
+
+    return NextResponse.json({
+      success: true,
+      message: "Article importé avec succès",
+      article: {
+        id: article.id,
+        slug: article.slug,
+        title: article.title,
+      },
+    })
+
   } catch (error) {
-    logStatus = "error"
-    logError = error instanceof Error ? error.message : "Erreur inconnue"
-    console.error("[import-article]", error)
-    return NextResponse.json({ error: logError }, { status: 500 })
-  } finally {
+    console.error("❌ Erreur lors de l'import de l'article:", error)
+
+    // Essayer d'enregistrer l'erreur dans les logs
     try {
       await prisma.articleSyncLog.create({
         data: {
-          articleId,
-          source,
-          status: logStatus,
-          error: logError,
-          payload: payloadJson,
+          source: "investissement",
+          status: "error",
+          error: error instanceof Error ? error.message : "Erreur inconnue",
+          payload: await req.json().catch(() => null),
+          generatedAt: new Date(),
         },
       })
     } catch (logError) {
-      console.error("[import-article][log-error]", logError)
+      console.error("Impossible d'enregistrer le log d'erreur:", logError)
     }
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : "Erreur lors de l'import",
+      },
+      { status: 500 }
+    )
   }
 }
-

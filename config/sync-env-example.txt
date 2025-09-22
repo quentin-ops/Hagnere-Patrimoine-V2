@@ -1,0 +1,25 @@
+# Configuration de synchronisation avec Hagnéré Investissement
+# Ajoutez ces variables à votre fichier .env.local
+
+# ===========================
+# SYNCHRONISATION DES ARTICLES
+# ===========================
+
+# Secret de synchronisation (doit être identique côté Investissement)
+PATRIMOINE_SYNC_SECRET="dev-secret-local-123"
+
+# URL de retour vers Investissement si besoin
+INVESTISSEMENT_API_BASE="http://localhost:3000"
+INVESTISSEMENT_SYNC_SECRET="dev-secret-local-123"
+
+# ===========================
+# CONFIGURATION LOCALE
+# ===========================
+
+# Pour le développement local, assurez-vous que :
+# - Investissement tourne sur le port 3000
+# - Patrimoine tourne sur le port 3003 (actuel)
+# 
+# Côté Investissement, configurez dans .env.local :
+# PATRIMOINE_BASE_URL="http://localhost:3003"
+# PATRIMOINE_SYNC_SECRET="dev-secret-local-123"

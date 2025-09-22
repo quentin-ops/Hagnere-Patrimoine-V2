@@ -35,6 +35,35 @@ import {
   LineChart,
   Gem,
   HeartHandshake,
+  BedDouble,
+  Wrench,
+  Hammer,
+  Castle,
+  Landmark,
+  PiggyBank as PiggyBankIcon,
+  Palmtree,
+  Trees,
+  Lightbulb,
+  Hotel,
+  Building as BuildingIcon,
+  Shield as ShieldIcon,
+  Coins as CoinsIcon,
+  RotateCw,
+  Diamond,
+  Zap,
+  Bitcoin,
+  BriefcaseBusiness,
+  Umbrella,
+  HeartPulse,
+  Split,
+  UsersRound,
+  Handshake as HandshakeIcon,
+  Scroll,
+  ShieldHalf,
+  Home as HomeIcon,
+  Key,
+  KeySquare,
+  Vault,
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
@@ -75,43 +104,31 @@ export function SiteHeader() {
             {
               name: "LMNP / LMP",
               href: "/services/lmnp-lmp",
-              icon: Building2,
+              icon: BedDouble,
               description: "Location meublée, amortissement du bien"
             },
             {
               name: "Déficit Foncier",
               href: "/services/deficit-foncier",
-              icon: Calculator,
+              icon: Wrench,
               description: "Déduction des travaux sur vos revenus"
-            },
-            {
-              name: "Pinel",
-              href: "/services/pinel",
-              icon: Home,
-              description: "Investissement neuf, jusqu'à 21%"
-            },
-            {
-              name: "Censi-Bouvard",
-              href: "/services/censi-bouvard",
-              icon: Building2,
-              description: "Résidences services, jusqu'à 11%"
             },
             {
               name: "Denormandie",
               href: "/services/denormandie",
-              icon: Home,
+              icon: Hammer,
               description: "Rénovation dans l'ancien"
             },
             {
               name: "Loi Malraux",
               href: "/services/malraux",
-              icon: Building2,
+              icon: Castle,
               description: "Restauration immobilière"
             },
             {
               name: "Monument Historique",
               href: "/services/monument-historique",
-              icon: Sparkles,
+              icon: Landmark,
               description: "100% des travaux déductibles"
             },
           ]
@@ -122,25 +139,25 @@ export function SiteHeader() {
             {
               name: "PER",
               href: "/services/per",
-              icon: Wallet,
+              icon: PiggyBankIcon,
               description: "Plan Épargne Retraite déductible"
             },
             {
               name: "Girardin Industriel",
               href: "/services/girardin",
-              icon: TrendingUp,
+              icon: Palmtree,
               description: "Investissement en Outre-mer"
             },
             {
               name: "Groupements Forestiers",
               href: "/services/groupements-forestiers",
-              icon: Sparkles,
+              icon: Trees,
               description: "Réduction d'impôt et IFI"
             },
             {
-              name: "FCPI / FIP",
-              href: "/services/fcpi-fip",
-              icon: BarChart3,
+              name: "FCPI",
+              href: "/services/fcpi",
+              icon: Lightbulb,
               description: "Innovation et PME, jusqu'à 25%"
             },
           ]
@@ -154,21 +171,21 @@ export function SiteHeader() {
       isDouble: false,
       items: [
         {
-          name: "Hagnéré Investissement",
+          name: "Hagnere Investissement",
           href: "/services/hagnere-investissement",
-          icon: Building2,
+          icon: Crown,
           description: "Notre solution clé en main"
         },
         {
           name: "Résidences Services",
           href: "/services/residences-services",
-          icon: Home,
+          icon: Hotel,
           description: "EHPAD, étudiantes, tourisme"
         },
         {
           name: "SCPI",
           href: "/services/scpi",
-          icon: BarChart3,
+          icon: BuildingIcon,
           description: "Pierre papier diversifiée"
         },
       ]
@@ -182,31 +199,31 @@ export function SiteHeader() {
         {
           name: "Assurance-vie",
           href: "/services/assurance-vie",
-          icon: Heart,
+          icon: Shield,
           description: "Support d'épargne privilégié"
         },
         {
           name: "Assurance-vie Luxembourgeoise",
           href: "/services/assurance-vie-luxembourg",
-          icon: Shield,
+          icon: Crown,
           description: "Haut de gamme international"
         },
         {
           name: "Contrat de capitalisation",
           href: "/services/contrat-capitalisation",
-          icon: TrendingUp,
+          icon: CoinsIcon,
           description: "Optimisation fiscale"
         },
         {
           name: "Contrat de capitalisation (personne morale)",
           href: "/services/contrat-capitalisation-pm",
-          icon: Building2,
+          icon: BriefcaseBusiness,
           description: "Pour les sociétés"
         },
         {
           name: "Plan Épargne Retraite (PER)",
           href: "/services/per",
-          icon: Wallet,
+          icon: RotateCw,
           description: "Préparer sa retraite"
         },
       ]
@@ -220,31 +237,31 @@ export function SiteHeader() {
         {
           name: "PEA & Compte-Titres",
           href: "/services/pea-compte-titres",
-          icon: BarChart3,
+          icon: LineChart,
           description: "Investissement en bourse"
         },
         {
           name: "Livrets & Épargne",
           href: "/services/livrets-epargne",
-          icon: BookOpen,
+          icon: PiggyBank,
           description: "Solutions court terme"
         },
         {
           name: "Private Equity",
           href: "/services/private-equity",
-          icon: Gem,
+          icon: Diamond,
           description: "Investissement non coté"
         },
         {
           name: "Produits Structurés",
           href: "/services/produits-structures",
-          icon: Shield,
+          icon: Zap,
           description: "Protection du capital"
         },
         {
           name: "Cryptomonnaies",
           href: "/services/cryptomonnaies",
-          icon: TrendingUp,
+          icon: Bitcoin,
           description: "Actifs numériques"
         },
       ]
@@ -258,31 +275,31 @@ export function SiteHeader() {
         {
           name: "PER Individuel",
           href: "/services/per-individuel",
-          icon: Wallet,
+          icon: PiggyBankIcon,
           description: "Épargne retraite déductible"
         },
         {
           name: "PER Entreprise",
           href: "/services/per-entreprise",
-          icon: Briefcase,
+          icon: BriefcaseBusiness,
           description: "Solutions pour dirigeants"
         },
         {
           name: "Contrats Madelin",
           href: "/services/madelin",
-          icon: FileText,
+          icon: BriefcaseBusiness,
           description: "TNS et professions libérales"
         },
         {
           name: "Prévoyance",
           href: "/services/prevoyance",
-          icon: Shield,
+          icon: Umbrella,
           description: "Protection famille"
         },
         {
           name: "Mutuelle Santé",
           href: "/services/mutuelle-sante",
-          icon: Heart,
+          icon: HeartPulse,
           description: "Complémentaire santé"
         },
         {
@@ -308,31 +325,31 @@ export function SiteHeader() {
         {
           name: "Démembrement",
           href: "/services/demembrement",
-          icon: Scale,
+          icon: Split,
           description: "Usufruit et nue-propriété"
         },
         {
           name: "SCI Familiale",
           href: "/services/sci-familiale",
-          icon: Home,
+          icon: UsersRound,
           description: "Gestion immobilière familiale"
         },
         {
           name: "Pacte Dutreil",
           href: "/services/pacte-dutreil",
-          icon: Handshake,
+          icon: HandshakeIcon,
           description: "Transmission d'entreprise"
         },
         {
           name: "Testament & Succession",
           href: "/services/testament-succession",
-          icon: FileText,
+          icon: Scroll,
           description: "Préparation successorale"
         },
         {
           name: "Protection du Conjoint",
           href: "/services/protection-conjoint",
-          icon: Shield,
+          icon: ShieldHalf,
           description: "Régimes matrimoniaux"
         },
       ]
@@ -349,25 +366,25 @@ export function SiteHeader() {
             {
               name: "Résidence principale",
               href: "/services/residence-principale",
-              icon: Home,
+              icon: HomeIcon,
               description: "Financement de votre habitation"
             },
             {
               name: "Résidence secondaire",
               href: "/services/residence-secondaire",
-              icon: Home,
+              icon: Palmtree,
               description: "Financement maison de vacances"
             },
             {
               name: "Prêt immobilier locatif",
               href: "/services/pret-locatif",
-              icon: Building2,
+              icon: Key,
               description: "Investissement locatif"
             },
             {
               name: "Financement de SCPI",
               href: "/services/financement-scpi",
-              icon: Building2,
+              icon: BarChart3,
               description: "Crédit pour parts de SCPI"
             },
           ]
@@ -378,13 +395,13 @@ export function SiteHeader() {
             {
               name: "Prêt Hypothécaire",
               href: "/services/pret-hypothecaire",
-              icon: Home,
+              icon: KeySquare,
               description: "Garantie sur bien immobilier"
             },
             {
               name: "Crédit Lombard",
               href: "/services/credit-lombard",
-              icon: Shield,
+              icon: Vault,
               description: "Prêt sur portefeuille titres"
             },
             {
@@ -396,7 +413,7 @@ export function SiteHeader() {
             {
               name: "Prêt Viager",
               href: "/services/pret-viager",
-              icon: Heart,
+              icon: Shield,
               description: "Financement en viager"
             },
             {
@@ -534,7 +551,7 @@ export function SiteHeader() {
         {
           name: "Philanthropie",
           href: "/services/philanthropie",
-          icon: Heart,
+          icon: Shield,
           description: "Fondations et mécénat"
         },
         {

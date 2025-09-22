@@ -21,6 +21,7 @@
     "auth:reset-users": "tsx scripts/reset-users.ts",
     "auth:quick": "tsx scripts/quick-create-user.ts",
     "setup:env": "tsx scripts/setup-env.ts",
+    "migrate:images": "tsx scripts/migrate-images-to-webp.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:push": "prisma db push",

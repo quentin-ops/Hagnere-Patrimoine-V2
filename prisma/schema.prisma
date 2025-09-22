@@ -86,15 +86,16 @@ model Article {
 }
 
 model ArticleSyncLog {
-  id        String   @id @default(cuid())
-  articleId String?
-  source    String
-  status    String
-  error     String?
-  payload   Json?
-  response  Json?
-  createdAt DateTime @default(now())
-  article   Article? @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  id          String   @id @default(cuid())
+  articleId   String?
+  source      String
+  status      String
+  error       String?
+  payload     Json?
+  response    Json?
+  generatedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  article     Article? @relation(fields: [articleId], references: [id], onDelete: Cascade)
 
   @@index([createdAt])
 }
@@ -152,4 +153,26 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String
+  phone     String?
+  message   String   @db.Text
+  status    MessageStatus @default(UNREAD)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([status])
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+  REPLIED
+  ARCHIVED
 }

@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 import {
   Home,
   PiggyBank,
@@ -19,6 +20,7 @@ import {
   Search,
   Filter,
   TreePine,
+  Trees,
   Scale,
   Coins,
   Receipt,
@@ -41,6 +43,7 @@ import {
   LifeBuoy,
   Hospital,
   Gem,
+  Diamond,
   Banknote,
   HandCoins,
   Palmtree,
@@ -68,7 +71,50 @@ import {
   Palette,
   BarChart3,
   Heart,
-  Handshake
+  Handshake,
+  Calculator,
+  Sparkles,
+  FileText,
+  LineChart,
+  Bed,
+  BedDouble,
+  Hammer,
+  HardHat,
+  Wrench,
+  RotateCw,
+  Crown,
+  LandPlot,
+  MapPin,
+  Lightbulb,
+  Rocket,
+  Microscope,
+  Bitcoin,
+  Coins as CoinsIcon,
+  Pill,
+  UserCheck,
+  UsersRound,
+  FileCheck,
+  Split,
+  GitBranch,
+  HomeIcon,
+  HandshakeIcon,
+  Scroll,
+  ShieldHalf,
+  CreditCardIcon,
+  PiggyBankIcon,
+  WalletCards,
+  TrendingUpIcon,
+  BriefcaseBusiness,
+  BanknotesIcon,
+  HandCoinsIcon,
+  Receipt as ReceiptIcon,
+  Landmark as LandmarkIcon,
+  University,
+  GavelIcon,
+  ScaleIcon,
+  KeySquare,
+  Building as BuildingIcon,
+  HotelIcon
 } from "lucide-react"
 
 // Liste des produits par catégorie avec descriptions et images (issus du header)
@@ -77,264 +123,229 @@ const products = [
   {
     category: "Défiscalisation",
     name: "LMNP / LMP",
-    icon: Building2,
+    icon: BedDouble,
     description: "Location meublée, amortissement du bien",
-    image: "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758288342956-816b7970bc1f5f7d-medium.webp"
   },
   {
     category: "Défiscalisation",
     name: "Déficit Foncier",
-    icon: Receipt,
+    icon: Wrench,
     description: "Déduction des travaux sur vos revenus",
-    image: "https://images.pexels.com/photos/209266/pexels-photo-209266.jpeg?w=400&h=250&fit=crop"
-  },
-  {
-    category: "Défiscalisation",
-    name: "Pinel",
-    icon: Home,
-    description: "Investissement neuf, jusqu'à 21%",
-    image: "https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?w=400&h=250&fit=crop"
-  },
-  {
-    category: "Défiscalisation",
-    name: "Censi-Bouvard",
-    icon: Building2,
-    description: "Résidences services, jusqu'à 11%",
-    image: "https://images.pexels.com/photos/3825752/pexels-photo-3825752.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758288844577-b3a23a0166725c5e-medium.webp"
   },
   {
     category: "Défiscalisation",
     name: "Denormandie",
-    icon: Home,
+    icon: Hammer,
     description: "Rénovation dans l'ancien",
-    image: "https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758289027187-63321999a16cbf62-medium.webp"
   },
   {
     category: "Défiscalisation",
     name: "Loi Malraux",
     icon: Castle,
     description: "Restauration immobilière",
-    image: "https://images.pexels.com/photos/208674/pexels-photo-208674.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758289262946-f411b41fd1106990-medium.webp"
   },
   {
     category: "Défiscalisation",
     name: "Monument Historique",
-    icon: Landmark,
+    icon: LandmarkIcon,
     description: "100% des travaux déductibles",
-    image: "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758289633932-8973ca050b7da0f7-medium.webp"
   },
 
   // Défiscalisation Financière
   {
     category: "Défiscalisation",
     name: "PER",
-    icon: Wallet,
+    icon: PiggyBankIcon,
     description: "Plan Épargne Retraite déductible",
-    image: "https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758289747413-cb6f1932f1a4b715-medium.webp"
   },
   {
     category: "Défiscalisation",
     name: "Girardin Industriel",
-    icon: TrendingUp,
+    icon: Palmtree,
     description: "Investissement en Outre-mer",
-    image: "https://images.pexels.com/photos/1078983/pexels-photo-1078983.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758290053810-ea767bd276acaadb-medium.webp"
   },
   {
     category: "Défiscalisation",
     name: "Groupements Forestiers",
-    icon: TreePine,
+    icon: Trees,
     description: "Réduction d'impôt et IFI",
-    image: "https://images.pexels.com/photos/1179229/pexels-photo-1179229.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758290089811-6582cad967ac828c-medium.webp"
   },
   {
     category: "Défiscalisation",
-    name: "FCPI / FIP",
-    icon: BarChart3,
+    name: "FCPI",
+    icon: Lightbulb,
     description: "Innovation et PME, jusqu'à 25%",
-    image: "https://images.pexels.com/photos/7567565/pexels-photo-7567565.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758290153154-90174055383336de-medium.webp"
   },
 
   // Investissement Immobilier
   {
-    category: "Investissement Immobilier",
-    name: "Hagnéré Investissement",
-    icon: Building2,
+    category: "Investissements",
+    name: "Hagnere Investissement",
+    icon: Crown,
     description: "Notre solution clé en main",
-    image: "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758290325402-93753a1df4128749-medium.webp"
   },
   {
-    category: "Investissement Immobilier",
+    category: "Investissements",
     name: "Résidences Services",
-    icon: Home,
+    icon: Hotel,
     description: "EHPAD, étudiantes, tourisme",
-    image: "https://images.pexels.com/photos/1838640/pexels-photo-1838640.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758309350607-c2fea991301dbd26-medium.webp"
   },
   {
-    category: "Investissement Immobilier",
+    category: "Investissements",
     name: "SCPI",
-    icon: BarChart3,
+    icon: BuildingIcon,
     description: "Pierre papier diversifiée",
-    image: "https://images.pexels.com/photos/416405/pexels-photo-416405.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758311674132-35497dfbadc480b7-medium.webp"
   },
 
   // Placements
   {
-    category: "Placements",
+    category: "Assurances / Prévoyance",
     name: "Assurance-vie",
-    icon: Heart,
+    icon: Shield,
     description: "Support d'épargne privilégié",
-    image: "https://images.pexels.com/photos/3943716/pexels-photo-3943716.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758312131364-61e855e863f8c5e8-medium.webp"
   },
   {
-    category: "Placements",
+    category: "Gestion de fortune",
     name: "Assurance-vie Luxembourgeoise",
-    icon: Shield,
+    icon: Crown,
     description: "Haut de gamme international",
-    image: "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758312372504-56e1aa5e967ead53-medium.webp"
   },
   {
     category: "Placements",
     name: "Contrat de capitalisation",
-    icon: TrendingUp,
+    icon: CoinsIcon,
     description: "Optimisation fiscale",
-    image: "https://images.pexels.com/photos/6289065/pexels-photo-6289065.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758312542466-87876bec83e68fdc-medium.webp"
   },
   {
     category: "Placements",
     name: "Contrat de capitalisation (personne morale)",
-    icon: Building2,
+    icon: BriefcaseBusiness,
     description: "Pour les sociétés",
-    image: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758312917480-effcf004ac02d0bb-medium.webp"
   },
   {
-    category: "Placements",
+    category: "Assurances / Prévoyance",
     name: "Plan Épargne Retraite (PER)",
-    icon: Wallet,
+    icon: RotateCw,
     description: "Préparer sa retraite",
-    image: "https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758313771620-40578957581e81a9-medium.webp"
   },
 
   // Épargne & Placements
   {
-    category: "Épargne & Placements",
+    category: "Placements",
     name: "PEA & Compte-Titres",
-    icon: BarChart3,
+    icon: LineChart,
     description: "Investissement en bourse",
-    image: "https://images.pexels.com/photos/6801647/pexels-photo-6801647.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758314084104-bb6792e363cba6a3-medium.webp"
   },
   {
-    category: "Épargne & Placements",
+    category: "Placements",
     name: "Livrets & Épargne",
-    icon: BookOpen,
+    icon: PiggyBank,
     description: "Solutions court terme",
-    image: "https://images.pexels.com/photos/4386476/pexels-photo-4386476.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758314708988-fa1408f8e444d016.webp"
   },
   {
-    category: "Épargne & Placements",
+    category: "Gestion de fortune",
     name: "Private Equity",
-    icon: Gem,
+    icon: Diamond,
     description: "Investissement non coté",
-    image: "https://images.pexels.com/photos/3833052/pexels-photo-3833052.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758318349030-38e581dbc2b4b6fa.webp"
   },
   {
-    category: "Épargne & Placements",
+    category: "Placements",
     name: "Produits Structurés",
-    icon: Shield,
+    icon: Zap,
     description: "Protection du capital",
-    image: "https://images.pexels.com/photos/5835276/pexels-photo-5835276.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758316559295-6836eb2b274e6653.webp"
   },
   {
-    category: "Épargne & Placements",
+    category: "Placements",
     name: "Cryptomonnaies",
-    icon: TrendingUp,
+    icon: Bitcoin,
     description: "Actifs numériques",
-    image: "https://images.pexels.com/photos/844127/pexels-photo-844127.jpeg?w=400&h=250&fit=crop"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758318388066-3ee7934313a17881.webp"
   },
 
   // Retraite & Prévoyance
   {
-    category: "Retraite & Prévoyance",
-    name: "PER Individuel",
-    icon: Wallet,
-    description: "Épargne retraite déductible",
-    image: "https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg?w=400&h=250&fit=crop"
-  },
-  {
-    category: "Retraite & Prévoyance",
-    name: "PER Entreprise",
-    icon: Briefcase,
-    description: "Solutions pour dirigeants",
-    image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?w=400&h=250&fit=crop"
-  },
-  {
-    category: "Retraite & Prévoyance",
+    category: "Assurances / Prévoyance",
     name: "Contrats Madelin",
-    icon: ScrollText,
+    icon: BriefcaseBusiness,
     description: "TNS et professions libérales",
     image: "https://images.pexels.com/photos/4427622/pexels-photo-4427622.jpeg?w=400&h=250&fit=crop"
   },
   {
-    category: "Retraite & Prévoyance",
+    category: "Assurances / Prévoyance",
     name: "Prévoyance",
-    icon: Shield,
+    icon: Umbrella,
     description: "Protection famille",
     image: "https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?w=400&h=250&fit=crop"
   },
   {
-    category: "Retraite & Prévoyance",
+    category: "Assurances / Prévoyance",
     name: "Mutuelle Santé",
-    icon: Heart,
+    icon: HeartPulse,
     description: "Complémentaire santé",
     image: "https://images.pexels.com/photos/4021779/pexels-photo-4021779.jpeg?w=400&h=250&fit=crop"
-  },
-  {
-    category: "Retraite & Prévoyance",
-    name: "Dépendance",
-    icon: HeartHandshake,
-    description: "Perte d'autonomie",
-    image: "https://images.pexels.com/photos/3768131/pexels-photo-3768131.jpeg?w=400&h=250&fit=crop"
   },
 
   // Transmission & Succession
   {
-    category: "Transmission & Succession",
+    category: "Gestion de fortune",
     name: "Donation",
     icon: Gift,
     description: "Transmission anticipée",
     image: "https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?w=400&h=250&fit=crop"
   },
   {
-    category: "Transmission & Succession",
+    category: "Gestion de fortune",
     name: "Démembrement",
-    icon: Scale,
+    icon: Split,
     description: "Usufruit et nue-propriété",
     image: "https://images.pexels.com/photos/8111862/pexels-photo-8111862.jpeg?w=400&h=250&fit=crop"
   },
   {
-    category: "Transmission & Succession",
+    category: "Gestion de fortune",
     name: "SCI Familiale",
-    icon: Home,
+    icon: UsersRound,
     description: "Gestion immobilière familiale",
     image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?w=400&h=250&fit=crop"
   },
   {
-    category: "Transmission & Succession",
+    category: "Gestion de fortune",
     name: "Pacte Dutreil",
-    icon: Handshake,
+    icon: HandshakeIcon,
     description: "Transmission d'entreprise",
     image: "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?w=400&h=250&fit=crop"
   },
   {
-    category: "Transmission & Succession",
+    category: "Gestion de fortune",
     name: "Testament & Succession",
-    icon: ScrollText,
+    icon: Scroll,
     description: "Préparation successorale",
     image: "https://images.pexels.com/photos/4427957/pexels-photo-4427957.jpeg?w=400&h=250&fit=crop"
   },
   {
-    category: "Transmission & Succession",
+    category: "Gestion de fortune",
     name: "Protection du Conjoint",
-    icon: Shield,
+    icon: ShieldHalf,
     description: "Régimes matrimoniaux",
     image: "https://images.pexels.com/photos/6669864/pexels-photo-6669864.jpeg?w=400&h=250&fit=crop"
   },
@@ -343,42 +354,42 @@ const products = [
   {
     category: "Financements",
     name: "Résidence principale",
-    icon: Home,
+    icon: HomeIcon,
     description: "Financement de votre habitation",
     image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?w=400&h=250&fit=crop"
   },
   {
     category: "Financements",
     name: "Résidence secondaire",
-    icon: Home,
+    icon: Palmtree,
     description: "Financement maison de vacances",
     image: "https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?w=400&h=250&fit=crop"
   },
   {
     category: "Financements",
     name: "Prêt immobilier locatif",
-    icon: Building2,
+    icon: Key,
     description: "Investissement locatif",
     image: "https://images.pexels.com/photos/1370704/pexels-photo-1370704.jpeg?w=400&h=250&fit=crop"
   },
   {
     category: "Financements",
     name: "Financement de SCPI",
-    icon: Building2,
+    icon: BarChart3,
     description: "Crédit pour parts de SCPI",
     image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?w=400&h=250&fit=crop"
   },
   {
     category: "Financements",
     name: "Prêt Hypothécaire",
-    icon: Home,
+    icon: KeySquare,
     description: "Garantie sur bien immobilier",
     image: "https://images.pexels.com/photos/4246161/pexels-photo-4246161.jpeg?w=400&h=250&fit=crop"
   },
   {
     category: "Financements",
     name: "Crédit Lombard",
-    icon: Shield,
+    icon: Vault,
     description: "Prêt sur portefeuille titres",
     image: "https://images.pexels.com/photos/7821713/pexels-photo-7821713.jpeg?w=400&h=250&fit=crop"
   },
@@ -388,10 +399,17 @@ const products = [
 export function ProductsGrid() {
   const [currentPage, setCurrentPage] = React.useState(0)
   const [searchQuery, setSearchQuery] = React.useState("")
-  const [selectedFilters, setSelectedFilters] = React.useState<string[]>([])
+  const [selectedFilters, setSelectedFilters] = React.useState<string[]>(["Défiscalisation"])
 
-  // Get unique categories for filter badges
-  const categories = Array.from(new Set(products.map(p => p.category)))
+  // Categories in header order with icons
+  const mainCategories = [
+    { name: "Défiscalisation", icon: PiggyBank },
+    { name: "Investissements", icon: Building2 },
+    { name: "Placements", icon: LineChart },
+    { name: "Financements", icon: TrendingUp },
+    { name: "Assurances / Prévoyance", icon: Shield },
+    { name: "Gestion de fortune", icon: Gift }
+  ]
 
   // Filter products based on search and selected filters
   const filteredProducts = products.filter(product => {
@@ -467,40 +485,34 @@ export function ProductsGrid() {
 
         {/* Filter Badges */}
         <div className="flex flex-wrap justify-center gap-2">
-          <Badge
-            variant={selectedFilters.length === 0 ? "default" : "outline"}
-            className={cn(
-              "cursor-pointer",
-              selectedFilters.length === 0
-                ? "bg-black text-white hover:bg-gray-800"
-                : "hover:bg-gray-100"
-            )}
-            onClick={() => setSelectedFilters([])}
-          >
-            <Filter className="mr-1 h-3 w-3" />
-            Tous
-          </Badge>
-          {categories.map((category) => (
-            <Badge
-              key={category}
-              variant={selectedFilters.includes(category) ? "default" : "outline"}
-              className={cn(
-                "cursor-pointer",
-                selectedFilters.includes(category)
-                  ? "bg-black text-white hover:bg-gray-800"
-                  : "hover:bg-gray-100"
-              )}
-              onClick={() => {
-                if (selectedFilters.includes(category)) {
-                  setSelectedFilters(selectedFilters.filter(f => f !== category))
-                } else {
-                  setSelectedFilters([...selectedFilters, category])
-                }
-              }}
-            >
-              {category}
-            </Badge>
-          ))}
+          {mainCategories.map((category) => {
+            const Icon = category.icon
+            return (
+              <Badge
+                key={category.name}
+                variant={selectedFilters.includes(category.name) ? "default" : "outline"}
+                className={cn(
+                  "cursor-pointer flex items-center gap-1",
+                  selectedFilters.includes(category.name)
+                    ? "bg-black text-white hover:bg-gray-800"
+                    : "hover:bg-gray-100"
+                )}
+                onClick={() => {
+                  if (selectedFilters.includes(category.name)) {
+                    // Ne pas permettre de décocher si c'est le dernier filtre sélectionné
+                    if (selectedFilters.length > 1) {
+                      setSelectedFilters(selectedFilters.filter(f => f !== category.name))
+                    }
+                  } else {
+                    setSelectedFilters([...selectedFilters, category.name])
+                  }
+                }}
+              >
+                <Icon className="h-3 w-3" />
+                {category.name}
+              </Badge>
+            )
+          })}
         </div>
       </div>
 
@@ -542,20 +554,28 @@ export function ProductsGrid() {
                 "cursor-pointer"
               )}
             >
-              {/* Image with blur effect and centered icon */}
-              <div className="relative h-40 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
-                <img
-                  src={product.image || "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=250&fit=crop"}
-                  alt={product.name}
-                  className="w-full h-full object-cover blur-[2px] group-hover:blur-none group-hover:scale-110 transition-all duration-500"
+              {/* Image container with 16:9 aspect ratio for SEO and performance */}
+              <div className="relative aspect-video overflow-hidden bg-gray-100 dark:bg-gray-800">
+                {/* Optimized Next.js Image with WebP conversion */}
+                <Image
+                  src={product.image || "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=450&fit=crop"}
+                  alt={`${product.name} - ${product.description || 'Solution patrimoniale Hagnéré'}`}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
+                  className="object-cover object-center transform group-hover:scale-105 transition-transform duration-500"
+                  priority={index < 4} // Priority loading for first 4 images
+                  quality={85}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAA8A/9k="
                 />
-                {/* Dark overlay for better icon visibility */}
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
-
-                {/* Centered Icon */}
+                
+                {/* Subtle gradient overlay for depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-60" />
+                
+                {/* Centered Icon with glass morphism effect */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-xl bg-white/95 dark:bg-black/95 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                    <Icon className="h-8 w-8 text-gray-800 dark:text-white" />
+                  <div className="w-14 h-14 rounded-xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border border-white/30 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <Icon className="h-7 w-7 text-gray-800 dark:text-white" />
                   </div>
                 </div>
               </div>

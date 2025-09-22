@@ -2,7 +2,22 @@
 
 import React, { useRef, useState, useEffect } from "react"
 import Link from "next/link"
-import { ChevronDown, ChevronLeft, ChevronRight, Building2, PiggyBank, TrendingUp, Wallet, Shield, Crown, FileText, Calculator, BookOpen, Users, ArrowRight, Clock, CheckCircle, Star, Home, Landmark, LineChart, Briefcase, Heart, TreePine, HandCoins, Globe, FileSignature, CreditCard, Banknote, Package, HeartHandshake, GraduationCap, AlertTriangle } from "lucide-react"
+import {
+  ChevronDown, ChevronLeft, ChevronRight, Building2, PiggyBank, TrendingUp,
+  Wallet, Shield, Crown, FileText, Calculator, BookOpen, Users, ArrowRight,
+  Clock, CheckCircle, Star, Home, Landmark, LineChart, Briefcase, Heart,
+  TreePine, HandCoins, Globe, FileSignature, CreditCard, Banknote, Package,
+  HeartHandshake, GraduationCap, AlertTriangle,
+  BedDouble, Wrench, Hammer, Castle, Trees, Lightbulb, Hotel,
+  Building as BuildingIcon, Shield as ShieldIcon, Coins as CoinsIcon,
+  RotateCw, Diamond, Zap, Bitcoin, BriefcaseBusiness, Umbrella,
+  HeartPulse, Split, UsersRound, Handshake as HandshakeIcon, Scroll,
+  ShieldHalf, Home as HomeIcon, Key, KeySquare, Vault, Palmtree,
+  PiggyBank as PiggyBankIcon, Award, Building, MapPin, RefreshCw,
+  TrendingDown, ArrowRightLeft, Receipt, Plane, Anchor, Bike,
+  ShieldCheck, Heart as HeartIcon, School, HelpCircle, BookOpenCheck,
+  Video, FileDown, Car, KeyRound, Beef
+} from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -77,16 +92,16 @@ export function SecondHeader() {
       badge: "-21%",
       items: [
         // Défiscalisation Immobilière
-        { name: "Déficit Foncier", href: "/defiscalisation/deficit-foncier", description: "Déduction des travaux sur vos revenus", icon: Calculator },
-        { name: "Denormandie", href: "/defiscalisation/denormandie", description: "Rénovation dans l'ancien", icon: Building2 },
-        { name: "Passer en LMNP / LMP", href: "/defiscalisation/lmnp-lmp", description: "Location meublée, amortissement du bien", icon: Briefcase },
-        { name: "Loi Malraux", href: "/defiscalisation/malraux", description: "Restauration immobilière", icon: Landmark },
-        { name: "Monument Historique", href: "/defiscalisation/monument-historique", description: "100% des travaux déductibles", icon: Crown },
+        { name: "Déficit Foncier", href: "/defiscalisation/deficit-foncier", description: "Déduction des travaux sur vos revenus", icon: Wrench },
+        { name: "Denormandie", href: "/defiscalisation/denormandie", description: "Rénovation dans l'ancien", icon: Hammer },
+        { name: "Passer en LMNP / LMP", href: "/defiscalisation/lmnp-lmp", description: "Location meublée, amortissement du bien", icon: BedDouble },
+        { name: "Loi Malraux", href: "/defiscalisation/malraux", description: "Restauration immobilière", icon: Castle },
+        { name: "Monument Historique", href: "/defiscalisation/monument-historique", description: "100% des travaux déductibles", icon: Landmark },
         // Défiscalisation Financière
-        { name: "Girardin Industriel", href: "/defiscalisation/girardin", description: "Investissement en Outre-mer", icon: Globe },
-        { name: "PER", href: "/defiscalisation/per", description: "Plan Épargne Retraite déductible", icon: Wallet },
-        { name: "Groupements Forestiers", href: "/defiscalisation/groupements-forestiers", description: "Réduction d'impôt et IFI", icon: TreePine },
-        { name: "Cheptel Bovin", href: "/defiscalisation/cheptel-bovin", description: "Investissement agricole défiscalisant", icon: Landmark },
+        { name: "Girardin Industriel", href: "/defiscalisation/girardin", description: "Investissement en Outre-mer", icon: Palmtree },
+        { name: "PER", href: "/defiscalisation/per", description: "Plan Épargne Retraite déductible", icon: PiggyBankIcon },
+        { name: "Groupements Forestiers", href: "/defiscalisation/groupements-forestiers", description: "Réduction d'impôt et IFI", icon: Trees },
+        { name: "Cheptel Bovin", href: "/defiscalisation/cheptel-bovin", description: "Investissement agricole défiscalisant", icon: Beef },
       ]
     },
     {
@@ -97,20 +112,20 @@ export function SecondHeader() {
       badge: "+8%",
       items: [
         // Supports d&apos;investissement
-        { name: "Assurance-vie", href: "/placements/assurance-vie", description: "Support privilégié d'épargne", icon: Heart },
-        { name: "Assurance-vie Luxembourgeoise", href: "/placements/assurance-vie-luxembourgeoise", description: "Haut de gamme international", icon: Shield },
-        { name: "Contrat de capitalisation (IR/IS)", href: "/placements/contrat-capitalisation", description: "Transmission optimisée", icon: FileText },
-        { name: "PER", href: "/placements/per", description: "Plan Épargne Retraite", icon: Clock },
+        { name: "Assurance-vie", href: "/placements/assurance-vie", description: "Support privilégié d'épargne", icon: Shield },
+        { name: "Assurance-vie Luxembourgeoise", href: "/placements/assurance-vie-luxembourgeoise", description: "Haut de gamme international", icon: Crown },
+        { name: "Contrat de capitalisation (IR/IS)", href: "/placements/contrat-capitalisation", description: "Transmission optimisée", icon: CoinsIcon },
+        { name: "PER", href: "/placements/per", description: "Plan Épargne Retraite", icon: RotateCw },
         { name: "PEA", href: "/placements/pea", description: "Actions européennes défiscalisées", icon: LineChart },
         { name: "Compte-Titres", href: "/placements/compte-titres", description: "Investissement libre", icon: Briefcase },
         // Produits
-        { name: "Private Equity", href: "/placements/private-equity", description: "Investissement non coté", icon: Crown },
+        { name: "Private Equity", href: "/placements/private-equity", description: "Investissement non coté", icon: Diamond },
         { name: "Venture Capital", href: "/placements/venture-capital", description: "Capital-risque innovant", icon: TrendingUp },
         { name: "ETF", href: "/placements/etf", description: "Fonds indiciels cotés", icon: LineChart },
         { name: "Actions", href: "/placements/actions", description: "Titres de sociétés", icon: TrendingUp },
         { name: "Obligations", href: "/placements/obligations", description: "Titres de créance", icon: FileText },
         { name: "SCPI / OPCI", href: "/placements/scpi-opci", description: "Pierre-papier", icon: Building2 },
-        { name: "Cryptomonnaies", href: "/placements/crypto", description: "Actifs digitaux", icon: Globe },
+        { name: "Cryptomonnaies", href: "/placements/crypto", description: "Actifs digitaux", icon: Bitcoin },
         { name: "Produits structurés", href: "/placements/produits-structures", description: "Protection du capital", icon: Shield },
         { name: "Métaux Précieux", href: "/placements/metaux-precieux", description: "Or, Argent, Platine", icon: Crown },
         { name: "Matières premières", href: "/placements/matieres-premieres", description: "Commodités", icon: Globe },
@@ -124,13 +139,13 @@ export function SecondHeader() {
       badge: "SCPI",
       items: [
         // Immobilier
-        { name: "Hagnéré Investissement", href: "/investissements/hagnere-investissement", description: "Notre solution exclusive", icon: Star },
-        { name: "SCPI Européenne", href: "/investissements/scpi-europeenne", description: "Immobilier européen diversifié", icon: Building2 },
-        { name: "Nue-Propriété", href: "/investissements/nue-propriete", description: "Décote de 20 à 40%", icon: FileText },
-        { name: "Viager", href: "/investissements/viager", description: "Investissement éthique", icon: HeartHandshake },
+        { name: "Hagnéré Investissement", href: "/investissements/hagnere-investissement", description: "Notre solution exclusive", icon: Award },
+        { name: "SCPI Européenne", href: "/investissements/scpi-europeenne", description: "Immobilier européen diversifié", icon: Building },
+        { name: "Nue-Propriété", href: "/investissements/nue-propriete", description: "Décote de 20 à 40%", icon: Key },
+        { name: "Viager", href: "/investissements/viager", description: "Investissement éthique", icon: Users },
         // Financier
-        { name: "Groupements Forestiers", href: "/investissements/groupements-forestiers", description: "Réduction IFI", icon: TreePine },
-        { name: "Cheptel Bovin", href: "/investissements/cheptel-bovin", description: "Investissement agricole", icon: Landmark },
+        { name: "Groupements Forestiers", href: "/investissements/groupements-forestiers", description: "Réduction IFI", icon: Trees },
+        { name: "Cheptel Bovin", href: "/investissements/cheptel-bovin", description: "Investissement agricole", icon: Beef },
       ]
     },
     {
@@ -141,21 +156,21 @@ export function SecondHeader() {
       badge: "1.5%",
       items: [
         // Crédits immobiliers
-        { name: "Prêt immobilier RP", href: "/financements/pret-immobilier-rp", description: "Résidence principale", icon: Home },
-        { name: "Prêt immobilier RS", href: "/financements/pret-immobilier-rs", description: "Résidence secondaire", icon: Home },
-        { name: "Prêt immobilier locatif", href: "/financements/pret-immobilier-locatif", description: "Bien destiné à la location", icon: Building2 },
-        { name: "Prêt relais", href: "/financements/pret-relais", description: "Avance en attendant la vente", icon: Clock },
-        { name: "Prêt in fine", href: "/financements/pret-in-fine", description: "Capital remboursé à la fin", icon: Banknote },
+        { name: "Prêt immobilier RP", href: "/financements/pret-immobilier-rp", description: "Résidence principale", icon: HomeIcon },
+        { name: "Prêt immobilier RS", href: "/financements/pret-immobilier-rs", description: "Résidence secondaire", icon: MapPin },
+        { name: "Prêt immobilier locatif", href: "/financements/pret-immobilier-locatif", description: "Bien destiné à la location", icon: KeyRound },
+        { name: "Prêt relais", href: "/financements/pret-relais", description: "Avance en attendant la vente", icon: RefreshCw },
+        { name: "Prêt in fine", href: "/financements/pret-in-fine", description: "Capital remboursé à la fin", icon: TrendingDown },
         // Crédits spécialisés
-        { name: "Crédit marchand de biens", href: "/financements/credit-marchand", description: "Achat, rénover, revendre", icon: Briefcase },
-        { name: "Crédit lombard", href: "/financements/credit-lombard", description: "Sur portefeuille titres", icon: LineChart },
+        { name: "Crédit marchand de biens", href: "/financements/credit-marchand", description: "Achat, rénover, revendre", icon: Hammer },
+        { name: "Crédit lombard", href: "/financements/credit-lombard", description: "Sur portefeuille titres", icon: Briefcase },
         // Crédits de restructuration
-        { name: "Rachat de crédits", href: "/financements/rachat-credits", description: "Regroupement de prêts", icon: HandCoins },
-        { name: "Crédit hypothécaire", href: "/financements/credit-hypothecaire", description: "Garanti par un bien immobilier", icon: Landmark },
+        { name: "Rachat de crédits", href: "/financements/rachat-credits", description: "Regroupement de prêts", icon: ArrowRightLeft },
+        { name: "Crédit hypothécaire", href: "/financements/credit-hypothecaire", description: "Garanti par un bien immobilier", icon: Building },
         // Crédits spécifiques
-        { name: "Prêt consommation", href: "/financements/pret-consommation", description: "Biens, travaux, projets", icon: CreditCard },
-        { name: "Prêt viager hypothécaire", href: "/financements/pret-viager", description: "Pour séniors, liquidité sans vente", icon: Users },
-        { name: "Vente à réméré", href: "/financements/vente-remere", description: "Liquidité avec rachat possible", icon: FileSignature },
+        { name: "Prêt consommation", href: "/financements/pret-consommation", description: "Biens, travaux, projets", icon: Package },
+        { name: "Prêt viager hypothécaire", href: "/financements/pret-viager", description: "Pour séniors, liquidité sans vente", icon: HeartHandshake },
+        { name: "Vente à réméré", href: "/financements/vente-remere", description: "Liquidité avec rachat possible", icon: Receipt },
       ]
     },
     {
@@ -166,24 +181,24 @@ export function SecondHeader() {
       badge: "100%",
       items: [
         // Assurances Crédit & Santé
-        { name: "Assurance emprunteur", href: "/assurances/emprunteur", description: "Protection crédit", icon: CreditCard },
-        { name: "Complémentaire Santé", href: "/assurances/complementaire-sante", description: "Couverture santé optimale", icon: Heart },
+        { name: "Assurance emprunteur", href: "/assurances/emprunteur", description: "Protection crédit", icon: ShieldCheck },
+        { name: "Complémentaire Santé", href: "/assurances/complementaire-sante", description: "Couverture santé optimale", icon: HeartIcon },
         { name: "Complémentaire santé expatriés", href: "/assurances/sante-expatries", description: "Santé internationale", icon: Globe },
-        { name: "Assurance voyage", href: "/assurances/voyage", description: "Protection voyage", icon: Globe },
+        { name: "Assurance voyage", href: "/assurances/voyage", description: "Protection voyage", icon: Plane },
         // Assurances Mobilité & Habitation
-        { name: "Assurance habitation", href: "/assurances/habitation", description: "Protection du logement", icon: Home },
-        { name: "Assurance voiture", href: "/assurances/voiture", description: "Véhicule protégé", icon: CreditCard },
-        { name: "Assurance deux-roues et quad", href: "/assurances/deux-roues", description: "Moto, scooter, quad", icon: Briefcase },
-        { name: "Assurance Bateaux / Jet-Skis", href: "/assurances/bateaux", description: "Navigation protégée", icon: Globe },
+        { name: "Assurance habitation", href: "/assurances/habitation", description: "Protection du logement", icon: HomeIcon },
+        { name: "Assurance voiture", href: "/assurances/voiture", description: "Véhicule protégé", icon: Car },
+        { name: "Assurance deux-roues et quad", href: "/assurances/deux-roues", description: "Moto, scooter, quad", icon: Bike },
+        { name: "Assurance Bateaux / Jet-Skis", href: "/assurances/bateaux", description: "Navigation protégée", icon: Anchor },
         // Assurances Décès & Prévoyance
-        { name: "Assurance décès", href: "/assurances/deces", description: "Capital ou rente", icon: Shield },
-        { name: "Assurance obsèques", href: "/assurances/obseques", description: "Frais funéraires", icon: Heart },
-        { name: "Garantie accident de la vie", href: "/assurances/gav", description: "Protection complète", icon: AlertTriangle },
+        { name: "Assurance décès", href: "/assurances/deces", description: "Capital ou rente", icon: Users },
+        { name: "Assurance obsèques", href: "/assurances/obseques", description: "Frais funéraires", icon: HeartHandshake },
+        { name: "Garantie accident de la vie", href: "/assurances/gav", description: "Protection complète", icon: ShieldCheck },
         // Assurances Immobilier
-        { name: "Assurance PNO", href: "/assurances/pno", description: "Propriétaire non occupant", icon: Building2 },
-        { name: "Assurance PNO Immeuble", href: "/assurances/pno-immeuble", description: "Immeuble de rapport", icon: Landmark },
+        { name: "Assurance PNO", href: "/assurances/pno", description: "Propriétaire non occupant", icon: Key },
+        { name: "Assurance PNO Immeuble", href: "/assurances/pno-immeuble", description: "Immeuble de rapport", icon: Building },
         // Assurances Spécifiques
-        { name: "Assurance études internationales", href: "/assurances/etudes-internationales", description: "Protection étudiants", icon: GraduationCap },
+        { name: "Assurance études internationales", href: "/assurances/etudes-internationales", description: "Protection étudiants", icon: School },
       ]
     },
     {
@@ -197,10 +212,10 @@ export function SecondHeader() {
         { name: "Guides", href: "/guides", description: "Guides pratiques", icon: BookOpen },
         { name: "Simulateurs", href: "/simulateurs", description: "Calculateurs en ligne", icon: Calculator },
         { name: "Actualités fiscales", href: "/actualites", description: "Veille réglementaire", icon: Clock },
-        { name: "FAQ", href: "/faq", description: "Questions fréquentes", icon: AlertTriangle },
-        { name: "Glossaire", href: "/glossaire", description: "Définitions", icon: BookOpen },
-        { name: "Webinaires", href: "/webinaires", description: "Formations en ligne", icon: GraduationCap },
-        { name: "Livres blancs", href: "/livres-blancs", description: "Études approfondies", icon: FileText },
+        { name: "FAQ", href: "/faq", description: "Questions fréquentes", icon: HelpCircle },
+        { name: "Glossaire", href: "/glossaire", description: "Définitions", icon: BookOpenCheck },
+        { name: "Webinaires", href: "/webinaires", description: "Formations en ligne", icon: Video },
+        { name: "Livres blancs", href: "/livres-blancs", description: "Études approfondies", icon: FileDown },
       ]
     },
   ]

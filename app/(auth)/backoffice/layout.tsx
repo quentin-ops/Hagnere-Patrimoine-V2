@@ -4,6 +4,7 @@ import { BackofficeSidebar, MobileMenuButton } from "@/components/backoffice/sid
 import { useState } from "react"
 import { useSession } from "next-auth/react"
 import { Shield } from "lucide-react"
+import { UnreadMessagesProvider } from "@/contexts/unread-messages"
 
 export default function BackofficeLayout({
   children,
@@ -14,28 +15,29 @@ export default function BackofficeLayout({
   const { data: session } = useSession()
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Desktop Sidebar */}
-      <BackofficeSidebar />
-      
-      {/* Mobile Sidebar Overlay */}
-      {mobileMenuOpen && (
-        <>
-          <div 
-            className="fixed inset-0 z-30 bg-black/50 lg:hidden"
-            onClick={() => setMobileMenuOpen(false)}
-          />
-          <BackofficeSidebar 
-            mobile 
-            onClose={() => setMobileMenuOpen(false)} 
-          />
-        </>
-      )}
+    <UnreadMessagesProvider>
+      <div className="relative min-h-screen bg-background">
+        {/* Desktop Sidebar */}
+        <BackofficeSidebar />
+        
+        {/* Mobile Sidebar Overlay */}
+        {mobileMenuOpen && (
+          <>
+            <div 
+              className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <BackofficeSidebar 
+              mobile 
+              onClose={() => setMobileMenuOpen(false)} 
+            />
+          </>
+        )}
 
-      {/* Main Content */}
-      <div className="flex flex-col lg:ml-64">
+        {/* Main Content */}
+        <div className="flex flex-col lg:ml-64 min-h-screen">
         {/* Top Bar */}
-        <header className="sticky top-0 z-20 flex items-center justify-between h-14 px-4 bg-card border-b">
+        <header className="sticky top-0 z-40 flex items-center justify-between h-14 px-4 bg-card border-b">
           <div className="flex items-center gap-4">
             <MobileMenuButton onClick={() => setMobileMenuOpen(true)} />
             <div className="lg:hidden flex items-center gap-2">
@@ -62,5 +64,7 @@ export default function BackofficeLayout({
         </main>
       </div>
     </div>
+    </UnreadMessagesProvider>
   )
 }
+

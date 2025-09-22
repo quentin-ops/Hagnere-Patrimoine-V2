@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -10,26 +10,23 @@ import { toast } from 'sonner'
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    message: ''
-  })
+  const formRef = useRef<HTMLFormElement>(null)
   const [submitMessage, setSubmitMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitMessage(null)
+
+    const formData = new FormData(e.currentTarget)
+    const getValue = (field: string) => (formData.get(field)?.toString().trim() ?? '')
+    const data = {
+      firstName: getValue('given-name'),
+      lastName: getValue('family-name'),
+      email: getValue('email'),
+      phone: getValue('tel'),
+      message: getValue('message'),
+    }
 
     try {
       const response = await fetch('/api/contact', {
@@ -37,39 +34,29 @@ export default function ContactPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       })
 
-      const data = await response.json()
+      const responseData = await response.json()
 
       if (response.ok) {
-        toast({
-          title: 'Message envoyé !',
+        toast.success('Message envoyé !', {
           description: "Votre message a bien été reçu, nos équipes vont vous répondre rapidement par mail ou téléphone.",
           duration: 10000,
-          variant: 'success',
         })
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          message: ''
-        })
+        if (formRef.current) {
+          formRef.current.reset()
+        }
         setSubmitMessage(null)
       } else {
-        toast({
-          title: 'Erreur',
-          description: data.error || 'Une erreur est survenue. Veuillez réessayer.',
-          variant: 'destructive',
+        toast.error('Erreur', {
+          description: responseData.error || 'Une erreur est survenue. Veuillez réessayer.',
           duration: 5000,
         })
       }
     } catch (error) {
-      toast({
-        title: 'Erreur',
+      toast.error('Erreur', {
         description: 'Une erreur est survenue. Veuillez réessayer.',
-        variant: 'destructive',
         duration: 5000,
       })
     } finally {
@@ -110,68 +97,76 @@ export default function ContactPage() {
           <div className="bg-muted p-5 sm:p-10 flex items-center justify-center">
             <div className="w-full max-w-md">
               <h2 className="text-sm font-medium sm:text-base">Formulaire de contact</h2>
-              <form onSubmit={handleSubmit} className="mt-4 grid gap-4">
+              <form ref={formRef} onSubmit={handleSubmit} className="mt-4 grid gap-4" autoComplete="on" name="contact-form" method="POST">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="grid gap-2">
-                    <Label htmlFor="firstName" className="text-[10px] sm:text-sm">Prénom</Label>
+                    <Label htmlFor="given-name" className="text-[10px] sm:text-sm">
+                      Prénom <span className="text-red-500">*</span>
+                    </Label>
                     <Input
-                      id="firstName"
-                      name="firstName"
+                      id="given-name"
+                      name="given-name"
+                      type="text"
                       placeholder="Votre prénom"
+                      autoComplete="given-name"
                       required
-                      value={formData.firstName}
-                      onChange={handleChange}
                       className="h-7 text-[10px] sm:h-10 sm:text-sm bg-white border-zinc-200 placeholder:text-zinc-400 focus-visible:ring-primary/40 dark:bg-zinc-900 dark:text-white dark:border-white/20 dark:placeholder:text-white/50"
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="lastName" className="text-[10px] sm:text-sm">Nom</Label>
+                    <Label htmlFor="family-name" className="text-[10px] sm:text-sm">
+                      Nom <span className="text-red-500">*</span>
+                    </Label>
                     <Input
-                      id="lastName"
-                      name="lastName"
+                      id="family-name"
+                      name="family-name"
+                      type="text"
                       placeholder="Votre nom"
+                      autoComplete="family-name"
                       required
-                      value={formData.lastName}
-                      onChange={handleChange}
                       className="h-7 text-[10px] sm:h-10 sm:text-sm bg-white border-zinc-200 placeholder:text-zinc-400 focus-visible:ring-primary/40 dark:bg-zinc-900 dark:text-white dark:border-white/20 dark:placeholder:text-white/50"
                     />
                   </div>
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="email" className="text-[10px] sm:text-sm">Email</Label>
+                  <Label htmlFor="email" className="text-[10px] sm:text-sm">
+                    Email <span className="text-red-500">*</span>
+                  </Label>
                   <Input
                     id="email"
                     name="email"
                     type="email"
                     placeholder="vous@exemple.com"
+                    autoComplete="email"
                     required
-                    value={formData.email}
-                    onChange={handleChange}
                     className="h-7 text-[10px] sm:h-10 sm:text-sm bg-white border-zinc-200 placeholder:text-zinc-400 focus-visible:ring-primary/40 dark:bg-zinc-900 dark:text-white dark:border-white/20 dark:placeholder:text-white/50"
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="phone" className="text-[10px] sm:text-sm">Téléphone (optionnel)</Label>
+                  <Label htmlFor="phone" className="text-[10px] sm:text-sm">
+                    Téléphone <span className="text-red-500">*</span>
+                  </Label>
                   <Input
                     id="phone"
-                    name="phone"
+                    name="tel"
                     type="tel"
-                    placeholder="03 74 47 20 18"
-                    value={formData.phone}
-                    onChange={handleChange}
+                    placeholder="06 12 34 56 78"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    required
                     className="h-7 text-[10px] sm:h-10 sm:text-sm bg-white border-zinc-200 placeholder:text-zinc-400 focus-visible:ring-primary/40 dark:bg-zinc-900 dark:text-white dark:border-white/20 dark:placeholder:text-white/50"
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="message" className="text-[10px] sm:text-sm">Message</Label>
+                  <Label htmlFor="message" className="text-[10px] sm:text-sm">
+                    Message <span className="text-red-500">*</span>
+                  </Label>
                   <Textarea
                     id="message"
                     name="message"
                     rows={4}
                     placeholder="Dites‑nous en plus sur votre besoin"
                     required
-                    value={formData.message}
-                    onChange={handleChange}
                     className="text-[10px] sm:text-sm sm:min-h-[120px] bg-white border-zinc-200 placeholder:text-zinc-400 focus-visible:ring-primary/40 dark:bg-zinc-900 dark:text-white dark:border-white/20 dark:placeholder:text-white/50"
                   />
                 </div>
