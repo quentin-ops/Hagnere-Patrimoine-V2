@@ -60,26 +60,6 @@ export default function ArticleContentWithCTAs({
 
   return (
     <div className="article-content">
-      <style jsx global>{`
-        .article-content h1,
-        .article-content h2,
-        .article-content h3,
-        .article-content .prose h1,
-        .article-content .prose h2,
-        .article-content .prose h3,
-        .prose h1,
-        .prose h2,
-        .prose h3 {
-          border-top: none !important;
-          border-bottom: none !important;
-          border-right: none !important;
-        }
-        .article-content h1::before,
-        .article-content h2::before,
-        .article-content h3::before {
-          display: none !important;
-        }
-      `}</style>
       <div 
         ref={contentRef}
         dangerouslySetInnerHTML={{ __html: content }}

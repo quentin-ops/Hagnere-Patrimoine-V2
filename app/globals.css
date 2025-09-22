@@ -66,37 +66,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-/* Forcer la suppression des séparateurs horizontaux sur les titres des articles */
-.article-content h1,
-.article-content h2,
-.article-content h3,
-.prose h1,
-.prose h2,
-.prose h3,
-article h1,
-article h2,
-article h3 {
-  border-top: none !important;
-  border-bottom: none !important;
-  border-right: none !important;
-}
-
-/* S'assurer que seule la barre latérale noire reste */
-.article-content h1::before,
-.article-content h2::before,
-.article-content h3::before,
-.prose h1::before,
-.prose h2::before,
-.prose h3::before {
-  display: none !important;
-  content: none !important;
-}
-
-/* Forcer le style des titres dans les articles */
-.article-content h1,
-.article-content h2,
-.article-content h3 {
-  border-left: 4px solid #000000 !important;
-  padding-left: 1.25rem !important;
-}
