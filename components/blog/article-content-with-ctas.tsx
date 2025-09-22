@@ -17,13 +17,19 @@ export default function ArticleContentWithCTAs({
   useEffect(() => {
     if (!contentRef.current) return
 
-    // Ajouter une barre latérale simple et élégante aux titres
+    // Ajouter une barre latérale élégante aux titres
     const headings = contentRef.current.querySelectorAll('h1, h2, h3')
     headings.forEach((heading: Element) => {
       const htmlHeading = heading as HTMLElement
-      htmlHeading.style.position = 'relative'
+      // Réinitialiser tous les styles de bordure
+      htmlHeading.style.border = 'none'
+      // Style de la barre latérale uniquement
+      htmlHeading.style.borderLeft = '4px solid #e5e7eb'  // Gris clair plus subtil
       htmlHeading.style.paddingLeft = '1.25rem'
-      htmlHeading.style.borderLeft = '4px solid #2563eb'
+      htmlHeading.style.marginLeft = '-0.25rem'
+      // Espacement propre
+      htmlHeading.style.paddingTop = '0.5rem'
+      htmlHeading.style.paddingBottom = '0.5rem'
       htmlHeading.style.marginTop = '2rem'
       htmlHeading.style.marginBottom = '1rem'
     })
@@ -53,10 +59,10 @@ export default function ArticleContentWithCTAs({
         ref={contentRef}
         dangerouslySetInnerHTML={{ __html: content }}
         className="prose prose-lg max-w-none prose-primary
-          prose-headings:font-bold
-          prose-h1:text-4xl prose-h1:mt-16 prose-h1:mb-8
-          prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:text-gray-900
-          prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-h3:text-gray-800
+          prose-headings:font-bold prose-headings:border-0
+          prose-h1:text-4xl prose-h1:mt-16 prose-h1:mb-8 prose-h1:border-t-0
+          prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:text-gray-900 prose-h2:border-t-0
+          prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-h3:text-gray-800 prose-h3:border-t-0
           prose-p:text-lg prose-p:leading-relaxed prose-p:text-gray-700 prose-p:mb-6
           prose-ul:my-6 prose-ul:space-y-2 prose-li:marker:text-primary
           prose-ol:my-6 prose-ol:space-y-2
