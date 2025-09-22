@@ -51,6 +51,15 @@ const products = [
   { category: "Transmission", name: "Trust", color: "bg-orange-500", icon: Shield },
   { category: "Transmission", name: "Holding patrimoniale", color: "bg-orange-500", icon: Briefcase },
 
+  // Financement
+  {
+    category: "Financement",
+    name: "Regroupement de crédits",
+    color: "bg-indigo-500",
+    icon: TrendingDown,
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758545189278-082efa16126307d1.webp"
+  },
+
   // Protection
   { category: "Protection", name: "Prévoyance", color: "bg-red-500", icon: Shield },
   { category: "Protection", name: "Assurance décès", color: "bg-red-500", icon: Shield },
