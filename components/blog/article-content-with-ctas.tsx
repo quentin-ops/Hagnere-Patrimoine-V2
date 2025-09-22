@@ -17,26 +17,15 @@ export default function ArticleContentWithCTAs({
   useEffect(() => {
     if (!contentRef.current) return
 
-    // Ajouter des barres latérales aux titres
+    // Ajouter une barre latérale simple et élégante aux titres
     const headings = contentRef.current.querySelectorAll('h1, h2, h3')
     headings.forEach((heading: Element) => {
       const htmlHeading = heading as HTMLElement
       htmlHeading.style.position = 'relative'
-      htmlHeading.style.paddingLeft = '1.5rem'
-      htmlHeading.style.borderLeft = '5px solid #2563eb'
-      htmlHeading.style.marginTop = '1.5rem'
+      htmlHeading.style.paddingLeft = '1.25rem'
+      htmlHeading.style.borderLeft = '4px solid #2563eb'
+      htmlHeading.style.marginTop = '2rem'
       htmlHeading.style.marginBottom = '1rem'
-      
-      if (heading.tagName === 'H1') {
-        htmlHeading.style.borderLeftWidth = '6px'
-        htmlHeading.style.borderLeftColor = '#2563eb'
-      } else if (heading.tagName === 'H2') {
-        htmlHeading.style.borderLeftWidth = '5px'
-        htmlHeading.style.borderLeftColor = '#2563eb'
-      } else if (heading.tagName === 'H3') {
-        htmlHeading.style.borderLeftWidth = '4px'
-        htmlHeading.style.borderLeftColor = '#2563ebcc'
-      }
     })
 
     // Injecter les CTAs après certains paragraphes
