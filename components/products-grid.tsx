@@ -411,8 +411,8 @@ export function ProductsGrid() {
   // Categories in header order with icons
   const mainCategories = [
     { name: "Défiscalisation", icon: PiggyBank },
-    { name: "Investissements", icon: Building2 },
     { name: "Placements", icon: LineChart },
+    { name: "Investissements", icon: Building2 },
     { name: "Financements", icon: TrendingUp },
     { name: "Assurances / Prévoyance", icon: Shield },
     { name: "Gestion de fortune", icon: Gift }
