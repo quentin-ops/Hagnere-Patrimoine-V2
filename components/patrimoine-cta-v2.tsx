@@ -9,49 +9,73 @@ interface PatrimoineCTAProps {
 }
 
 export default function PatrimoineCTA({ position = 'end' }: PatrimoineCTAProps) {
-  // Version identique à Hagnéré Investissement
+  // Version adaptée pour sidebar - design vertical compact style Hagnéré Investissement
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary/95 to-primary text-white">
-      {/* Dégradé de fond subtil */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/5 via-transparent to-black/10" />
+    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 via-gray-950 to-black">
+      {/* Gradient subtil de fond */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/20 via-transparent to-purple-900/10" />
       
-      {/* Effet de halo lumineux */}
-      <div className="absolute -top-24 -right-24 w-48 h-48 bg-white/10 rounded-full blur-3xl" />
-      <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-white/10 rounded-full blur-3xl" />
+      {/* Grille de points en arrière-plan pour effet tech */}
+      <div 
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 1px)`,
+          backgroundSize: '20px 20px'
+        }}
+      />
       
-      {/* Contenu principal */}
+      {/* Illustration 3D en arrière-plan avec opacité */}
+      <div className="absolute right-0 bottom-0 w-48 h-48 opacity-30">
+        <Image
+          src="https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758547885734-3d-building-illustration.png"
+          alt="3D Building"
+          fill
+          className="object-contain"
+        />
+      </div>
+      
       <div className="relative z-10 p-6">
-        {/* Titre */}
-        <p className="text-xl font-bold text-white mb-2">
-          Hagnéré Patrimoine
+        {/* Titre principal */}
+        <h3 className="text-2xl font-bold text-white mb-1">
+          Hagnéré
+        </h3>
+        <h3 className="text-2xl font-bold text-white mb-3">
+          Patrimoine
+        </h3>
+        
+        {/* Sous-titre */}
+        <p className="text-sm text-gray-300 mb-6 leading-relaxed">
+          Optimisez votre patrimoine et réduisez vos impôts légalement.
         </p>
         
-        <p className="text-sm text-white/90 mb-4 leading-relaxed">
-          Optimisez votre patrimoine et réduisez vos impôts.
-        </p>
-        
-        {/* 3 Cards de métriques */}
-        <div className="space-y-2 mb-4">
-          <div className="bg-white/15 backdrop-blur-sm rounded-lg p-2.5 text-center border border-white/25">
-            <p className="text-lg font-bold text-white">30%</p>
-            <p className="text-xs text-white/90">Économie d'impôts moyenne</p>
+        {/* 3 Cards métriques - disposition verticale */}
+        <div className="space-y-3 mb-6">
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 flex items-center justify-between border border-white/10">
+            <div>
+              <p className="text-2xl font-bold text-white">30%</p>
+              <p className="text-xs text-gray-400">Économie d'impôts moyenne</p>
+            </div>
           </div>
-          <div className="bg-white/15 backdrop-blur-sm rounded-lg p-2.5 text-center border border-white/25">
-            <p className="text-lg font-bold text-white">0€</p>
-            <p className="text-xs text-white/90">Frais cachés</p>
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 flex items-center justify-between border border-white/10">
+            <div>
+              <p className="text-2xl font-bold text-white">0€</p>
+              <p className="text-xs text-gray-400">Frais cachés</p>
+            </div>
           </div>
-          <div className="bg-white/15 backdrop-blur-sm rounded-lg p-2.5 text-center border border-white/25">
-            <p className="text-lg font-bold text-white">100%</p>
-            <p className="text-xs text-white/90">Sur-mesure</p>
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 flex items-center justify-between border border-white/10">
+            <div>
+              <p className="text-2xl font-bold text-white">100%</p>
+              <p className="text-xs text-gray-400">Sur-mesure</p>
+            </div>
           </div>
         </div>
         
-        {/* Boutons d'action */}
+        {/* Boutons empilés */}
         <div className="space-y-2">
           <Button
             asChild
             size="sm"
-            className="w-full bg-white text-primary hover:bg-gray-100 font-semibold"
+            className="w-full bg-white text-black hover:bg-gray-100 font-medium rounded-full"
           >
             <Link href="/prendre-rdv">
               Prendre rendez-vous
@@ -60,7 +84,8 @@ export default function PatrimoineCTA({ position = 'end' }: PatrimoineCTAProps) 
           <Button
             asChild
             size="sm"
-            className="w-full bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30"
+            variant="outline"
+            className="w-full bg-transparent text-white border-white/30 hover:bg-white/10 font-medium rounded-full"
           >
             <Link href="/">
               Découvrir le site
