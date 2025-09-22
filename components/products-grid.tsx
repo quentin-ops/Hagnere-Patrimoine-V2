@@ -199,7 +199,7 @@ const products = [
     name: "Nue-Propriété",
     icon: Key,
     description: "Décote de 20 à 40%",
-    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758546297890-5c6b5c7e8a6c9c2f.webp"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758546952137-91671a96a60892c2.webp"
   },
   {
     category: "Investissements",
