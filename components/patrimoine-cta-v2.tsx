@@ -1,6 +1,6 @@
 'use client'
 
-import { ModernCTASection } from '@/components/modern-cta-section'
+import { ArticleCTAModern } from '@/components/article-cta-modern'
 
 interface PatrimoineCTAProps {
   position?: 'first' | 'second' | 'end'
@@ -9,15 +9,10 @@ interface PatrimoineCTAProps {
 
 export default function PatrimoineCTA({ 
   position = 'end',
-  backgroundImage = "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758547885734-3d-building-illustration.png"
+  backgroundImage
 }: PatrimoineCTAProps) {
-  // Utilisation du composant ModernCTASection identique à Hagnéré Investissement
-  return (
-    <ModernCTASection 
-      backgroundImage={backgroundImage}
-      className="w-full"
-    />
-  )
+  // Utilisation du nouveau composant ArticleCTAModern
+  return <ArticleCTAModern />
 }
 
 // Export nommé pour compatibilité
