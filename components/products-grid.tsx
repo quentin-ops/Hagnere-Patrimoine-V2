@@ -173,47 +173,55 @@ const products = [
   },
   {
     category: "Défiscalisation",
-    name: "Groupements Forestiers",
-    icon: Trees,
-    description: "Réduction d'impôt et IFI",
-    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758290089811-6582cad967ac828c-medium.webp"
-  },
-  {
-    category: "Défiscalisation",
-    name: "Cheptel Bovin",
-    icon: PiggyBank,
-    description: "Investissement agricole défiscalisant",
-    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758545846278-e13bcaf310e7b378.webp"
-  },
-  {
-    category: "Défiscalisation",
     name: "FCPI",
     icon: Lightbulb,
     description: "Innovation et PME, jusqu'à 25%",
     image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758290153154-90174055383336de-medium.webp"
   },
 
-  // Investissement Immobilier
+  // Investissements - Immobilier
   {
     category: "Investissements",
-    name: "Hagnere Investissement",
+    name: "Hagnéré Investissement",
     icon: Crown,
-    description: "Notre solution clé en main",
+    description: "Notre solution exclusive",
     image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758290325402-93753a1df4128749-medium.webp"
   },
   {
     category: "Investissements",
-    name: "Résidences Services",
-    icon: Hotel,
-    description: "EHPAD, étudiantes, tourisme",
-    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758309350607-c2fea991301dbd26-medium.webp"
+    name: "SCPI Européenne",
+    icon: BuildingIcon,
+    description: "Immobilier européen diversifié",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758311674132-35497dfbadc480b7-medium.webp"
   },
   {
     category: "Investissements",
-    name: "SCPI",
-    icon: BuildingIcon,
-    description: "Pierre papier diversifiée",
-    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758311674132-35497dfbadc480b7-medium.webp"
+    name: "Nue-Propriété",
+    icon: Key,
+    description: "Décote de 20 à 40%",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758546297890-5c6b5c7e8a6c9c2f.webp"
+  },
+  {
+    category: "Investissements",
+    name: "Viager",
+    icon: Users,
+    description: "Investissement éthique",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758546389223-9a7d8e6f7b5c4a3e.webp"
+  },
+  // Investissements - Financier
+  {
+    category: "Investissements",
+    name: "Groupements Forestiers",
+    icon: Trees,
+    description: "Réduction IFI",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758290089811-6582cad967ac828c-medium.webp"
+  },
+  {
+    category: "Investissements",
+    name: "Cheptel Bovin",
+    icon: PiggyBank,
+    description: "Investissement agricole",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758545846278-e13bcaf310e7b378.webp"
   },
 
   // Placements
