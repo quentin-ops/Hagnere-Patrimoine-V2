@@ -180,6 +180,13 @@ const products = [
   },
   {
     category: "Défiscalisation",
+    name: "Cheptel Bovin",
+    icon: PiggyBank,
+    description: "Investissement agricole défiscalisant",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758321585827-39f2c09c0e0f91f4.webp"
+  },
+  {
+    category: "Défiscalisation",
     name: "FCPI",
     icon: Lightbulb,
     description: "Innovation et PME, jusqu'à 25%",
