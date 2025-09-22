@@ -17,19 +17,21 @@ export default function ArticleContentWithCTAs({
   useEffect(() => {
     if (!contentRef.current) return
 
-    // Ajouter une barre latérale élégante aux titres
+    // Ajouter une barre latérale noire aux titres sans séparateur horizontal
     const headings = contentRef.current.querySelectorAll('h1, h2, h3')
     headings.forEach((heading: Element) => {
       const htmlHeading = heading as HTMLElement
-      // Réinitialiser tous les styles de bordure
-      htmlHeading.style.border = 'none'
-      // Style de la barre latérale uniquement
-      htmlHeading.style.borderLeft = '4px solid #e5e7eb'  // Gris clair plus subtil
+      // Forcer la suppression de TOUTES les bordures sauf la gauche
+      htmlHeading.style.setProperty('border-top', 'none', 'important')
+      htmlHeading.style.setProperty('border-right', 'none', 'important')
+      htmlHeading.style.setProperty('border-bottom', 'none', 'important')
+      // Ajouter seulement la barre latérale noire
+      htmlHeading.style.setProperty('border-left', '4px solid #000000', 'important')
       htmlHeading.style.paddingLeft = '1.25rem'
-      htmlHeading.style.marginLeft = '-0.25rem'
+      htmlHeading.style.marginLeft = '0'
       // Espacement propre
-      htmlHeading.style.paddingTop = '0.5rem'
-      htmlHeading.style.paddingBottom = '0.5rem'
+      htmlHeading.style.paddingTop = '0.25rem'
+      htmlHeading.style.paddingBottom = '0.25rem'
       htmlHeading.style.marginTop = '2rem'
       htmlHeading.style.marginBottom = '1rem'
     })
@@ -55,14 +57,23 @@ export default function ArticleContentWithCTAs({
 
   return (
     <div className="article-content">
+      <style jsx>{`
+        .article-content h1,
+        .article-content h2,
+        .article-content h3 {
+          border-top: none !important;
+          border-bottom: none !important;
+          border-right: none !important;
+        }
+      `}</style>
       <div 
         ref={contentRef}
         dangerouslySetInnerHTML={{ __html: content }}
         className="prose prose-lg max-w-none prose-primary
-          prose-headings:font-bold prose-headings:border-0
-          prose-h1:text-4xl prose-h1:mt-16 prose-h1:mb-8 prose-h1:border-t-0
-          prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:text-gray-900 prose-h2:border-t-0
-          prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-h3:text-gray-800 prose-h3:border-t-0
+          prose-headings:font-bold prose-headings:border-0 prose-headings:border-t-0
+          prose-h1:text-4xl prose-h1:mt-16 prose-h1:mb-8 prose-h1:border-0 prose-h1:border-t-0
+          prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:text-gray-900 prose-h2:border-0 prose-h2:border-t-0
+          prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-h3:text-gray-800 prose-h3:border-0 prose-h3:border-t-0
           prose-p:text-lg prose-p:leading-relaxed prose-p:text-gray-700 prose-p:mb-6
           prose-ul:my-6 prose-ul:space-y-2 prose-li:marker:text-primary
           prose-ol:my-6 prose-ol:space-y-2
@@ -80,6 +91,8 @@ export default function ArticleContentWithCTAs({
           [&_.example-block]:rounded-lg [&_.example-block]:my-8
           [&_.highlight]:bg-yellow-100 [&_.highlight]:px-2 [&_.highlight]:py-0.5
           [&_.tiptap-heading]:scroll-mt-24
+          [&>h2]:border-t-0 [&>h2]:!border-t-0
+          [&>h1]:border-t-0 [&>h3]:border-t-0
         "
       />
       
