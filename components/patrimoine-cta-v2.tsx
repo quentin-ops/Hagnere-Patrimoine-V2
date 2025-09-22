@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowRight, Calendar } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface PatrimoineCTAProps {
@@ -9,94 +9,81 @@ interface PatrimoineCTAProps {
 }
 
 export default function PatrimoineCTA({ position = 'end' }: PatrimoineCTAProps) {
-  // Version principale - style Hagnéré Investissement
+  // Version épurée et moderne avec polices réduites
   return (
-    <section className="my-16">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary/95 to-primary shadow-2xl">
-        {/* Effets de fond */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/5 via-transparent to-black/10" />
-        <div className="absolute -top-32 -right-32 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
+    <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary via-primary to-primary/95 text-white">
+      {/* Effet de gradient très subtil */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-transparent to-white/5" />
+      
+      {/* Contenu principal - padding compact */}
+      <div className="relative z-10 p-5">
+        {/* En-tête */}
+        <div className="mb-4">
+          <h3 className="text-base font-semibold text-white mb-1">
+            Hagnéré Patrimoine
+          </h3>
+          <p className="text-xs text-white/85 leading-relaxed">
+            Optimisez votre patrimoine et réduisez vos impôts.
+          </p>
+        </div>
         
-        <div className="relative z-10 px-8 py-12 sm:px-12 sm:py-16 lg:px-20 lg:py-20">
-          {/* Titre principal */}
-          <div className="text-center mb-6">
-            <h3 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
-              Hagnéré Patrimoine
-            </h3>
-            
-            <p className="text-xl sm:text-2xl lg:text-3xl text-white/90 font-medium">
-              Optimisez votre patrimoine et réduisez vos impôts.
-            </p>
+        {/* 3 métriques - disposition horizontale compacte */}
+        <div className="grid grid-cols-3 gap-2 mb-4">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg px-2 py-2 text-center">
+            <p className="text-sm font-bold text-white">30%</p>
+            <p className="text-[10px] text-white/75 leading-tight">Économie<br/>d'impôts</p>
           </div>
-          
-          {/* 3 Métriques clés */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mb-12 max-w-4xl mx-auto">
-            {/* Métrique 1 */}
-            <div className="text-center">
-              <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/25 hover:bg-white/20 transition-all">
-                <p className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-2">30%</p>
-                <p className="text-base sm:text-lg text-white/90 font-medium">
-                  Économie d'impôts<br className="hidden sm:block" /> moyenne
-                </p>
-              </div>
-            </div>
-            
-            {/* Métrique 2 */}
-            <div className="text-center">
-              <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/25 hover:bg-white/20 transition-all">
-                <p className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-2">0€</p>
-                <p className="text-base sm:text-lg text-white/90 font-medium">
-                  Frais<br className="hidden sm:block" /> cachés
-                </p>
-              </div>
-            </div>
-            
-            {/* Métrique 3 */}
-            <div className="text-center">
-              <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/25 hover:bg-white/20 transition-all">
-                <p className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-2">100%</p>
-                <p className="text-base sm:text-lg text-white/90 font-medium">
-                  Sur<br className="hidden sm:block" />-mesure
-                </p>
-              </div>
-            </div>
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg px-2 py-2 text-center">
+            <p className="text-sm font-bold text-white">0€</p>
+            <p className="text-[10px] text-white/75 leading-tight">Frais<br/>cachés</p>
           </div>
-          
-          {/* Boutons d'action */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-2xl mx-auto">
-            <Button 
-              asChild 
-              size="lg" 
-              className="bg-white text-primary hover:bg-gray-100 font-bold text-lg px-8 py-7 h-auto rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all"
-            >
-              <Link href="/prendre-rdv">
-                <Calendar className="h-5 w-5 mr-2" />
-                Prendre rendez-vous
-              </Link>
-            </Button>
-            
-            <Button 
-              asChild 
-              size="lg" 
-              className="bg-white/20 backdrop-blur-sm text-white border-2 border-white/40 hover:bg-white/30 font-bold text-lg px-8 py-7 h-auto rounded-full hover:shadow-xl transform hover:scale-105 transition-all"
-            >
-              <Link href="/">
-                <ArrowRight className="h-5 w-5 mr-2" />
-                Découvrir le site
-              </Link>
-            </Button>
-          </div>
-          
-          {/* Points de réassurance */}
-          <div className="mt-10 text-center">
-            <p className="text-base text-white/80 font-medium">
-              ✓ Consultation gratuite &nbsp;&nbsp; ✓ Sans engagement &nbsp;&nbsp; ✓ Experts certifiés
-            </p>
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg px-2 py-2 text-center">
+            <p className="text-sm font-bold text-white">100%</p>
+            <p className="text-[10px] text-white/75 leading-tight">Sur<br/>mesure</p>
           </div>
         </div>
+        
+        {/* Boutons d'action - tailles réduites */}
+        <div className="space-y-2 mb-3">
+          <Button
+            asChild
+            size="sm"
+            className="w-full h-8 bg-white text-primary hover:bg-gray-50 text-xs font-medium rounded-lg"
+          >
+            <Link href="/prendre-rdv">
+              Prendre rendez-vous
+              <ArrowRight className="ml-1.5 h-3 w-3" />
+            </Link>
+          </Button>
+          <Button
+            asChild
+            size="sm"
+            variant="ghost"
+            className="w-full h-7 bg-white/10 text-white hover:bg-white/15 text-xs font-normal rounded-lg border border-white/20"
+          >
+            <Link href="/">
+              Découvrir le site
+            </Link>
+          </Button>
+        </div>
+        
+        {/* Points de réassurance - très discrets */}
+        <div className="flex items-center justify-center gap-3 text-[10px] text-white/60">
+          <span className="flex items-center gap-0.5">
+            <Check className="h-2.5 w-2.5" />
+            Consultation gratuite
+          </span>
+          <span className="flex items-center gap-0.5">
+            <Check className="h-2.5 w-2.5" />
+            Sans engagement
+          </span>
+          <span className="flex items-center gap-0.5">
+            <Check className="h-2.5 w-2.5" />
+            Experts certifiés
+          </span>
+        </div>
       </div>
-    </section>
+    </div>
   )
 }
 
