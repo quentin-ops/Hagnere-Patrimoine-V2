@@ -114,13 +114,19 @@ export function PartnersSection() {
                   key={index}
                   className="flex-shrink-0"
                 >
-                  <div className="bg-white rounded-xl p-6 h-28 w-44 flex items-center justify-center border border-gray-200">
+                  <div className="relative bg-white dark:bg-zinc-900 rounded-xl p-6 h-28 w-44 flex items-center justify-center border border-gray-200 dark:border-zinc-700 group overflow-hidden">
                     <img
                       src={partner.logo}
                       alt={partner.name}
-                      className="max-h-14 max-w-32 w-auto h-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                      className="max-h-14 max-w-32 w-auto h-auto object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
                       style={{ objectFit: 'contain' }}
                     />
+                    {/* Overlay avec le nom du partenaire */}
+                    <div className="absolute inset-0 bg-black/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                      <span className="text-white text-sm font-semibold text-center px-2">
+                        {partner.name}
+                      </span>
+                    </div>
                   </div>
                 </div>
               ))}

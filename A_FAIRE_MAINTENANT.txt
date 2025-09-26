@@ -1,0 +1,54 @@
+🎉 VOS VIDÉOS SONT PRÊTES !
+============================
+
+✅ COMPRESSION RÉUSSIE : 860 MB → 15 MB !
+
+📁 Vos fichiers compressés sont dans : 
+   videos-optimized/
+
+MAINTENANT, FAITES CECI :
+=========================
+
+1️⃣ OUVRIR LE NAVIGATEUR
+   Allez sur : http://localhost:3030/test-video-upload
+
+2️⃣ UPLOADER VOS VIDÉOS
+   
+   Pour chaque Hero (1, 2, 3, 4), uploadez :
+   - Le fichier .webm (meilleure qualité)
+   - Le fichier .mp4 (compatibilité)
+   - Le fichier _poster.jpg (preview)
+
+   📁 Les fichiers sont dans : videos-optimized/
+
+3️⃣ COPIER LES URLs S3
+   
+   Après chaque upload, cliquez "Copier URL"
+   Gardez ces URLs quelque part !
+
+4️⃣ METTRE À JOUR LE CODE
+   
+   Dans components/hero-aurora.tsx (ligne ~185) :
+   Remplacez les URLs placeholder par vos vraies URLs S3
+
+============================
+
+SI LE SITE N'EST PAS ACCESSIBLE :
+
+Ouvrez un Terminal et tapez :
+cd "/Users/quentinhagnere/Development/Hagnéré Patrimoine/hagnere-patrimoine"
+PORT=3030 npm run dev
+
+Puis allez sur : http://localhost:3030/test-video-upload
+
+============================
+
+BESOIN D'AIDE ?
+
+Vos vidéos compressées :
+- hero1.webm + hero1_h264.mp4 + hero1_poster.jpg
+- hero2.webm + hero2_h264.mp4 + hero2_poster.jpg
+- hero3.webm + hero3_h264.mp4 + hero3_poster.jpg
+- hero4.webm + hero4_h264.mp4 + hero4_poster.jpg
+
+Toutes dans : videos-optimized/

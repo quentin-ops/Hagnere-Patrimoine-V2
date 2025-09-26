@@ -176,3 +176,20 @@ enum MessageStatus {
   REPLIED
   ARCHIVED
 }
+
+/// Stocke les consentements marketing / partenaires recueillis sur les formulaires
+model MarketingContact {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  firstName      String?
+  lastName       String?
+  newsletterOptIn Boolean  @default(false)
+  partnersOptIn   Boolean  @default(false)
+  source          String?  // ex: "simulation_compound"
+  metadata        Json?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([newsletterOptIn])
+  @@index([partnersOptIn])
+}

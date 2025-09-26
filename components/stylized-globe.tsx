@@ -226,30 +226,44 @@ export default function StylizedGlobe() {
   }, [cities, webglSupported])
 
   useEffect(() => {
-    if (!webglSupported || !globeRef.current) {
+    if (!webglSupported) {
       return
     }
 
-    const globe = globeRef.current
+    // Attendre que le globe soit disponible
+    const checkInterval = setInterval(() => {
+      if (globeRef.current && globeRef.current.controls) {
+        const globe = globeRef.current
+        
+        // Initial view - more zoomed in on Europe
+        globe.pointOfView({ lat: 45, lng: 10, altitude: 1.8 }, 1000)
+        
+        // Auto-rotate - rotation automatique activée
+        const controls = globe.controls()
+        controls.autoRotate = true
+        controls.autoRotateSpeed = 1.5  // Vitesse de rotation augmentée pour être sûr qu'elle soit visible
+        controls.enableZoom = false  // Disable zoom to allow page scroll
+        controls.minDistance = 150
+        controls.maxDistance = 600
+        controls.enablePan = false
+        controls.enableRotate = true
+        
+        console.log("Globe auto-rotate configuré avec succès")
+        clearInterval(checkInterval)
+      }
+    }, 100) // Vérifier toutes les 100ms
 
-    // Initial view - more zoomed in on Europe
-    const timer = window.setTimeout(() => {
-      globe.pointOfView({ lat: 45, lng: 10, altitude: 1.8 }, 1000)
-    }, 100)
-
-    // Auto-rotate
-    globe.controls().autoRotate = !prefersReducedMotion
-    globe.controls().autoRotateSpeed = prefersReducedMotion ? 0 : 0.45
-    globe.controls().enableZoom = false  // Disable zoom to allow page scroll
-    globe.controls().minDistance = 150
-    globe.controls().maxDistance = 600
-    globe.controls().enablePan = false
-    globe.controls().enableRotate = true
+    // Timeout de sécurité pour éviter une boucle infinie
+    const timeout = setTimeout(() => {
+      clearInterval(checkInterval)
+      console.log("Timeout: impossible de configurer le globe")
+    }, 5000)
 
     return () => {
-      window.clearTimeout(timer)
+      clearInterval(checkInterval)
+      clearTimeout(timeout)
     }
-  }, [webglSupported, prefersReducedMotion])
+  }, [webglSupported])
 
   return (
     <div className="relative w-full h-[600px] bg-gradient-to-b from-black via-slate-950 to-black rounded-2xl overflow-hidden">
@@ -273,6 +287,23 @@ export default function StylizedGlobe() {
             }}
           />
         ))}
+      </div>
+
+      {/* Scrolling "INTERNATIONAL" text in background */}
+      <div className="absolute inset-x-0 top-0 h-full overflow-hidden pointer-events-none">
+        <div className="relative h-full w-full flex items-center justify-center">
+          <div className="absolute flex flex-col animate-scroll-vertical">
+            <div className="text-white/[0.025] text-[4rem] md:text-[5rem] lg:text-[6rem] xl:text-[7rem] font-black tracking-tight whitespace-nowrap text-center mb-24">
+              INTERNATIONAL
+            </div>
+            <div className="text-white/[0.025] text-[4rem] md:text-[5rem] lg:text-[6rem] xl:text-[7rem] font-black tracking-tight whitespace-nowrap text-center mb-24">
+              INTERNATIONAL
+            </div>
+            <div className="text-white/[0.025] text-[4rem] md:text-[5rem] lg:text-[6rem] xl:text-[7rem] font-black tracking-tight whitespace-nowrap text-center">
+              INTERNATIONAL
+            </div>
+          </div>
+        </div>
       </div>
       
       <div className="w-full h-full flex items-center justify-end pr-8" style={{ perspective: '1000px' }}>
@@ -382,29 +413,31 @@ export default function StylizedGlobe() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
       
       {/* Main Info Text */}
-      <div className="absolute left-12 top-1/2 -translate-y-1/2 z-20 max-w-sm">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-            <GlobeIcon className="h-8 w-8 text-white" />
+      <div className="absolute left-8 lg:left-12 top-1/2 -translate-y-1/2 z-20 max-w-sm">
+        <div className="bg-black/15 backdrop-blur-lg rounded-2xl p-6 lg:p-8 border border-white/10 shadow-2xl">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+              <GlobeIcon className="h-8 w-8 text-white" />
+            </div>
           </div>
-        </div>
-        <h2 className="text-3xl font-bold text-white mb-6">
-          Hagnéré Patrimoine intervient auprès de ses clients dans plus de 25 pays. Rejoignez-nous aussi !
-        </h2>
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Button size="lg" asChild className="bg-white text-black hover:bg-white/90">
-            <Link href="/votre-projet">
-              <FileText className="mr-2 h-4 w-4" />
-              Bilan Patrimonial
+          <h2 className="text-3xl font-bold text-white mb-6">
+            Hagnéré Patrimoine intervient auprès de ses clients dans 22 pays.
+          </h2>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button size="lg" asChild className="bg-white text-black hover:bg-white/90">
+              <Link href="/votre-projet">
+                <FileText className="mr-2 h-4 w-4" />
+                Bilan Patrimonial
+              </Link>
+            </Button>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center h-10 px-6 rounded-md text-sm font-medium transition-all border border-white bg-transparent text-white hover:bg-white/10 backdrop-blur-sm"
+            >
+              <Phone className="mr-2 h-4 w-4" />
+              Contact
             </Link>
-          </Button>
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center h-10 px-6 rounded-md text-sm font-medium transition-all border border-white bg-transparent text-white hover:bg-white/10 backdrop-blur-sm"
-          >
-            <Phone className="mr-2 h-4 w-4" />
-            Contact
-          </Link>
+          </div>
         </div>
       </div>
       

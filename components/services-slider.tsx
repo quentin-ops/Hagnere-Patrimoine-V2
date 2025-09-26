@@ -19,8 +19,9 @@ import {
 interface ServiceData {
   title: string
   description: string
-  icon: React.ComponentType<{ className?: string }>
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>
   highlights?: string[]
+  imageUrl?: string
 }
 
 const services: ServiceData[] = [
@@ -67,10 +68,78 @@ const services: ServiceData[] = [
     highlights: ["Livrets", "PEL", "Assurance vie"]
   },
   {
-    title: "Financement",
-    description: "Obtenez les meilleurs taux pour vos projets immobiliers et personnels",
+    title: "Prêt immobilier résidence principale",
+    description: "Financement de votre résidence principale aux meilleurs taux",
+    icon: Home,
+    highlights: ["Résidence principale", "Taux optimisé", "Primo-accédant"],
+    imageUrl: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758555459222-967fadaa2e782b7e.webp"
+  },
+  {
+    title: "Prêt immobilier RS",
+    description: "Crédit pour votre résidence secondaire avec conditions avantageuses",
+    icon: Home,
+    highlights: ["Résidence secondaire", "Maison vacances", "Investissement plaisir"]
+  },
+  {
+    title: "Prêt immobilier locatif",
+    description: "Financement pour vos investissements locatifs rentables",
+    icon: Building2,
+    highlights: ["Investissement locatif", "Défiscalisation", "Rentabilité"]
+  },
+  {
+    title: "Prêt relais",
+    description: "Avance pour acheter avant d'avoir vendu votre bien actuel",
     icon: CreditCard,
-    highlights: ["Crédit immobilier", "Rachat", "Prêt personnel"]
+    highlights: ["Achat avant vente", "Transition sereine", "Flexibilité"]
+  },
+  {
+    title: "Prêt in fine",
+    description: "Capital remboursé en une seule fois à la fin du prêt",
+    icon: Wallet,
+    highlights: ["Capital in fine", "Intérêts déductibles", "Optimisation fiscale"]
+  },
+  {
+    title: "Crédit marchand de biens",
+    description: "Financement pour achat-revente et rénovation immobilière",
+    icon: TrendingUp,
+    highlights: ["Achat-revente", "Rénovation", "Plus-value"]
+  },
+  {
+    title: "Crédit lombard",
+    description: "Prêt garanti par votre portefeuille de titres financiers",
+    icon: Banknote,
+    highlights: ["Sur titres", "Liquidité", "Sans vente d'actifs"]
+  },
+  {
+    title: "Rachat de crédits",
+    description: "Regroupement de vos prêts pour réduire vos mensualités",
+    icon: CreditCard,
+    highlights: ["Regroupement", "Mensualité réduite", "Simplification"]
+  },
+  {
+    title: "Crédit hypothécaire",
+    description: "Prêt garanti par un bien immobilier pour tous vos projets",
+    icon: Building2,
+    highlights: ["Garantie immobilière", "Montant élevé", "Taux attractif"]
+  },
+  {
+    title: "Prêt consommation",
+    description: "Financement pour vos projets personnels et travaux",
+    icon: CreditCard,
+    highlights: ["Projets personnels", "Travaux", "Biens d'équipement"]
+  },
+  {
+    title: "Prêt viager hypothécaire",
+    description: "Solution pour séniors : liquidité sans vendre votre bien",
+    icon: Shield,
+    highlights: ["Séniors", "Liquidité", "Rester chez soi"],
+    imageUrl: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758555380183-b2f30aca1d2fff5b.webp"
+  },
+  {
+    title: "Vente à réméré",
+    description: "Vente temporaire avec possibilité de rachat de votre bien",
+    icon: FileText,
+    highlights: ["Liquidité immédiate", "Rachat possible", "Solution temporaire"]
   },
   {
     title: "Patrimoine",
@@ -227,7 +296,7 @@ function ServiceCard3D({
       style={style}
     >
       <div className="w-[180px] rounded-xl overflow-hidden bg-background border shadow-lg hover:shadow-xl">
-        {/* Zone image avec fond noir et icône */}
+        {/* Zone image avec fond noir et icône ou image */}
         <div className="relative h-[80px] bg-zinc-950 dark:bg-zinc-900">
           {/* Animated background blobs */}
           <div className="absolute inset-0 overflow-hidden">
@@ -282,12 +351,20 @@ function ServiceCard3D({
               }} />
           </div>
 
-          {/* Icon in center */}
+          {/* Icon or image in center */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <service.icon
-              className="w-8 h-8 text-white relative z-10"
-              style={{ strokeWidth: 1.5 }}
-            />
+            {service.imageUrl ? (
+              <img
+                src={service.imageUrl}
+                alt={service.title}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <service.icon
+                className="w-8 h-8 text-white relative z-10"
+                style={{ strokeWidth: 1.5 }}
+              />
+            )}
           </div>
         </div>
 

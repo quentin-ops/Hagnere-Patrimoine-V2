@@ -28,6 +28,7 @@ import {
   ScrollText,
   CreditCard,
   TrendingUp,
+  ShoppingBag,
   Building,
   Hotel,
   Factory,
@@ -59,6 +60,8 @@ import {
   Ship,
   Plane,
   Globe,
+  Car,
+  Bike,
   Map,
   BookOpen,
   GraduationCap,
@@ -114,7 +117,16 @@ import {
   ScaleIcon,
   KeySquare,
   Building as BuildingIcon,
-  HotelIcon
+  HotelIcon,
+  Calendar,
+  ArrowRightLeft,
+  Package,
+  Newspaper,
+  PlayCircle,
+  Target,
+  PieChart,
+  Leaf,
+  Beef
 } from "lucide-react"
 
 // Liste des produits par catégorie avec descriptions et images (issus du header)
@@ -206,7 +218,7 @@ const products = [
     name: "Viager",
     icon: Users,
     description: "Investissement éthique",
-    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758546389223-9a7d8e6f7b5c4a3e.webp"
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758557657948-e4ee82b8d7161d67.webp"
   },
   // Investissements - Financier
   {
@@ -224,13 +236,35 @@ const products = [
     image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758545846278-e13bcaf310e7b378.webp"
   },
 
-  // Placements
+  // Assurances - Nouvelle liste complète
+  // Assurances Crédit & Santé
   {
-    category: "Assurances / Prévoyance",
-    name: "Assurance-vie",
+    category: "Assurances",
+    name: "Assurance emprunteur",
     icon: Shield,
-    description: "Support d'épargne privilégié",
-    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758312131364-61e855e863f8c5e8-medium.webp"
+    description: "Protection crédit",
+    image: "https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Assurances",
+    name: "Complémentaire Santé",
+    icon: Heart,
+    description: "Couverture santé optimale",
+    image: "https://images.pexels.com/photos/4021779/pexels-photo-4021779.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Assurances",
+    name: "Complémentaire santé expatriés",
+    icon: Globe,
+    description: "Santé internationale",
+    image: "https://images.pexels.com/photos/3769146/pexels-photo-3769146.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Assurances",
+    name: "Assurance voyage",
+    icon: Plane,
+    description: "Protection voyage",
+    image: "https://images.pexels.com/photos/2007647/pexels-photo-2007647.jpeg?w=400&h=250&fit=crop"
   },
   {
     category: "Gestion de fortune",
@@ -239,42 +273,64 @@ const products = [
     description: "Haut de gamme international",
     image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758312372504-56e1aa5e967ead53-medium.webp"
   },
+  // Placements - Nouvelle liste simplifiée
   {
     category: "Placements",
-    name: "Contrat de capitalisation",
-    icon: CoinsIcon,
-    description: "Optimisation fiscale",
+    name: "Assurance-vie",
+    icon: Shield,
+    description: "Support privilégié d'épargne",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758312131364-61e855e863f8c5e8-medium.webp"
+  },
+  {
+    category: "Placements",
+    name: "Assurance-vie Luxembourgeoise",
+    icon: Crown,
+    description: "Haut de gamme international",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758312372504-56e1aa5e967ead53-medium.webp"
+  },
+  // Assurances Mobilité & Habitation
+  {
+    category: "Assurances",
+    name: "Assurance habitation",
+    icon: Home,
+    description: "Protection du logement",
+    image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Assurances",
+    name: "Assurance voiture",
+    icon: Car,
+    description: "Véhicule protégé",
+    image: "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Assurances",
+    name: "Assurance deux-roues et quad",
+    icon: Bike,
+    description: "Moto, scooter, quad",
+    image: "https://images.pexels.com/photos/2607554/pexels-photo-2607554.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Assurances",
+    name: "Assurance Bateaux / Jet-Skis",
+    icon: Anchor,
+    description: "Navigation protégée",
+    image: "https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?w=400&h=250&fit=crop"
+  },
+
+  {
+    category: "Placements",
+    name: "Contrat de capitalisation (IR/IS)",
+    icon: HandCoins,
+    description: "Transmission optimisée",
     image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758312542466-87876bec83e68fdc-medium.webp"
   },
   {
     category: "Placements",
-    name: "Contrat de capitalisation (personne morale)",
-    icon: BriefcaseBusiness,
-    description: "Pour les sociétés",
-    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758312917480-effcf004ac02d0bb-medium.webp"
-  },
-  {
-    category: "Assurances / Prévoyance",
-    name: "Plan Épargne Retraite (PER)",
+    name: "PER",
     icon: RotateCw,
-    description: "Préparer sa retraite",
+    description: "Plan Épargne Retraite",
     image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758313771620-40578957581e81a9-medium.webp"
-  },
-
-  // Épargne & Placements
-  {
-    category: "Placements",
-    name: "PEA & Compte-Titres",
-    icon: LineChart,
-    description: "Investissement en bourse",
-    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758314084104-bb6792e363cba6a3-medium.webp"
-  },
-  {
-    category: "Placements",
-    name: "Livrets & Épargne",
-    icon: PiggyBank,
-    description: "Solutions court terme",
-    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758314708988-fa1408f8e444d016.webp"
   },
   {
     category: "Gestion de fortune",
@@ -285,40 +341,63 @@ const products = [
   },
   {
     category: "Placements",
-    name: "Produits Structurés",
-    icon: Zap,
-    description: "Protection du capital",
-    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758316559295-6836eb2b274e6653.webp"
+    name: "PEA",
+    icon: TrendingUp,
+    description: "Actions européennes défiscalisées",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758314084104-bb6792e363cba6a3-medium.webp"
   },
   {
     category: "Placements",
-    name: "Cryptomonnaies",
-    icon: Bitcoin,
-    description: "Actifs numériques",
-    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758318388066-3ee7934313a17881.webp"
+    name: "Compte-Titres",
+    icon: BriefcaseBusiness,
+    description: "Investissement libre",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758314084104-bb6792e363cba6a3-medium.webp"
   },
 
-  // Retraite & Prévoyance
+  // Assurances Décès & Prévoyance
   {
-    category: "Assurances / Prévoyance",
-    name: "Contrats Madelin",
-    icon: BriefcaseBusiness,
-    description: "TNS et professions libérales",
-    image: "https://images.pexels.com/photos/4427622/pexels-photo-4427622.jpeg?w=400&h=250&fit=crop"
-  },
-  {
-    category: "Assurances / Prévoyance",
-    name: "Prévoyance",
-    icon: Umbrella,
-    description: "Protection famille",
+    category: "Assurances",
+    name: "Assurance décès",
+    icon: Users,
+    description: "Capital ou rente",
     image: "https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?w=400&h=250&fit=crop"
   },
   {
-    category: "Assurances / Prévoyance",
-    name: "Mutuelle Santé",
-    icon: HeartPulse,
-    description: "Complémentaire santé",
-    image: "https://images.pexels.com/photos/4021779/pexels-photo-4021779.jpeg?w=400&h=250&fit=crop"
+    category: "Assurances",
+    name: "Assurance obsèques",
+    icon: Heart,
+    description: "Frais funéraires",
+    image: "https://images.pexels.com/photos/4427622/pexels-photo-4427622.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Assurances",
+    name: "Garantie accident de la vie",
+    icon: Shield,
+    description: "Protection complète",
+    image: "https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?w=400&h=250&fit=crop"
+  },
+  // Assurances Immobilier
+  {
+    category: "Assurances",
+    name: "Assurance PNO",
+    icon: Key,
+    description: "Propriétaire non occupant",
+    image: "https://images.pexels.com/photos/955793/pexels-photo-955793.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Assurances",
+    name: "Assurance PNO Immeuble",
+    icon: Building,
+    description: "Immeuble de rapport",
+    image: "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?w=400&h=250&fit=crop"
+  },
+  // Assurances Spécifiques
+  {
+    category: "Assurances",
+    name: "Assurance études internationales",
+    icon: GraduationCap,
+    description: "Protection étudiants",
+    image: "https://images.pexels.com/photos/1462630/pexels-photo-1462630.jpeg?w=400&h=250&fit=crop"
   },
 
   // Transmission & Succession
@@ -365,48 +444,184 @@ const products = [
     image: "https://images.pexels.com/photos/6669864/pexels-photo-6669864.jpeg?w=400&h=250&fit=crop"
   },
 
-  // Financements
+  // Financements - Crédits Immobiliers
   {
     category: "Financements",
-    name: "Résidence principale",
+    name: "Prêt immobilier RP",
     icon: HomeIcon,
-    description: "Financement de votre habitation",
-    image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?w=400&h=250&fit=crop"
+    description: "Résidence principale",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758555459222-967fadaa2e782b7e.webp"
   },
   {
     category: "Financements",
-    name: "Résidence secondaire",
+    name: "Prêt immobilier RS",
     icon: Palmtree,
-    description: "Financement maison de vacances",
-    image: "https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?w=400&h=250&fit=crop"
+    description: "Résidence secondaire",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758556327664-2cc9ad01743a2f9d.webp"
   },
   {
     category: "Financements",
     name: "Prêt immobilier locatif",
     icon: Key,
-    description: "Investissement locatif",
-    image: "https://images.pexels.com/photos/1370704/pexels-photo-1370704.jpeg?w=400&h=250&fit=crop"
+    description: "Bien destiné à la location",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758559748796-9bee8618834c5096.webp"
   },
   {
     category: "Financements",
-    name: "Financement de SCPI",
-    icon: BarChart3,
-    description: "Crédit pour parts de SCPI",
+    name: "Prêt relais",
+    icon: RotateCw,
+    description: "Avance en attendant la vente",
+    image: "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758558849478-5a6dfc89b7ee6751.webp"
+  },
+  {
+    category: "Financements",
+    name: "Prêt in fine",
+    icon: Wallet,
+    description: "Capital remboursé à la fin",
+    image: "https://images.pexels.com/photos/4246161/pexels-photo-4246161.jpeg?w=400&h=250&fit=crop"
+  },
+  
+  // Financements - Crédits Spécialisés
+  {
+    category: "Financements",
+    name: "Crédit marchand de biens",
+    icon: TrendingUp,
+    description: "Achat, rénover, revendre",
+    image: "https://images.pexels.com/photos/7821713/pexels-photo-7821713.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Financements",
+    name: "Crédit lombard",
+    icon: Vault,
+    description: "Sur portefeuille titres",
+    image: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?w=400&h=250&fit=crop"
+  },
+
+  // Financements - Crédits de Restructuration
+  {
+    category: "Financements",
+    name: "Rachat de crédits",
+    icon: RotateCw,
+    description: "Regroupement de prêts",
+    image: "https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Financements",
+    name: "Crédit hypothécaire",
+    icon: KeySquare,
+    description: "Garanti par un bien immobilier",
+    image: "https://images.pexels.com/photos/4968391/pexels-photo-4968391.jpeg?w=400&h=250&fit=crop"
+  },
+
+  // Financements - Crédits Spécifiques
+  {
+    category: "Financements",
+    name: "Prêt consommation",
+    icon: ShoppingBag,
+    description: "Biens, travaux, projets",
+    image: "https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Financements",
+    name: "Prêt viager hypothécaire",
+    icon: Shield,
+    description: "Pour séniors, liquidité sans vente",
+    image: "https://images.pexels.com/photos/3824771/pexels-photo-3824771.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Financements",
+    name: "Vente à réméré",
+    icon: FileText,
+    description: "Liquidité avec rachat possible",
+    image: "https://images.pexels.com/photos/8293778/pexels-photo-8293778.jpeg?w=400&h=250&fit=crop"
+  },
+
+  // Rendez-vous
+  {
+    category: "Rendez-vous",
+    name: "Bilan Patrimonial 360°",
+    icon: PieChart,
+    description: "Analyse complète gratuite",
+    image: "https://images.pexels.com/photos/7681091/pexels-photo-7681091.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Rendez-vous",
+    name: "Consultation Elite",
+    icon: Crown,
+    description: "Conseil haut de gamme",
+    image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Rendez-vous",
+    name: "Stratégie 1h",
+    icon: Lightbulb,
+    description: "Session de travail d'1 heure",
+    image: "https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Rendez-vous",
+    name: "Stratégies 2h",
+    icon: Target,
+    description: "Session approfondie de 2 heures",
     image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?w=400&h=250&fit=crop"
   },
   {
-    category: "Financements",
-    name: "Prêt Hypothécaire",
-    icon: KeySquare,
-    description: "Garantie sur bien immobilier",
-    image: "https://images.pexels.com/photos/4246161/pexels-photo-4246161.jpeg?w=400&h=250&fit=crop"
+    category: "Rendez-vous",
+    name: "Hagnéré Investissement",
+    icon: Briefcase,
+    description: "Présentation opportunités exclusives",
+    image: "https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?w=400&h=250&fit=crop"
+  },
+
+  // Ressources
+  {
+    category: "Ressources",
+    name: "Simulateurs",
+    icon: Calculator,
+    description: "Calculez vos économies d'impôts",
+    image: "https://images.pexels.com/photos/6863255/pexels-photo-6863255.jpeg?w=400&h=250&fit=crop"
   },
   {
-    category: "Financements",
-    name: "Crédit Lombard",
-    icon: Vault,
-    description: "Prêt sur portefeuille titres",
-    image: "https://images.pexels.com/photos/7821713/pexels-photo-7821713.jpeg?w=400&h=250&fit=crop"
+    category: "Ressources",
+    name: "Guides fiscaux",
+    icon: BookOpen,
+    description: "Guides pratiques téléchargeables",
+    image: "https://images.pexels.com/photos/4560092/pexels-photo-4560092.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Ressources",
+    name: "Webinaires",
+    icon: Calendar,
+    description: "Sessions live avec nos experts",
+    image: "https://images.pexels.com/photos/4226122/pexels-photo-4226122.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Ressources",
+    name: "Actualités",
+    icon: Newspaper,
+    description: "Dernières actualités fiscales",
+    image: "https://images.pexels.com/photos/3944454/pexels-photo-3944454.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Ressources",
+    name: "Vidéos",
+    icon: PlayCircle,
+    description: "Tutoriels et cas pratiques",
+    image: "https://images.pexels.com/photos/4761352/pexels-photo-4761352.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Ressources",
+    name: "FAQ",
+    icon: Search,
+    description: "Réponses à vos questions",
+    image: "https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?w=400&h=250&fit=crop"
+  },
+  {
+    category: "Ressources",
+    name: "Témoignages",
+    icon: Heart,
+    description: "Retours d'expérience clients",
+    image: "https://images.pexels.com/photos/3184432/pexels-photo-3184432.jpeg?w=400&h=250&fit=crop"
   },
 
 ]
@@ -420,10 +635,12 @@ export function ProductsGrid() {
   const mainCategories = [
     { name: "Défiscalisation", icon: PiggyBank },
     { name: "Placements", icon: LineChart },
-    { name: "Investissements", icon: Building2 },
-    { name: "Financements", icon: TrendingUp },
-    { name: "Assurances / Prévoyance", icon: Shield },
-    { name: "Gestion de fortune", icon: Gift }
+    { name: "Investissements", icon: TrendingUp },
+    { name: "Financements", icon: CreditCard },
+    { name: "Assurances", icon: Shield },
+    { name: "Gestion de fortune", icon: Crown },
+    { name: "Rendez-vous", icon: Calendar },
+    { name: "Ressources", icon: BookOpen }
   ]
 
   // Filter products based on search and selected filters
@@ -483,80 +700,218 @@ export function ProductsGrid() {
   }
 
   return (
-    <div className="relative w-full space-y-6">
-      {/* Search and Filters Section */}
-      <div className="space-y-4">
-        {/* Search Bar */}
-        <div className="relative max-w-md mx-auto">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
-          <Input
-            type="text"
-            placeholder="Rechercher une solution..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 pr-4 py-2 w-full bg-white border-gray-200"
-          />
-        </div>
-
-        {/* Filter Badges */}
-        <div className="flex flex-wrap justify-center gap-2">
-          {mainCategories.map((category) => {
-            const Icon = category.icon
-            return (
-              <Badge
-                key={category.name}
-                variant={selectedFilters.includes(category.name) ? "default" : "outline"}
-                className={cn(
-                  "cursor-pointer flex items-center gap-1",
-                  selectedFilters.includes(category.name)
-                    ? "bg-black text-white hover:bg-gray-800"
-                    : "hover:bg-gray-100"
-                )}
-                onClick={() => {
-                  if (selectedFilters.includes(category.name)) {
-                    // Ne pas permettre de décocher si c'est le dernier filtre sélectionné
-                    if (selectedFilters.length > 1) {
-                      setSelectedFilters(selectedFilters.filter(f => f !== category.name))
-                    }
-                  } else {
-                    setSelectedFilters([...selectedFilters, category.name])
-                  }
-                }}
-              >
-                <Icon className="h-3 w-3" />
-                {category.name}
-              </Badge>
-            )
-          })}
-        </div>
-      </div>
-
-      {/* Products Grid Container */}
+    <div className="relative w-full space-y-8">
+      {/* Main decorative container with enhanced connection lines */}
       <div className="relative">
-        {/* Navigation arrows */}
-        <div className="absolute -left-4 top-1/2 -translate-y-1/2 z-10">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={handlePrevPage}
-          className="h-10 w-10 rounded-full bg-white shadow-lg border-gray-200 hover:bg-gray-50"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </Button>
-      </div>
-      <div className="absolute -right-4 top-1/2 -translate-y-1/2 z-10">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={handleNextPage}
-          className="h-10 w-10 rounded-full bg-white shadow-lg border-gray-200 hover:bg-gray-50"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </Button>
+        {/* Animated background patterns */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-br from-blue-50/50 to-transparent dark:from-blue-950/20 rounded-full blur-3xl" />
+          <div className="absolute top-0 right-1/4 w-64 h-64 bg-gradient-to-bl from-indigo-50/50 to-transparent dark:from-indigo-950/20 rounded-full blur-3xl" />
+        </div>
+
+        {/* Top decorative frame */}
+        <div className="absolute -top-4 left-0 right-0 flex items-center justify-between">
+          {/* Left corner decoration */}
+          <div className="relative">
+            <div className="w-20 h-px bg-gradient-to-r from-transparent to-gray-200 dark:to-gray-700" />
+            <div className="absolute right-0 top-0 w-2 h-2 border-t border-r border-gray-200 dark:border-gray-700 rounded-tr-sm" />
+          </div>
+
+          {/* Center top ornament */}
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-px bg-gray-200 dark:bg-gray-700" />
+            <div className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600" />
+            <div className="w-8 h-px bg-gray-200 dark:bg-gray-700" />
+          </div>
+
+          {/* Right corner decoration */}
+          <div className="relative">
+            <div className="w-20 h-px bg-gradient-to-l from-transparent to-gray-200 dark:to-gray-700" />
+            <div className="absolute left-0 top-0 w-2 h-2 border-t border-l border-gray-200 dark:border-gray-700 rounded-tl-sm" />
+          </div>
+        </div>
+
+        {/* Search and Filters Section with enhanced styling */}
+        <div className="relative space-y-6 py-10">
+          {/* Side vertical lines */}
+          <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-transparent via-gray-200/50 dark:via-gray-700/50 to-transparent" />
+          <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-transparent via-gray-200/50 dark:via-gray-700/50 to-transparent" />
+
+          {/* Decorative corner elements */}
+          <div className="absolute top-0 left-0 w-4 h-4">
+            <div className="absolute top-0 left-0 w-full h-px bg-gray-200 dark:bg-gray-700" />
+            <div className="absolute top-0 left-0 w-px h-full bg-gray-200 dark:bg-gray-700" />
+            <div className="absolute top-0 left-0 w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full" />
+          </div>
+          <div className="absolute top-0 right-0 w-4 h-4">
+            <div className="absolute top-0 right-0 w-full h-px bg-gray-200 dark:bg-gray-700" />
+            <div className="absolute top-0 right-0 w-px h-full bg-gray-200 dark:bg-gray-700" />
+            <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full" />
+          </div>
+
+          {/* Search Bar with enhanced connection design */}
+          <div className="relative">
+            {/* Connection lines to search */}
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+              <div className="w-12 h-px bg-gradient-to-r from-transparent to-gray-200 dark:to-gray-700" />
+              <div className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 animate-pulse" />
+              <div className="w-12 h-px bg-gradient-to-l from-transparent to-gray-200 dark:to-gray-700" />
+            </div>
+
+            <div className="relative max-w-md mx-auto">
+              {/* Search input with glass morphism effect */}
+              <div className="relative group">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 rounded-lg blur opacity-30 group-hover:opacity-50 transition duration-300" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500 z-10" />
+                <Input
+                  type="text"
+                  placeholder="Rechercher une solution..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="relative pl-10 pr-4 py-2 w-full bg-white/90 dark:bg-card/90 backdrop-blur-sm border-gray-200 dark:border-gray-700"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Enhanced connection bridge */}
+          <div className="relative flex items-center justify-center">
+            <div className="absolute w-full h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent" />
+            <div className="relative bg-white dark:bg-black px-4">
+              <div className="flex items-center gap-2">
+                <div className="w-1 h-1 bg-gray-400 dark:bg-gray-600 rounded-full" />
+                <div className="w-2 h-2 bg-gray-300 dark:bg-gray-700 rounded-full" />
+                <div className="w-1 h-1 bg-gray-400 dark:bg-gray-600 rounded-full" />
+              </div>
+            </div>
+          </div>
+
+          {/* Filter Badges with enhanced frame design */}
+          <div className="relative">
+            {/* Outer glow effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 rounded-xl blur-sm opacity-50" />
+
+            {/* Main frame with double border effect */}
+            <div className="absolute inset-0 border-2 border-gray-200/50 dark:border-gray-700/50 rounded-xl -z-10" />
+            <div className="absolute inset-1 border border-gray-100 dark:border-gray-800 rounded-lg -z-10" />
+
+            {/* Enhanced corner decorations */}
+            <div className="absolute -top-2 -left-2 w-4 h-4">
+              <div className="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-gray-400 dark:border-gray-500 rounded-tl" />
+              <div className="absolute top-0 left-0 w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full animate-pulse" />
+            </div>
+            <div className="absolute -top-2 -right-2 w-4 h-4">
+              <div className="absolute top-1 right-1 w-2 h-2 border-t-2 border-r-2 border-gray-400 dark:border-gray-500 rounded-tr" />
+              <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full animate-pulse" />
+            </div>
+            <div className="absolute -bottom-2 -left-2 w-4 h-4">
+              <div className="absolute bottom-1 left-1 w-2 h-2 border-b-2 border-l-2 border-gray-400 dark:border-gray-500 rounded-bl" />
+              <div className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full animate-pulse" />
+            </div>
+            <div className="absolute -bottom-2 -right-2 w-4 h-4">
+              <div className="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-gray-400 dark:border-gray-500 rounded-br" />
+              <div className="absolute bottom-0 right-0 w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full animate-pulse" />
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-2 p-4">
+              {mainCategories.map((category, index) => {
+                const Icon = category.icon
+                return (
+                  <div key={category.name} className="relative">
+                    {/* Connector dots between badges */}
+                    {index < mainCategories.length - 1 && (
+                      <div className="absolute top-1/2 -right-3 w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600 -translate-y-1/2 z-10" />
+                    )}
+                    <Badge
+                      variant={selectedFilters.includes(category.name) ? "default" : "outline"}
+                      className={cn(
+                        "cursor-pointer flex items-center gap-1 relative",
+                        selectedFilters.includes(category.name)
+                          ? "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                          : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                      )}
+                      onClick={() => {
+                        if (selectedFilters.includes(category.name)) {
+                          return
+                        } else {
+                          setSelectedFilters([category.name])
+                        }
+                      }}
+                    >
+                      <Icon className="h-3 w-3" />
+                      {category.name}
+                    </Badge>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Bottom connecting line */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-8 bg-gradient-to-b from-gray-200 dark:from-gray-700 to-transparent" />
+        </div>
       </div>
 
-      {/* Products Grid - 4 columns x 2 rows */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Products Grid Container with enhanced connection lines */}
+      <div className="relative mt-8">
+        {/* Connection from filters to grid */}
+        <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-px h-8 bg-gradient-to-b from-gray-200 dark:from-gray-700 to-transparent" />
+
+        {/* Enhanced grid frame with multiple layers */}
+        <div className="absolute -inset-4 pointer-events-none">
+          {/* Outer decorative frame */}
+          <div className="absolute inset-4 border border-gray-100/50 dark:border-gray-800/50 rounded-2xl" />
+
+          {/* Corner brackets with enhanced design */}
+          <div className="absolute top-4 left-4 w-12 h-12">
+            <div className="absolute inset-0 border-l-2 border-t-2 border-gray-300 dark:border-gray-600 rounded-tl-xl" />
+            <div className="absolute -top-1 -left-1 w-3 h-3 bg-gradient-to-br from-gray-400 to-gray-300 dark:from-gray-500 dark:to-gray-600 rounded-full opacity-70" />
+            <div className="absolute top-0 left-0 w-1.5 h-1.5 bg-gray-500 dark:bg-gray-400 rounded-full animate-pulse" />
+          </div>
+          <div className="absolute top-4 right-4 w-12 h-12">
+            <div className="absolute inset-0 border-r-2 border-t-2 border-gray-300 dark:border-gray-600 rounded-tr-xl" />
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-bl from-gray-400 to-gray-300 dark:from-gray-500 dark:to-gray-600 rounded-full opacity-70" />
+            <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-gray-500 dark:bg-gray-400 rounded-full animate-pulse" />
+          </div>
+          <div className="absolute bottom-4 left-4 w-12 h-12">
+            <div className="absolute inset-0 border-l-2 border-b-2 border-gray-300 dark:border-gray-600 rounded-bl-xl" />
+            <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-gradient-to-tr from-gray-400 to-gray-300 dark:from-gray-500 dark:to-gray-600 rounded-full opacity-70" />
+            <div className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-gray-500 dark:bg-gray-400 rounded-full animate-pulse" />
+          </div>
+          <div className="absolute bottom-4 right-4 w-12 h-12">
+            <div className="absolute inset-0 border-r-2 border-b-2 border-gray-300 dark:border-gray-600 rounded-br-xl" />
+            <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-tl from-gray-400 to-gray-300 dark:from-gray-500 dark:to-gray-600 rounded-full opacity-70" />
+            <div className="absolute bottom-0 right-0 w-1.5 h-1.5 bg-gray-500 dark:bg-gray-400 rounded-full animate-pulse" />
+          </div>
+
+          {/* Cross-hair connections at midpoints */}
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
+            <div className="w-px h-3 bg-gradient-to-b from-gray-300 to-transparent dark:from-gray-600" />
+            <div className="w-2 h-2 bg-gray-200 dark:bg-gray-700 rounded-full border border-gray-300 dark:border-gray-600" />
+          </div>
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
+            <div className="w-2 h-2 bg-gray-200 dark:bg-gray-700 rounded-full border border-gray-300 dark:border-gray-600" />
+            <div className="w-px h-3 bg-gradient-to-t from-gray-300 to-transparent dark:from-gray-600" />
+          </div>
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center">
+            <div className="w-3 h-px bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-600" />
+            <div className="w-2 h-2 bg-gray-200 dark:bg-gray-700 rounded-full border border-gray-300 dark:border-gray-600" />
+          </div>
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center">
+            <div className="w-2 h-2 bg-gray-200 dark:bg-gray-700 rounded-full border border-gray-300 dark:border-gray-600" />
+            <div className="w-3 h-px bg-gradient-to-l from-gray-300 to-transparent dark:from-gray-600" />
+          </div>
+
+          {/* Decorative grid lines */}
+          <div className="absolute top-1/3 left-8 right-8 h-px bg-gradient-to-r from-transparent via-gray-100 dark:via-gray-800 to-transparent opacity-50" />
+          <div className="absolute top-2/3 left-8 right-8 h-px bg-gradient-to-r from-transparent via-gray-100 dark:via-gray-800 to-transparent opacity-50" />
+          <div className="absolute left-1/4 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-gray-100 dark:via-gray-800 to-transparent opacity-50" />
+          <div className="absolute left-1/2 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-gray-100 dark:via-gray-800 to-transparent opacity-50" />
+          <div className="absolute left-3/4 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-gray-100 dark:via-gray-800 to-transparent opacity-50" />
+        </div>
+
+        {/* Products Grid - 4 columns x 2 rows */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6 relative z-10">
         {currentProducts.map((product, index) => {
           const Icon = product.icon
           return (
@@ -622,23 +977,75 @@ export function ProductsGrid() {
           )
         })}
       </div>
+      </div>
 
-        {/* Page Indicator */}
-        <div className="flex justify-center mt-6 gap-1">
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentPage(i)}
-              className={cn(
-                "w-2 h-2 rounded-full transition-all",
-                currentPage === i
-                  ? "bg-gray-900 w-6"
-                  : "bg-gray-300 hover:bg-gray-400"
-              )}
-              aria-label={`Go to page ${i + 1}`}
-            />
-          ))}
+      {/* Navigation Controls with connection lines */}
+      <div className="relative mt-12">
+        {/* Connection line from grid to navigation */}
+        <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-px h-6 bg-gradient-to-b from-gray-200 dark:from-gray-700 to-transparent" />
+
+        {/* Navigation container with frame */}
+        <div className="relative inline-flex items-center justify-center gap-4 mx-auto w-full">
+          {/* Background connection line */}
+          <div className="absolute left-1/4 right-1/4 top-1/2 -translate-y-1/2 h-px bg-gray-200 dark:bg-gray-700" />
+
+          {/* Previous Button with connection */}
+          <div className="relative">
+            <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-px bg-gray-200 dark:bg-gray-700" />
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={handlePrevPage}
+              className="h-10 w-10 rounded-full bg-white dark:bg-card shadow-lg border-gray-200 dark:border-border hover:bg-gray-50 dark:hover:bg-gray-900 relative z-10"
+              disabled={filteredProducts.length === 0}
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+          </div>
+
+          {/* Page Indicator with frame */}
+          <div className="relative px-8">
+            {/* Frame around indicators */}
+            <div className="absolute inset-0 border border-gray-100 dark:border-gray-800 rounded-full -z-10" />
+
+            {/* Connection dots */}
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-gray-300 dark:bg-gray-600 rounded-full" />
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-gray-300 dark:bg-gray-600 rounded-full" />
+
+            <div className="flex items-center gap-1 px-4 py-2">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentPage(i)}
+                  className={cn(
+                    "w-2 h-2 rounded-full transition-all relative",
+                    currentPage === i
+                      ? "bg-gray-900 dark:bg-white w-6"
+                      : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
+                  )}
+                  aria-label={`Go to page ${i + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Next Button with connection */}
+          <div className="relative">
+            <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-px bg-gray-200 dark:bg-gray-700" />
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={handleNextPage}
+              className="h-10 w-10 rounded-full bg-white dark:bg-card shadow-lg border-gray-200 dark:border-border hover:bg-gray-50 dark:hover:bg-gray-900 relative z-10"
+              disabled={filteredProducts.length === 0}
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
+
+        {/* Bottom decorative line */}
+        <div className="absolute -bottom-4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent" />
       </div>
     </div>
   )

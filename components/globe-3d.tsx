@@ -321,7 +321,7 @@ export default function Globe3D() {
       
       {/* Info overlay */}
       <div className="absolute bottom-4 left-4 text-white/60 text-xs">
-        <p>🌍 Présence mondiale • 10+ pays</p>
+        <p>🌍 Présence mondiale • 22 pays</p>
       </div>
     </div>
   )

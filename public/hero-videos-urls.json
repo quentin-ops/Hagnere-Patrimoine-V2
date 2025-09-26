@@ -1,0 +1,79 @@
+{
+  "uploadedAt": "2025-09-25T16:22:13.605Z",
+  "bucket": "hagnerepatrimoine",
+  "region": "eu-north-1",
+  "videos": [
+    {
+      "filename": "hero3.webm",
+      "url": "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/videos/hero/hero3.webm",
+      "description": "Vidéo Hero 3 - WebM (Mode Light Desktop)",
+      "size": "3.20 MB"
+    },
+    {
+      "filename": "hero3_h264.mp4",
+      "url": "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/videos/hero/hero3_h264.mp4",
+      "description": "Vidéo Hero 3 - MP4 (Mode Light Desktop)",
+      "size": "2.89 MB"
+    },
+    {
+      "filename": "hero3_poster.jpg",
+      "url": "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/videos/hero/hero3_poster.jpg",
+      "description": "Poster Hero 3 (Mode Light Desktop)",
+      "size": "0.62 MB"
+    },
+    {
+      "filename": "hero4.webm",
+      "url": "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/videos/hero/hero4.webm",
+      "description": "Vidéo Hero 4 - WebM (Mode Dark Desktop)",
+      "size": "2.73 MB"
+    },
+    {
+      "filename": "hero4_h264.mp4",
+      "url": "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/videos/hero/hero4_h264.mp4",
+      "description": "Vidéo Hero 4 - MP4 (Mode Dark Desktop)",
+      "size": "1.68 MB"
+    },
+    {
+      "filename": "hero4_poster.jpg",
+      "url": "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/videos/hero/hero4_poster.jpg",
+      "description": "Poster Hero 4 (Mode Dark Desktop)",
+      "size": "0.41 MB"
+    },
+    {
+      "filename": "hero1.webm",
+      "url": "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/videos/hero/hero1.webm",
+      "description": "Vidéo Hero 1 - WebM (Desktop Fallback)",
+      "size": "3.50 MB"
+    },
+    {
+      "filename": "hero1_h264.mp4",
+      "url": "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/videos/hero/hero1_h264.mp4",
+      "description": "Vidéo Hero 1 - MP4 (Desktop Fallback)",
+      "size": "3.19 MB"
+    },
+    {
+      "filename": "hero1_poster.jpg",
+      "url": "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/videos/hero/hero1_poster.jpg",
+      "description": "Poster Hero 1 (Desktop Fallback)",
+      "size": "0.63 MB"
+    },
+    {
+      "filename": "hero2.webm",
+      "url": "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/videos/hero/hero2.webm",
+      "description": "Vidéo Hero 2 - WebM (Mobile)",
+      "size": "2.85 MB"
+    },
+    {
+      "filename": "hero2_h264.mp4",
+      "url": "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/videos/hero/hero2_h264.mp4",
+      "description": "Vidéo Hero 2 - MP4 (Mobile)",
+      "size": "2.10 MB"
+    },
+    {
+      "filename": "hero2_poster.jpg",
+      "url": "https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/videos/hero/hero2_poster.jpg",
+      "description": "Poster Hero 2 (Mobile)",
+      "size": "0.44 MB"
+    }
+  ]
+}

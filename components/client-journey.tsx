@@ -193,7 +193,7 @@ export function ClientJourney() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-background via-muted/30 to-background py-20">
+    <section className="relative overflow-hidden bg-gradient-to-b from-background via-muted/30 to-background py-12">
       <div className="absolute inset-0 bg-grid-black/[0.03] dark:bg-grid-white/[0.03]" aria-hidden="true" />
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 md:px-6">
         <div className="text-center">

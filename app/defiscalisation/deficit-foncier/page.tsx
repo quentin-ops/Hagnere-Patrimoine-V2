@@ -2,21 +2,20 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import {
-  Building2,
   Calculator,
-  CheckCircle2,
   FileSearch,
   Handshake,
   HelpCircle,
-  Layers3,
-  LineChart,
-  PiggyBank,
-  ShieldCheck,
   Sparkles,
   Target,
   Wallet,
   Youtube,
 } from "lucide-react"
+
+import { Hero223 } from "@/components/ui/hero223"
+import { Hero210Images } from "@/components/ui/hero210-images"
+import { Feature76 } from "@/components/ui/feature76"
+import { ServicesPharesTabs } from "@/components/services-phares-tabs"
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -28,44 +27,6 @@ export const metadata: Metadata = {
     "Comprenez le déficit foncier, ses avantages fiscaux, les risques et nos méthodes d'accompagnement pour optimiser votre patrimoine immobilier en 2025.",
 }
 
-const advantages = [
-  {
-    title: "Réduction immédiate d'impôt",
-    description:
-      "Imputez jusqu'à 10 700 € de travaux par an sur vos revenus fonciers et diminuez rapidement votre fiscalité.",
-    icon: PiggyBank,
-  },
-  {
-    title: "Effet de levier du crédit",
-    description:
-      "Financez les travaux à crédit et laissez la fiscalité rembourser une partie des mensualités.",
-    icon: LineChart,
-  },
-  {
-    title: "Valorisation durable du bien",
-    description:
-      "Rénover un actif résidentiel augmente le loyer potentiel, la valeur de revente et l'attractivité locative.",
-    icon: Building2,
-  },
-  {
-    title: "Souplesse patrimoniale",
-    description:
-      "Location nue pendant les travaux, possibilité de basculer en meublé après amortissement pour prolonger l'optimisation.",
-    icon: Layers3,
-  },
-  {
-    title: "Sécurisation juridique",
-    description:
-      "Travaux éligibles, devis certifiés, conformité BOFiP : nous auditons chaque dossier pour éviter les redressements.",
-    icon: ShieldCheck,
-  },
-  {
-    title: "Accompagnement clé en main",
-    description:
-      "Accès à notre réseau de notaires, experts-comptables et artisans sélectionnés pour fluidifier votre projet.",
-    icon: CheckCircle2,
-  },
-]
 
 const knowledgeSections = [
   {
@@ -250,90 +211,13 @@ export default function DeficitFoncierPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
-      <section className="border-b bg-background">
-        <div className="container mx-auto flex flex-col gap-12 px-4 py-20 lg:flex-row lg:items-center">
-          <div className="max-w-2xl space-y-6">
-            <Badge variant="outline">
-              Optimisation fiscale 2025
-            </Badge>
-            <h1 className="text-3xl font-bold tracking-tight sm:text-5xl text-foreground">
-              Déficit foncier 2025 : réduisez vos impôts avec l'immobilier locatif
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Identifiez les travaux éligibles, optimisez leur financement et sécurisez votre déclaration fiscale en vous appuyant sur notre équipe pluridisciplinaire.
-            </p>
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Button
-                size="lg"
-                variant="outline"
-                className="premium-shimmer group relative overflow-hidden transition-shadow hover:shadow-lg"
-                asChild
-              >
-                <Link href="/votre-projet" aria-label="Bilan Patrimonial 360° (Gratuit)">
-                  <span className="premium-text-grow relative">Bilan Patrimonial 360° (Gratuit)</span>
-                </Link>
-              </Button>
-              <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                <ShieldCheck className="size-5 text-foreground" />
-                <span>Accompagnement ORIAS &amp; cabinet patrimonial indépendant</span>
-              </div>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded-xl border bg-card p-4 text-sm">
-                <div className="font-semibold text-foreground">10 700 €</div>
-                <p className="text-muted-foreground">Déduction annuelle sur le revenu global</p>
-              </div>
-              <div className="rounded-xl border bg-card p-4 text-sm">
-                <div className="font-semibold text-foreground">10 ans</div>
-                <p className="text-muted-foreground">Report du déficit excédentaire sur les loyers</p>
-              </div>
-              <div className="rounded-xl border bg-card p-4 text-sm">
-                <div className="font-semibold text-foreground">+25 %</div>
-                <p className="text-muted-foreground">Valorisation moyenne post-rénovation (source interne)</p>
-              </div>
-            </div>
-          </div>
-          <div className="relative mx-auto flex h-full w-full max-w-md items-center justify-center">
-            <div className="relative rounded-3xl border bg-card p-6 shadow-2xl backdrop-blur-md">
-              <Image
-                src="/images/Building_glow.png"
-                alt="Visualisation d'un immeuble rénové"
-                width={480}
-                height={480}
-                className="rounded-2xl object-cover"
-                priority
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <Hero223 />
 
-      <section className="container mx-auto grid gap-8 px-4 py-20">
-        <div className="mx-auto max-w-3xl text-center">
-          <Badge variant="outline" className="mb-4">
-            Bénéfices clés
-          </Badge>
-          <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Pourquoi activer un déficit foncier en 2025 ?</h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Nous combinons expertise fiscale, sourcing immobilier et pilotage de travaux pour transformer un poste de dépense en accélérateur patrimonial.
-          </p>
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-          {advantages.map((advantage) => (
-            <Card key={advantage.title} className="border bg-card">
-              <CardHeader className="flex flex-row items-center gap-4">
-                <div className="rounded-lg bg-muted p-3 text-foreground">
-                  <advantage.icon className="size-6" />
-                </div>
-                <CardTitle className="text-xl">{advantage.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>{advantage.description}</CardDescription>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
+      <Hero210Images />
+
+      <Feature76 />
+
+      <ServicesPharesTabs />
 
       <section className="border-y bg-muted py-20">
         <div className="container mx-auto px-4">

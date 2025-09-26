@@ -522,7 +522,7 @@ export default function BlogArticle({ article, relatedArticles }: BlogArticlePro
                         <div className="flex items-center gap-3 flex-1" itemProp="author" itemScope itemType="https://schema.org/Person">
                           <div className="relative w-9 h-9 rounded-full bg-black">
                             <Image
-                              src="https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758129971150-5372beae560993e3.webp"
+                              src="https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758556598517-537bd5c866cd3e3e.webp"
                               alt="Quentin Hagnéré"
                               width={36}
                               height={36}
@@ -1278,7 +1278,7 @@ export default function BlogArticle({ article, relatedArticles }: BlogArticlePro
                 <div className="relative flex-shrink-0">
                   <div className="w-24 h-24 rounded-full overflow-hidden ring-4 ring-primary/10 bg-black">
                     <Image
-                      src="https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758129971150-5372beae560993e3.webp"
+                      src="https://hagnerepatrimoine.s3.eu-north-1.amazonaws.com/uploads/1758556598517-537bd5c866cd3e3e.webp"
                       alt="Quentin Hagnéré"
                       width={96}
                       height={96}

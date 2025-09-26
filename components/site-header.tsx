@@ -4,6 +4,7 @@ import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { HeaderLogoLocal } from "@/components/logo-local"
+import { AnimatedThemeToggler } from "@/components/magicui/animated-theme-toggler"
 import {
   Phone,
   Calendar,
@@ -40,6 +41,7 @@ import {
   Hammer,
   Castle,
   Landmark,
+  ShoppingBag,
   PiggyBank as PiggyBankIcon,
   Palmtree,
   Trees,
@@ -65,7 +67,6 @@ import {
   KeySquare,
   Vault,
 } from "lucide-react"
-import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -83,7 +84,6 @@ import {
 
 export function SiteHeader() {
   const pathname = usePathname()
-  const { theme, setTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 
   // Hide header on admin pages
@@ -361,66 +361,94 @@ export function SiteHeader() {
       isDouble: true,
       subcategories: [
         {
-          title: "Prêts Immobiliers Classiques",
+          title: "Crédits Immobiliers",
           items: [
             {
-              name: "Résidence principale",
-              href: "/services/residence-principale",
+              name: "Prêt immobilier RP",
+              href: "/services/pret-immobilier-rp",
               icon: HomeIcon,
-              description: "Financement de votre habitation"
+              description: "Résidence principale"
             },
             {
-              name: "Résidence secondaire",
-              href: "/services/residence-secondaire",
+              name: "Prêt immobilier RS",
+              href: "/services/pret-immobilier-rs",
               icon: Palmtree,
-              description: "Financement maison de vacances"
+              description: "Résidence secondaire"
             },
             {
               name: "Prêt immobilier locatif",
-              href: "/services/pret-locatif",
+              href: "/services/pret-immobilier-locatif",
               icon: Key,
-              description: "Investissement locatif"
+              description: "Bien destiné à la location"
             },
             {
-              name: "Financement de SCPI",
-              href: "/services/financement-scpi",
-              icon: BarChart3,
-              description: "Crédit pour parts de SCPI"
+              name: "Prêt relais",
+              href: "/services/pret-relais",
+              icon: RotateCw,
+              description: "Avance en attendant la vente"
+            },
+            {
+              name: "Prêt in fine",
+              href: "/services/pret-in-fine",
+              icon: Wallet,
+              description: "Capital remboursé à la fin"
             },
           ]
         },
         {
-          title: "Prêts Spécialisés",
+          title: "Crédits Spécialisés",
           items: [
             {
-              name: "Prêt Hypothécaire",
-              href: "/services/pret-hypothecaire",
-              icon: KeySquare,
-              description: "Garantie sur bien immobilier"
+              name: "Crédit marchand de biens",
+              href: "/services/credit-marchand-biens",
+              icon: TrendingUp,
+              description: "Achat, rénover, revendre"
             },
             {
-              name: "Crédit Lombard",
+              name: "Crédit lombard",
               href: "/services/credit-lombard",
               icon: Vault,
-              description: "Prêt sur portefeuille titres"
+              description: "Sur portefeuille titres"
+            },
+          ]
+        },
+        {
+          title: "Crédits de Restructuration",
+          items: [
+            {
+              name: "Rachat de crédits",
+              href: "/services/rachat-credits",
+              icon: RotateCw,
+              description: "Regroupement de prêts"
             },
             {
-              name: "Financement marchand de bien",
-              href: "/services/financement-marchand",
-              icon: TrendingUp,
-              description: "Achat-revente immobilier"
+              name: "Crédit hypothécaire",
+              href: "/services/credit-hypothecaire",
+              icon: KeySquare,
+              description: "Garanti par un bien immobilier"
+            },
+          ]
+        },
+        {
+          title: "Crédits Spécifiques",
+          items: [
+            {
+              name: "Prêt consommation",
+              href: "/services/pret-consommation",
+              icon: ShoppingBag,
+              description: "Biens, travaux, projets"
             },
             {
-              name: "Prêt Viager",
-              href: "/services/pret-viager",
+              name: "Prêt viager hypothécaire",
+              href: "/services/pret-viager-hypothecaire",
               icon: Shield,
-              description: "Financement en viager"
+              description: "Pour séniors, liquidité sans vente"
             },
             {
-              name: "Réméré",
-              href: "/services/remere",
+              name: "Vente à réméré",
+              href: "/services/vente-remere",
               icon: FileText,
-              description: "Vente avec rachat"
+              description: "Liquidité avec rachat possible"
             },
           ]
         }
@@ -647,7 +675,7 @@ export function SiteHeader() {
               <Link href="/calendly">
                 <Button
                   size="sm"
-                  className="h-9 gap-1.5 px-3 text-xs bg-primary hover:bg-primary/90"
+                  className="h-9 gap-1.5 px-3 text-xs bg-black hover:bg-gray-800 text-white dark:bg-white dark:text-black dark:hover:bg-gray-200"
                 >
                   <Calendar className="h-3.5 w-3.5" />
                   Rendez-vous gratuit
@@ -658,35 +686,7 @@ export function SiteHeader() {
               <div className="mx-2 h-6 w-px bg-foreground/60" />
 
               {/* Theme Selector */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="group h-9 px-2 overflow-hidden transition-all duration-300 hover:px-3"
-                  >
-                    <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 flex-shrink-0" />
-                    <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 flex-shrink-0" />
-                    <span className="max-w-0 overflow-hidden whitespace-nowrap transition-all duration-300 group-hover:max-w-[60px] ml-1">
-                      {theme === 'dark' ? 'Nuit' : theme === 'light' ? 'Jour' : 'Système'}
-                    </span>
-                    <span className="sr-only">Toggle theme</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => setTheme('light')}>
-                    <Sun className="mr-2 h-4 w-4" />
-                    <span>Jour</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setTheme('dark')}>
-                    <Moon className="mr-2 h-4 w-4" />
-                    <span>Nuit</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setTheme('system')}>
-                    <Globe className="mr-2 h-4 w-4" />
-                    <span>Système</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <AnimatedThemeToggler />
             </div>
           </div>
 
@@ -720,7 +720,7 @@ export function SiteHeader() {
                 <div className="flex flex-col gap-4 mt-6">
                   {/* Mobile Services */}
                   <div className="space-y-4">
-                    <h2 className="text-lg font-semibold flex items-center gap-2">
+                    <h2 className="text-lg flex items-center gap-2">
                       <Briefcase className="h-5 w-5" />
                       Notre galaxie de services
                     </h2>
@@ -735,7 +735,7 @@ export function SiteHeader() {
                             <>
                               {category.subcategories.map((subcategory) => (
                                 <div key={subcategory.title} className="mb-3">
-                                  <div className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-2">
+                                  <div className="text-xs text-gray-600 dark:text-gray-400 mb-2">
                                     {subcategory.title}
                                   </div>
                                   {subcategory.items.map((item) => (
@@ -841,15 +841,7 @@ export function SiteHeader() {
                   {/* Mobile Theme Toggle */}
                   <div className="flex items-center justify-between px-2">
                     <span className="text-sm font-medium">Thème</span>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                      className="h-8 w-8"
-                    >
-                      <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                      <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                    </Button>
+                    <AnimatedThemeToggler className="h-8" />
                   </div>
                 </div>
               </SheetContent>

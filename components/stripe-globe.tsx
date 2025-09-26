@@ -194,7 +194,7 @@ export default function StripeGlobe() {
       {/* Info text */}
       <div className="absolute bottom-6 left-6 text-white/60 text-sm">
         <p className="font-medium text-white/80 mb-1">Réseau mondial</p>
-        <p className="text-xs">Accompagnement patrimonial dans 10+ pays</p>
+        <p className="text-xs">Accompagnement patrimonial dans 22 pays</p>
       </div>
     </div>
   )

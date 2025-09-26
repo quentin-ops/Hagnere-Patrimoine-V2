@@ -213,7 +213,7 @@ export default function ModernGlobe() {
       <div className="absolute bottom-6 left-6 z-20">
         <div className="backdrop-blur-md bg-black/40 rounded-lg px-4 py-3 border border-white/10">
           <p className="font-semibold text-white mb-1">Présence Mondiale</p>
-          <p className="text-xs text-white/70">10+ pays • 24/7 Support • Expertise locale</p>
+          <p className="text-xs text-white/70">22 pays • 24/7 Support • Expertise locale</p>
         </div>
       </div>
     </div>

@@ -1,0 +1,66 @@
+🎬 COMPRESSION VIDÉO - INSTRUCTIONS SIMPLES
+===========================================
+
+COPIEZ-COLLEZ CES COMMANDES DANS LE TERMINAL (une par une) :
+
+1️⃣ OUVRIR LE TERMINAL
+   - Appuyez sur Cmd+Espace
+   - Tapez "Terminal"
+   - Appuyez sur Entrée
+
+2️⃣ ALLER DANS LE BON DOSSIER
+   Copiez-collez cette ligne :
+   
+   cd "/Users/quentinhagnere/Development/Hagnéré Patrimoine/hagnere-patrimoine"
+
+3️⃣ INSTALLER FFMPEG (si pas déjà fait)
+   Copiez-collez cette ligne :
+   
+   brew install ffmpeg
+
+4️⃣ CRÉER LE DOSSIER DE SORTIE
+   Copiez-collez cette ligne :
+   
+   mkdir -p videos-optimized
+
+5️⃣ COMPRESSER VOS VIDÉOS
+
+   ⚠️ IMPORTANT : Remplacez VIDEO1.mp4, VIDEO2.mp4, etc. par les VRAIS NOMS de vos fichiers
+
+   Pour la vidéo 1 :
+   ffmpeg -i "/Users/quentinhagnere/Downloads/GrosFichiers - hnn/VIDEO1.mp4" -t 30 -vf scale=1920:1080 -c:v libx264 -crf 26 -preset faster -an videos-optimized/hero1.mp4 -y
+
+   Pour la vidéo 2 :
+   ffmpeg -i "/Users/quentinhagnere/Downloads/GrosFichiers - hnn/VIDEO2.mp4" -t 30 -vf scale=1920:1080 -c:v libx264 -crf 26 -preset faster -an videos-optimized/hero2.mp4 -y
+
+   Pour la vidéo 3 :
+   ffmpeg -i "/Users/quentinhagnere/Downloads/GrosFichiers - hnn/VIDEO3.mp4" -t 30 -vf scale=1920:1080 -c:v libx264 -crf 26 -preset faster -an videos-optimized/hero3.mp4 -y
+
+   Pour la vidéo 4 :
+   ffmpeg -i "/Users/quentinhagnere/Downloads/GrosFichiers - hnn/VIDEO4.mp4" -t 30 -vf scale=1920:1080 -c:v libx264 -crf 26 -preset faster -an videos-optimized/hero4.mp4 -y
+
+6️⃣ VÉRIFIER QUE C'EST FAIT
+   Copiez-collez cette ligne :
+   
+   ls -lah videos-optimized/
+
+   Vous devriez voir : hero1.mp4, hero2.mp4, hero3.mp4, hero4.mp4
+
+7️⃣ UPLOADER SUR S3
+   - Allez sur : http://localhost:3030/test-video-upload
+   - Uploadez les 4 fichiers hero1.mp4, hero2.mp4, etc.
+   - Copiez les URLs S3
+
+===========================================
+BESOIN DES NOMS EXACTS DES VIDÉOS ?
+===========================================
+
+Copiez-collez cette commande pour voir vos vidéos :
+
+ls -la "/Users/quentinhagnere/Downloads/GrosFichiers - hnn/"
+
+OU si ça ne marche pas :
+
+ls -la /Users/quentinhagnere/Downloads/ | grep -E "\.(mp4|MP4|mov|MOV|avi|AVI)$"
+
+===========================================

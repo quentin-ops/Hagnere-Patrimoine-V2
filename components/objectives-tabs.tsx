@@ -316,8 +316,7 @@ export function ObjectivesTabs() {
               <span className="text-black dark:text-white"> une solution adaptée</span>
             </h2>
             <p className="text-base text-muted-foreground max-w-3xl mx-auto">
-              Découvrez comment booster vos objectifs patrimoniaux
-              grâce à nos produits d'épargne et d'investissement exclusifs.
+              Découvrez nos produits d'épargne et d'investissement exclusifs.
             </p>
           </div>
 
@@ -483,11 +482,6 @@ export function ObjectivesTabs() {
 
                 <div className="space-y-6">
                   {/* Problem Statement */}
-                  <div className="relative bg-white dark:bg-card rounded-xl p-6 border border-gray-200 dark:border-gray-800">
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="w-2 h-2 rounded-full bg-black dark:bg-white" />
-                    <span className="text-sm font-medium text-gray-900 dark:text-white uppercase tracking-wider">Votre situation</span>
-                  </div>
                   <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 space-y-3">
                     <p className="text-xs lg:text-sm text-gray-700 dark:text-gray-300 font-semibold">
                       {currentObjective.problem}
@@ -497,7 +491,6 @@ export function ObjectivesTabs() {
                       <p>"{currentObjective.userQuote}"</p>
                     </div>
                   </div>
-                </div>
 
                   {/* Solutions */}
                   <div className="relative bg-white dark:bg-card rounded-xl p-6 border border-gray-200 dark:border-gray-800">

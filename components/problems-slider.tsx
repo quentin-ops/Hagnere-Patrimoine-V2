@@ -113,7 +113,7 @@ export function ProblemsSlider() {
   }, [])
 
   return (
-    <section className="relative py-20 overflow-hidden">
+    <section className="relative py-12 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
         <div className="space-y-12">
           {/* Header */}
